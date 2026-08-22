@@ -1,0 +1,143 @@
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --muted: rgba(239, 229, 206, 0.84);
+}
+
+body,
+#root {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+
+.screen {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+
+.selection-content,
+.passport-stage-content,
+.intro-content {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  padding-left: max(22px, var(--safe-left));
+  padding-right: max(22px, var(--safe-right));
+}
+
+.editorial-hero {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+
+.closing-section {
+  min-height: 72vh;
+  min-height: 72svh;
+  min-height: 72dvh;
+}
+
+.bottom-nav {
+  padding-left: max(12px, var(--safe-left));
+  padding-right: max(12px, var(--safe-right));
+  padding-bottom: calc(7px + var(--safe-bottom));
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+.back-button,
+.sound-float,
+.site-sound {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.sound-pill,
+.primary-cta,
+.secondary-cta,
+.status-toggle button,
+.event-checks button,
+.bottom-nav button {
+  min-height: 44px;
+}
+
+.tap-hint {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  padding: 8px 14px;
+  min-height: 48px;
+}
+
+.bottom-nav button span {
+  color: rgba(239, 229, 206, 0.88);
+}
+
+.placeholder-note,
+.utility-card small {
+  opacity: 0.72;
+}
+
+.lang-hi h1,
+.lang-hi h2,
+.lang-hi h3,
+.lang-hi p,
+.lang-hi button,
+.lang-hi label,
+.selection-content h1,
+.journey-copy {
+  line-height: 1.4;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+@media (max-width: 365px) {
+  .selection-content,
+  .passport-stage-content,
+  .intro-content {
+    padding-left: max(14px, var(--safe-left));
+    padding-right: max(14px, var(--safe-right));
+  }
+
+  .selection-content h1 {
+    font-size: clamp(29px, 8.4vw, 36px);
+  }
+
+  .english-sub {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .side-grid,
+  .language-grid {
+    gap: 8px;
+  }
+
+  .passport-choice,
+  .language-card {
+    padding-inline: 7px;
+  }
+
+  .passport-choice small {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
