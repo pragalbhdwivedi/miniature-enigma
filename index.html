@@ -8,9 +8,45 @@
     <meta property="og:title" content="Kritica & Ashish — The Corbett Wedding" />
     <meta property="og:description" content="A destination wedding journey in Jim Corbett, 24–26 November 2026." />
     <title>Kritica & Ashish — The Corbett Wedding</title>
+    <style>
+      html, body, #root { min-height: 100%; margin: 0; background: #050806; }
+      body { min-height: 100vh; color: #efe5ce; }
+      .boot-note { min-height: 100vh; display: grid; place-items: center; font: 16px Georgia, serif; color: #caa566; letter-spacing: .08em; }
+    </style>
+    <script>
+      window.__loadWeddingFallback = function () {
+        if (window.__weddingFallbackLoading || window.__branchFallbackMounted) return;
+        window.__weddingFallbackLoading = true;
+
+        var root = document.getElementById('root');
+        if (root && !root.childElementCount) root.innerHTML = '<div class="boot-note">OPENING THE CORBETT WEDDING…</div>';
+
+        ['./src/styles.css', './src/audit-hardening.css'].forEach(function (href) {
+          if (document.querySelector('link[data-fallback-style="' + href + '"]')) return;
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = href;
+          link.setAttribute('data-fallback-style', href);
+          document.head.appendChild(link);
+        });
+
+        var script = document.createElement('script');
+        script.type = 'module';
+        script.src = './src/branchFallback.js';
+        script.onerror = function () {
+          if (root) root.innerHTML = '<div class="boot-note">THE INVITATION COULD NOT LOAD. PLEASE REFRESH.</div>';
+        };
+        document.body.appendChild(script);
+      };
+
+      window.setTimeout(function () {
+        var root = document.getElementById('root');
+        if (root && !root.childElementCount) window.__loadWeddingFallback();
+      }, 5000);
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="./src/main.jsx" onerror="window.__loadWeddingFallback()"></script>
   </body>
 </html>
