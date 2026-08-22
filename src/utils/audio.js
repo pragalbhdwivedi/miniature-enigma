@@ -6,15 +6,25 @@ class AudioManager {
     this.muted = false
   }
 
+  resetClosedContext() {
+    if (this.ctx?.state === 'closed') {
+      this.ctx = null
+      this.gain = null
+      this.source = null
+    }
+  }
+
   async ensureUnlocked() {
     try {
+      this.resetClosedContext()
+
       if (!this.ctx) {
         const AudioContextClass = window.AudioContext || window.webkitAudioContext
         if (!AudioContextClass) return false
         this.ctx = new AudioContextClass()
       }
 
-      if (this.ctx.state === 'suspended') {
+      if (this.ctx.state !== 'running') {
         await this.ctx.resume()
       }
 
@@ -62,7 +72,8 @@ class AudioManager {
       this.gain = gain
     }
 
-    this.setMuted(false)
+    this.muted = false
+    if (this.gain && this.ctx) this.gain.gain.setTargetAtTime(0.035, this.ctx.currentTime, 0.2)
     return true
   }
 
