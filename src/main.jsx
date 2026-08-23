@@ -4,7 +4,9 @@ import App from './App'
 import './styles.css'
 import './audit-hardening.css'
 import './precision-opening.css'
+import './sylva-kinetic.css'
 import './cinematicEnhancements.js'
+import './sylvaKinetic.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
