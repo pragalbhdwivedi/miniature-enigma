@@ -64,6 +64,15 @@ function cardHtml(block, index, side) {
   </article>`
 }
 
+function inferExistingOrder(grid) {
+  if (grid.dataset.familyOrder) return grid.dataset.familyOrder.split(',')
+  const firstText = grid.querySelector('article')?.textContent || ''
+  const groomFirst = /Shushil|Rajwanti|वर पक्ष|Groom Family/i.test(firstText)
+  const order = groomFirst ? ['groom', 'bride'] : ['bride', 'groom']
+  grid.dataset.familyOrder = order.join(',')
+  return order
+}
+
 function renderApprovedFamilies() {
   const section = document.querySelector('.family-section')
   const grid = section?.querySelector('.family-grid')
@@ -71,9 +80,8 @@ function renderApprovedFamilies() {
 
   const lang = document.documentElement.lang === 'hi' ? 'hi' : 'en'
   const copy = FAMILY_DATA[lang]
-  const groomFirst = document.querySelector('.site-shell')?.classList.contains('side-groom') || false
-  const order = groomFirst ? ['groom', 'bride'] : ['bride', 'groom']
-  const signature = `${lang}:${order.join('-')}`
+  const order = inferExistingOrder(grid)
+  const signature = `${lang}:${order.join('-')}:approved-v2`
   if (grid.dataset.familySignature === signature) return
 
   grid.innerHTML = order.map((side, index) => cardHtml(copy[side], index, side)).join('')
@@ -84,5 +92,4 @@ function renderApprovedFamilies() {
 const observer = new MutationObserver(renderApprovedFamilies)
 observer.observe(document.documentElement, { childList: true, subtree: true })
 renderApprovedFamilies()
-
 window.addEventListener('pageshow', renderApprovedFamilies)
