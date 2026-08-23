@@ -1,0 +1,239 @@
+/* Production media bindings.
+   These overrides replace remote/placeholding imagery with the uploaded wedding assets. */
+
+:root {
+  --asset-tiger-bride: url('./images/tiger/tiger-medallion-bride.PNG');
+  --asset-tiger-groom: url('./images/tiger/tiger-medallion-groom.PNG');
+  --asset-tiger-front: url('./images/tiger/tiger-medallion-front.PNG');
+  --asset-tiger-peek: url('./images/tiger/tiger-forest-peek.PNG');
+  --asset-tiger-river: url('./images/tiger/tiger-river-profile.PNG');
+  --asset-tiger-reveal: url('./images/tiger/tiger-reveal-front.PNG');
+  --asset-tiger-engraved: url('./images/tiger/tiger-transition-engraved.PNG');
+}
+
+/* Opening tiger system: every role now uses the exact dedicated upload. */
+.selection-screen:not(.language-screen) .passport-choice.bride::before {
+  background: var(--asset-tiger-bride) center / contain no-repeat;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: .96;
+  border-color: rgba(225, 190, 126, .34);
+}
+
+.selection-screen:not(.language-screen) .passport-choice.groom::before {
+  background: var(--asset-tiger-groom) center / contain no-repeat;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: .96;
+  border-color: rgba(225, 190, 126, .34);
+}
+
+.selection-screen:not(.language-screen)::after {
+  background: var(--asset-tiger-river) center / contain no-repeat;
+  filter: none;
+  opacity: .82;
+}
+
+.language-screen .language-card::before {
+  background: var(--asset-tiger-front) center / contain no-repeat;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: .94;
+  border-color: rgba(226,190,126,.22);
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.language-screen::after {
+  background: var(--asset-tiger-peek) center / contain no-repeat;
+  filter: none;
+  opacity: .86;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.intro-1 .intro-media {
+  background-image:
+    linear-gradient(180deg, rgba(1,4,2,.28), rgba(0,0,0,.01) 42%, rgba(0,0,0,.72)),
+    var(--asset-tiger-reveal) !important;
+  background-size: cover, contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center, center 44% !important;
+  filter: none !important;
+}
+
+.intro-2 .crest-transform::before {
+  inset: -5%;
+  background: var(--asset-tiger-engraved) center / contain no-repeat;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: .98;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.passport-stage .cover-crest::before {
+  background: var(--asset-tiger-front) center / contain no-repeat;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: .98;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* Couple photography replaces the editorial placeholder immediately after the passport. */
+.hero-photo {
+  background-image: url('./images/couple/couple-hero.webp') !important;
+  background-position: center 42% !important;
+  filter: saturate(.90) brightness(.68) !important;
+}
+
+/* Family perspective hooks are ready for the side-aware shell class. */
+.family-grid article {
+  position: relative;
+  min-height: 150px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Couple story becomes photographic while retaining editorial legibility. */
+.story-section {
+  background-image:
+    linear-gradient(90deg, rgba(6,10,7,.98) 0%, rgba(6,10,7,.86) 46%, rgba(6,10,7,.34) 100%),
+    linear-gradient(180deg, rgba(6,10,7,.18), rgba(6,10,7,.82)),
+    url('./images/couple/couple-story-01.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.story-layout {
+  position: relative;
+  z-index: 2;
+}
+
+/* Use the second story frame as a quiet editorial inset rather than wasting it. */
+.story-layout::after {
+  content: '';
+  display: block;
+  width: min(62vw, 250px);
+  aspect-ratio: 4 / 5;
+  margin: 42px 0 0 auto;
+  border: 1px solid rgba(211,173,112,.42);
+  border-radius: 8px;
+  background: url('./images/couple/couple-story-02.webp') center / cover no-repeat;
+  box-shadow: 0 22px 48px rgba(0,0,0,.34);
+  transform: rotate(2deg);
+}
+
+/* The actual Wyndham uploads now replace the generic destination/venue placeholders. */
+.destination-image {
+  background-image:
+    linear-gradient(180deg, rgba(7,12,8,.04), rgba(7,12,8,.22)),
+    url('./images/destination/wyndham-garden-night.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.venue-photo {
+  background-image: url('./images/destination/wyndham-garden-exterior.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.venue-card::before {
+  content: '';
+  display: block;
+  width: min(56vw, 220px);
+  aspect-ratio: 4 / 3;
+  margin: 0 0 24px auto;
+  border: 1px solid rgba(211,173,112,.36);
+  border-radius: 12px;
+  background: url('./images/destination/wyndham-garden-glass-hall.webp') center / cover no-repeat;
+  box-shadow: 0 18px 38px rgba(0,0,0,.28);
+}
+
+/* Uploaded event imagery now drives each kinetic chapter. */
+.event-card.mood-botanical {
+  background-image:
+    linear-gradient(180deg, rgba(5,12,7,.18), rgba(5,12,7,.90) 78%),
+    url('./images/bride/bride-mehendi.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.event-card.mood-cinema {
+  background-image:
+    linear-gradient(180deg, rgba(15,7,5,.15), rgba(10,6,4,.91) 78%),
+    url('./images/groom/groom-sangeet.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.event-card.mood-sun {
+  background-image:
+    linear-gradient(180deg, rgba(25,20,4,.10), rgba(13,10,3,.88) 78%),
+    url('./images/bride/bride-haldi.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.event-card.mood-water {
+  background-image:
+    linear-gradient(180deg, rgba(2,14,15,.08), rgba(3,12,12,.87) 76%),
+    url('./images/destination/wyndham-garden-pool.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.event-card.mood-wine {
+  background-image:
+    linear-gradient(180deg, rgba(18,5,8,.08), rgba(14,5,8,.91) 78%),
+    url('./images/bride/bride-jaimal.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.event-card.mood-stars,
+.event-card.event-card--constellation {
+  background-image:
+    linear-gradient(180deg, rgba(5,5,13,.10), rgba(5,5,13,.91) 78%),
+    url('./images/groom/groom-pheras.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+/* Let the uploaded photography read clearly; the kinetic colour layer remains subtle. */
+.event-card::after {
+  opacity: .22;
+}
+
+/* Replace the three rendered gallery placeholders with the uploaded couple gallery. */
+.gallery-grid .photo-1 {
+  background-image: url('./images/couple/couple-gallery-01.webp') !important;
+  background-position: center !important;
+}
+
+.gallery-grid .photo-2 {
+  background-image: url('./images/couple/couple-gallery-02.webp') !important;
+  background-position: center !important;
+}
+
+.gallery-grid .photo-3 {
+  background-image: url('./images/couple/couple-gallery-03.webp') !important;
+  background-position: center !important;
+}
+
+/* The fourth uploaded gallery frame gets the closing cinematic beat. */
+.closing-section {
+  background-image:
+    linear-gradient(180deg, rgba(4,8,5,.90), rgba(4,8,5,.76)),
+    url('./images/couple/couple-gallery-04.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+@media (max-width: 365px) {
+  .story-layout::after {
+    width: min(68vw, 220px);
+  }
+}

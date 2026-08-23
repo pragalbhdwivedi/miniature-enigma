@@ -5,6 +5,7 @@ import './styles.css'
 import './audit-hardening.css'
 import './precision-opening.css'
 import './sylva-kinetic.css'
+import './production-assets.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 
