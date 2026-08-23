@@ -1,0 +1,104 @@
+/* Approved family roster. This intentionally overrides the old placeholder-card treatment. */
+.family-section .family-grid {
+  gap: 0 !important;
+}
+
+.family-section .family-card {
+  display: block;
+  padding: 24px 0 26px !important;
+  min-height: 0 !important;
+  border-top: 1px solid rgba(62, 48, 27, .24);
+  background: transparent !important;
+}
+
+.family-section .family-card:first-child {
+  border-top: 0;
+}
+
+.family-card-topline {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  align-items: baseline;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.family-card-topline > span {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 11px;
+  letter-spacing: .25em;
+  color: rgba(54, 43, 27, .56);
+}
+
+.family-card-topline > strong {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(19px, 5vw, 24px);
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: #1f241c;
+}
+
+.family-card dl {
+  margin: 0;
+}
+
+.family-person {
+  display: grid;
+  grid-template-columns: minmax(104px, 34%) 1fr;
+  gap: 14px;
+  padding: 11px 0;
+  border-top: 1px solid rgba(62, 48, 27, .13);
+}
+
+.family-person:first-child {
+  border-top: 0;
+}
+
+.family-person dt,
+.family-person dd {
+  margin: 0;
+}
+
+.family-person dt {
+  font-size: 12px;
+  line-height: 1.35;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(43, 52, 39, .64);
+}
+
+.family-person dd {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(18px, 4.8vw, 22px);
+  line-height: 1.25;
+  color: #151a14;
+}
+
+.lang-hi .family-card-topline > strong,
+html[lang='hi'] .family-card-topline > strong,
+.lang-hi .family-person dd,
+html[lang='hi'] .family-person dd {
+  font-family: 'Noto Serif Devanagari', 'Noto Sans Devanagari', serif;
+}
+
+.lang-hi .family-person dt,
+html[lang='hi'] .family-person dt {
+  text-transform: none;
+  letter-spacing: .02em;
+}
+
+.family-section > .placeholder-note {
+  display: none !important;
+}
+
+@media (max-width: 390px) {
+  .family-card-topline {
+    grid-template-columns: 48px 1fr;
+    gap: 12px;
+  }
+
+  .family-person {
+    grid-template-columns: 96px 1fr;
+    gap: 10px;
+  }
+}
