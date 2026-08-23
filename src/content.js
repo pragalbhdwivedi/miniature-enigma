@@ -74,8 +74,16 @@ export const copy = {
     welcomeJourney: 'Welcome to our journey',
     formalInvite: 'With the blessings of our families, we invite you to join us for three unforgettable days in the wild heart of Corbett.',
     familyTitle: 'From our families, with love',
-    brideFamily: 'Bride family details will appear here once approved.',
-    groomFamily: 'Groom family details will appear here once approved.',
+    brideFamily: `Father — Dr. Vinay Kumar Dwivedi
+Mother — Mrs. Archana Dwivedi
+Bhaiya & Bhabhi — Pragalbh Dwivedi & Nisha Dwivedi
+Bade Bhaiya & Bhabhi — Pankaj Shukla & Neeta Shukla
+Nephew — Aadidev Dwivedi`,
+    groomFamily: `Father — Mr. Shushil Pandey
+Mother — Mrs. Rajwanti Pandey
+Sister — Anjali Pandey
+Didi & Jija — Sushma Pandey & Manish Mishra
+Niece — Samridhi Mishra`,
     storyTitle: 'A story still being written',
     storyBody: 'Some chapters are meant to be read. This one is meant to be lived with us.',
     destinationTitle: 'Into the wild, together',
@@ -110,8 +118,16 @@ export const copy = {
     welcomeJourney: 'हमारी यात्रा में आपका स्वागत है',
     formalInvite: 'हमारे परिवारों के आशीर्वाद के साथ, हम आपको कॉर्बेट की वादियों में हमारे तीन यादगार दिनों का हिस्सा बनने के लिए सादर आमंत्रित करते हैं।',
     familyTitle: 'हमारे परिवारों की ओर से, स्नेह सहित',
-    brideFamily: 'वधू पक्ष के परिवार का विवरण स्वीकृति के बाद यहाँ जोड़ा जाएगा।',
-    groomFamily: 'वर पक्ष के परिवार का विवरण स्वीकृति के बाद यहाँ जोड़ा जाएगा।',
+    brideFamily: `पिता — Dr. Vinay Kumar Dwivedi
+माता — Mrs. Archana Dwivedi
+भैया एवं भाभी — Pragalbh Dwivedi & Nisha Dwivedi
+बड़े भैया एवं भाभी — Pankaj Shukla & Neeta Shukla
+Nephew — Aadidev Dwivedi`,
+    groomFamily: `पिता — Mr. Shushil Pandey
+माता — Mrs. Rajwanti Pandey
+बहन — Anjali Pandey
+दीदी एवं जीजा — Sushma Pandey & Manish Mishra
+Niece — Samridhi Mishra`,
     storyTitle: 'एक कहानी जो अभी लिखी जा रही है',
     storyBody: 'कुछ कहानियाँ पढ़ी जाती हैं। यह कहानी आपके साथ जीने के लिए है।',
     destinationTitle: 'जंगल की ओर, साथ-साथ',
@@ -144,7 +160,7 @@ export const media = {
 }
 
 export const config = {
-  whatsappNumber: '',
+  whatsappNumber: '+919555877000',
   rsvpEndpoint: '',
   mapUrl: 'https://www.google.com/maps/search/?api=1&query=Wyndham+Garden+Ramnagar+Jim+Corbett',
 }

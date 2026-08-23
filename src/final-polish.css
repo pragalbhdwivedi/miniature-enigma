@@ -1,0 +1,195 @@
+/* Final production polish requested after live asset review. */
+
+/* --------------------------------------------------------------------------
+   FAMILY DETAILS
+   -------------------------------------------------------------------------- */
+.family-section .family-grid article {
+  padding: 22px 20px;
+}
+
+.family-section .family-grid article p {
+  white-space: pre-line;
+  line-height: 1.72;
+  letter-spacing: .005em;
+}
+
+.family-section > .placeholder-note {
+  display: none;
+}
+
+/* Couple story 02 is intentionally not used. */
+.story-layout::after {
+  content: none !important;
+  display: none !important;
+  background-image: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   LANGUAGE SCREEN — keep the canopy tiger deliberately small and peripheral.
+   -------------------------------------------------------------------------- */
+.language-screen::after {
+  top: 72px !important;
+  right: -18px !important;
+  width: 112px !important;
+  height: 138px !important;
+  opacity: .70 !important;
+  background-size: contain !important;
+  background-position: center !important;
+}
+
+/* --------------------------------------------------------------------------
+   CINEMATIC INTRO
+   -------------------------------------------------------------------------- */
+.intro-screen .intro-content {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  padding-bottom: calc(116px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Tap / continue is always anchored to the bottom of the viewport. */
+.intro-screen .tap-hint,
+.intro-screen .intro-continue {
+  position: absolute !important;
+  z-index: 8;
+  left: 50%;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 40px);
+  margin: 0 !important;
+}
+
+.intro-screen .progress-dots {
+  position: absolute;
+  z-index: 7;
+  left: 50%;
+  bottom: calc(82px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+}
+
+/* ONE WILD MOMENT gets a full-frame tiger, with text living near the bottom. */
+.intro-1 .intro-media {
+  background-image:
+    linear-gradient(180deg, rgba(1,4,2,.18), rgba(0,0,0,.02) 44%, rgba(0,0,0,.76) 100%),
+    var(--asset-tiger-reveal),
+    var(--opening-stream) !important;
+  background-size: cover, auto 96dvh, cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center, 50% 42%, center !important;
+  transform: none !important;
+}
+
+.intro-1 .intro-shade {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.10) 0%, transparent 38%, rgba(0,0,0,.10) 58%, rgba(0,0,0,.84) 100%) !important;
+}
+
+.intro-1 .intro-content h1 {
+  position: absolute;
+  z-index: 6;
+  left: 24px;
+  right: 24px;
+  bottom: calc(164px + env(safe-area-inset-bottom, 0px));
+  margin: 0 !important;
+  font-size: clamp(31px, 8.6vw, 43px) !important;
+  line-height: 1.08 !important;
+  text-align: center;
+  text-shadow: 0 5px 28px rgba(0,0,0,.92);
+}
+
+.intro-1 .tiger-reveal-label {
+  position: absolute;
+  z-index: 7;
+  left: 20px;
+  right: 20px;
+  bottom: calc(126px + env(safe-area-inset-bottom, 0px));
+  margin: 0 !important;
+  text-align: center;
+  font-size: clamp(13px, 3.8vw, 17px) !important;
+  letter-spacing: .24em !important;
+  color: #efd095 !important;
+  text-shadow: 0 3px 18px rgba(0,0,0,.94);
+}
+
+/* --------------------------------------------------------------------------
+   PASSPORT — deeper physical object with right-side clasp/lock.
+   -------------------------------------------------------------------------- */
+.passport-stage-content {
+  perspective: 1250px;
+  perspective-origin: 50% 46%;
+}
+
+.passport-stage .passport-cover {
+  transform-origin: 8% 50%;
+  transform: rotateY(-7deg) rotateX(1.4deg) translateZ(0);
+  backface-visibility: hidden;
+  overflow: visible;
+  box-shadow:
+    -20px 13px 0 #061008,
+    -22px 14px 0 1px rgba(207,169,101,.32),
+    -7px 7px 0 1px rgba(255,255,255,.025) inset,
+    28px 40px 78px rgba(0,0,0,.70),
+    9px 14px 28px rgba(0,0,0,.42),
+    inset 0 0 0 5px rgba(0,0,0,.23),
+    inset 0 0 0 7px rgba(211,173,112,.09) !important;
+}
+
+.passport-stage .passport-cover::after {
+  right: -53px !important;
+  left: auto !important;
+  width: 82px !important;
+  height: 62px !important;
+  border-radius: 0 12px 12px 0 !important;
+  border-left: 0 !important;
+  transform: translateY(-50%) translateZ(34px) !important;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.30), transparent 18%),
+    repeating-linear-gradient(24deg, rgba(255,255,255,.018) 0 1px, transparent 1px 4px),
+    #14261b !important;
+  box-shadow:
+    8px 13px 24px rgba(0,0,0,.55),
+    inset 0 0 0 3px rgba(0,0,0,.20),
+    inset 0 1px 0 rgba(255,255,255,.05) !important;
+}
+
+.passport-stage .passport-cover:hover {
+  transform: rotateY(-4deg) rotateX(.8deg) translateZ(7px);
+}
+
+/* --------------------------------------------------------------------------
+   CLOSING MEDALLION BELOW RSVP
+   -------------------------------------------------------------------------- */
+.closing-section .tiger-crest {
+  display: none !important;
+}
+
+.closing-section::before {
+  content: '';
+  display: block;
+  width: min(42vw, 176px);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto 22px;
+  background: url('./images/tiger/tiger-medallion-front.PNG') center / contain no-repeat;
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,.38));
+}
+
+@media (max-width: 365px) {
+  .language-screen::after {
+    width: 94px !important;
+    height: 118px !important;
+    right: -16px !important;
+  }
+
+  .passport-stage .passport-cover {
+    transform: rotateY(-5deg) rotateX(1deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .passport-stage .passport-cover,
+  .passport-stage .passport-cover:hover {
+    transform: none !important;
+  }
+}
