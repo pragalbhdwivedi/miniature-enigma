@@ -21,7 +21,7 @@
         var root = document.getElementById('root');
         if (root && !root.childElementCount) root.innerHTML = '<div class="boot-note">OPENING THE CORBETT WEDDING…</div>';
 
-        ['./src/styles.css', './src/audit-hardening.css'].forEach(function (href) {
+        ['./src/styles.css', './src/audit-hardening.css', './src/precision-opening.css'].forEach(function (href) {
           if (document.querySelector('link[data-fallback-style="' + href + '"]')) return;
           var link = document.createElement('link');
           link.rel = 'stylesheet';
