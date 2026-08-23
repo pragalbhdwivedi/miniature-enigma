@@ -56,16 +56,42 @@
   left: 50%;
   bottom: calc(24px + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
-  width: max-content;
-  max-width: calc(100% - 40px);
+  width: min(82%, 360px) !important;
+  max-width: calc(100% - 36px);
+  min-height: 58px;
   margin: 0 !important;
+  padding: 15px 24px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  border: 1px solid rgba(130, 255, 159, .88) !important;
+  border-radius: 999px !important;
+  background: rgba(22, 166, 72, .50) !important;
+  color: #eaffed !important;
+  font-size: clamp(15px, 4.2vw, 18px) !important;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: 1 !important;
+  backdrop-filter: blur(8px) saturate(1.15);
+  -webkit-backdrop-filter: blur(8px) saturate(1.15);
+  box-shadow:
+    0 12px 34px rgba(0,0,0,.36),
+    0 0 24px rgba(76,255,121,.18),
+    inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+.intro-screen .tap-hint span,
+.intro-screen .intro-continue span {
+  color: inherit !important;
 }
 
 .intro-screen .progress-dots {
   position: absolute;
   z-index: 7;
   left: 50%;
-  bottom: calc(82px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(94px + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
 }
 
@@ -91,7 +117,7 @@
   z-index: 6;
   left: 24px;
   right: 24px;
-  bottom: calc(164px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(178px + env(safe-area-inset-bottom, 0px));
   margin: 0 !important;
   font-size: clamp(31px, 8.6vw, 43px) !important;
   line-height: 1.08 !important;
@@ -104,7 +130,7 @@
   z-index: 7;
   left: 20px;
   right: 20px;
-  bottom: calc(126px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(138px + env(safe-area-inset-bottom, 0px));
   margin: 0 !important;
   text-align: center;
   font-size: clamp(13px, 3.8vw, 17px) !important;
@@ -175,6 +201,77 @@
   filter: drop-shadow(0 12px 24px rgba(0,0,0,.38));
 }
 
+/* --------------------------------------------------------------------------
+   FIRST SCREEN — K&A first, Corbett Wedding second.
+   -------------------------------------------------------------------------- */
+.selection-screen:not(.language-screen) .selection-content {
+  padding-top: max(12px, env(safe-area-inset-top)) !important;
+}
+
+.selection-screen:not(.language-screen) .monogram {
+  order: 1;
+  width: 100%;
+  min-height: 20svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto !important;
+  font-size: clamp(82px, 25vw, 122px) !important;
+  line-height: .78;
+  letter-spacing: -8px !important;
+  filter: drop-shadow(0 10px 32px rgba(0,0,0,.36));
+}
+
+.selection-screen:not(.language-screen) .monogram::after {
+  display: none !important;
+}
+
+.selection-screen:not(.language-screen) .eyebrow {
+  order: 2;
+  margin: 2px auto 0 !important;
+  font-size: 0 !important;
+  line-height: 1;
+  color: var(--opening-gold-bright) !important;
+}
+
+.selection-screen:not(.language-screen) .eyebrow::before {
+  content: 'THE CORBETT WEDDING';
+  display: block;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(24px, 7vw, 34px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .08em;
+  text-shadow: 0 5px 22px rgba(0,0,0,.55);
+}
+
+.selection-screen:not(.language-screen) .eyebrow::after {
+  content: '24–26 NOVEMBER 2026';
+  display: block;
+  margin-top: 10px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .26em;
+  color: rgba(231, 199, 132, .76);
+}
+
+.selection-screen:not(.language-screen) h1 {
+  margin-top: 20px !important;
+}
+
+/* --------------------------------------------------------------------------
+   RSVP contact-number field injected for both React and raw fallback modes.
+   -------------------------------------------------------------------------- */
+.rsvp-form .contact-number-field {
+  display: grid;
+  gap: 8px;
+}
+
+.rsvp-form .contact-number-field input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 @media (max-width: 365px) {
   .language-screen::after {
     width: 94px !important;
@@ -184,6 +281,15 @@
 
   .passport-stage .passport-cover {
     transform: rotateY(-5deg) rotateX(1deg);
+  }
+
+  .selection-screen:not(.language-screen) .monogram {
+    font-size: clamp(76px, 24vw, 102px) !important;
+  }
+
+  .intro-screen .tap-hint,
+  .intro-screen .intro-continue {
+    width: calc(100% - 34px) !important;
   }
 }
 
