@@ -1,0 +1,573 @@
+/* High-visibility upgrade based on ThreeUI Community's Sylva Living World
+   and Article Headings/TextAnimationCollection motion language. */
+
+/* --------------------------------------------------------------------------
+   SYLVA LIVING DESTINATION
+   -------------------------------------------------------------------------- */
+
+.sylva-destination {
+  --sylva-progress: 0;
+  --sylva-depth: 0;
+  --sylva-pointer-x: 0;
+  --sylva-pointer-y: 0;
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  background: #071009;
+  color: #efe5ce;
+}
+
+.sylva-destination .destination-image {
+  position: absolute;
+  inset: -5%;
+  min-height: 0;
+  z-index: 0;
+  background-position: center 54% !important;
+  filter: saturate(.84) brightness(.64) contrast(1.05);
+  transform:
+    translate3d(
+      calc(var(--sylva-pointer-x) * -8px),
+      calc((var(--sylva-depth) - .4) * -26px + var(--sylva-pointer-y) * -8px),
+      0
+    )
+    scale(1.12);
+  transition: filter .8s ease;
+  will-change: transform;
+}
+
+.sylva-destination.is-sylva-visible .destination-image {
+  filter: saturate(.92) brightness(.7) contrast(1.06);
+}
+
+.sylva-destination .destination-image::after {
+  background:
+    linear-gradient(180deg, rgba(2,7,4,.1) 0%, rgba(2,7,4,.22) 28%, rgba(2,7,4,.82) 76%, #071009 100%),
+    radial-gradient(circle at 50% 28%, rgba(233,210,157,.12), transparent 38%),
+    linear-gradient(90deg, rgba(0,0,0,.58), transparent 28%, transparent 72%, rgba(0,0,0,.6));
+}
+
+.sylva-world {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sylva-world__rays {
+  position: absolute;
+  inset: -20% -35%;
+  opacity: .72;
+  background:
+    conic-gradient(
+      from 188deg at 50% -8%,
+      transparent 0 12deg,
+      rgba(242,218,163,.085) 12deg 15deg,
+      transparent 15deg 24deg,
+      rgba(242,218,163,.045) 24deg 27deg,
+      transparent 27deg 42deg,
+      rgba(242,218,163,.06) 42deg 45deg,
+      transparent 45deg 360deg
+    );
+  transform:
+    translate3d(calc(var(--sylva-pointer-x) * 10px), calc(var(--sylva-depth) * -14px), 0)
+    rotate(calc((var(--sylva-progress) - .5) * 2deg));
+  mix-blend-mode: screen;
+  filter: blur(.4px);
+}
+
+.sylva-world__mist {
+  position: absolute;
+  left: -22%;
+  right: -22%;
+  bottom: 18%;
+  height: 38%;
+  opacity: .68;
+  background:
+    radial-gradient(ellipse at 25% 60%, rgba(226,235,216,.14), transparent 44%),
+    radial-gradient(ellipse at 68% 42%, rgba(218,226,206,.11), transparent 48%),
+    radial-gradient(ellipse at 48% 84%, rgba(195,211,190,.08), transparent 50%);
+  filter: blur(18px);
+  transform: translate3d(calc((var(--sylva-progress) - .5) * 25px), calc(var(--sylva-depth) * -18px), 0);
+  animation: sylvaMist 11s ease-in-out infinite alternate;
+}
+
+.sylva-world__ghost {
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  transform:
+    translate3d(calc(-50% + var(--sylva-pointer-x) * -14px), calc(var(--sylva-depth) * -12px), 0);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(88px, 29vw, 145px);
+  line-height: .72;
+  font-weight: 500;
+  letter-spacing: .06em;
+  color: rgba(239,229,206,.052);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.sylva-world__pollen {
+  position: absolute;
+  inset: 0;
+}
+
+.sylva-world__pollen i {
+  --x: 50%;
+  --y: 50%;
+  --size: 2px;
+  --delay: 0s;
+  --duration: 10s;
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: #efd095;
+  opacity: .35;
+  box-shadow: 0 0 8px rgba(239,208,149,.55), 0 0 18px rgba(239,208,149,.2);
+  animation: sylvaPollen var(--duration) ease-in-out var(--delay) infinite;
+}
+
+.sylva-world__foliage {
+  position: absolute;
+  top: -3%;
+  bottom: -3%;
+  width: 31%;
+  z-index: 3;
+  filter: drop-shadow(0 14px 20px rgba(0,0,0,.38));
+  will-change: transform;
+}
+
+.sylva-world__foliage--left {
+  left: -12%;
+  transform: translate3d(
+    calc(var(--sylva-pointer-x) * 18px + (var(--sylva-progress) - .5) * -11px),
+    calc(var(--sylva-depth) * -20px),
+    0
+  );
+}
+
+.sylva-world__foliage--right {
+  right: -12%;
+  transform: translate3d(
+    calc(var(--sylva-pointer-x) * -18px + (var(--sylva-progress) - .5) * 11px),
+    calc(var(--sylva-depth) * -26px),
+    0
+  );
+}
+
+.sylva-world__foliage i {
+  position: absolute;
+  top: var(--leaf-y);
+  width: 96px;
+  height: 35px;
+  border-radius: 100% 0 100% 0;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.08), transparent 28%),
+    linear-gradient(135deg, #15251a, #07110a 70%);
+  border: 1px solid rgba(193,164,99,.08);
+  opacity: .92;
+  transform: rotate(var(--leaf-rot)) scale(var(--leaf-scale));
+  transform-origin: 10% 50%;
+  animation: sylvaLeafSway calc(5.6s + var(--leaf-index) * .17s) ease-in-out calc(var(--leaf-index) * -.3s) infinite alternate;
+}
+
+.sylva-world__foliage--left i { left: calc((var(--leaf-index) % 3) * 13px); }
+.sylva-world__foliage--right i {
+  right: calc((var(--leaf-index) % 3) * 13px);
+  border-radius: 0 100% 0 100%;
+  transform-origin: 90% 50%;
+}
+
+.sylva-destination .destination-copy {
+  position: relative;
+  z-index: 4;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: max(80px, env(safe-area-inset-top)) 31px 74px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background:
+    linear-gradient(180deg, transparent 0 40%, rgba(3,8,5,.14) 54%, rgba(3,8,5,.72) 77%, rgba(3,8,5,.94) 100%);
+}
+
+.sylva-destination .destination-copy::before {
+  content: 'INTO THE LIVING WORLD';
+  position: absolute;
+  left: 30px;
+  top: 23%;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 9px;
+  letter-spacing: .28em;
+  color: rgba(239,208,149,.52);
+}
+
+.sylva-destination .destination-copy::after {
+  content: '';
+  position: absolute;
+  left: 31px;
+  right: 31px;
+  bottom: 53px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(211,173,112,.6), transparent);
+  transform-origin: left;
+  transform: scaleX(.15);
+  transition: transform 1.25s cubic-bezier(.16,1,.3,1) .32s;
+}
+
+.sylva-destination.is-sylva-visible .destination-copy::after { transform: scaleX(1); }
+
+.sylva-destination .section-number {
+  color: #d3ad70;
+  margin-bottom: 18px;
+}
+
+.sylva-destination .destination-copy h2 {
+  max-width: 390px;
+  margin-bottom: 18px;
+  font-size: clamp(48px, 14.5vw, 68px);
+  line-height: .88;
+  color: #f3e8cf;
+  text-shadow: 0 10px 40px rgba(0,0,0,.42);
+}
+
+.sylva-destination .destination-copy > p:not(.section-number) {
+  max-width: 315px;
+  color: rgba(239,229,206,.79);
+  margin: 0 0 19px;
+  font-size: 15px;
+}
+
+.sylva-destination .destination-copy strong {
+  color: #efd095;
+  font-size: 20px;
+  letter-spacing: .025em;
+}
+
+.sylva-destination .destination-copy span {
+  color: rgba(239,229,206,.66);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+/* --------------------------------------------------------------------------
+   THREEUI ARTICLE-HEADING / KINETIC TYPOGRAPHY LANGUAGE
+   -------------------------------------------------------------------------- */
+
+[data-kinetic] {
+  position: relative;
+}
+
+.kinetic-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: .055em;
+  margin-bottom: -.055em;
+  perspective: 500px;
+}
+
+.kinetic-word__ink {
+  display: inline-block;
+  transform: translate3d(0, 115%, 0) rotateX(-54deg);
+  transform-origin: 50% 100%;
+  opacity: 0;
+  filter: blur(8px);
+  transition:
+    transform .82s cubic-bezier(.16,1,.3,1),
+    opacity .5s ease,
+    filter .72s ease;
+  transition-delay: calc(var(--word-index) * 38ms);
+  will-change: transform, opacity, filter;
+}
+
+[data-kinetic].is-kinetic-visible .kinetic-word__ink {
+  transform: translate3d(0, 0, 0) rotateX(0deg);
+  opacity: 1;
+  filter: blur(0);
+}
+
+/* The events are no longer little cards. They behave like stacked editorial chapters. */
+.event-section {
+  position: relative;
+  padding: 96px 0 112px;
+  background:
+    radial-gradient(circle at 50% 0, rgba(211,173,112,.09), transparent 28%),
+    linear-gradient(180deg, #07100a, #040806 70%);
+  overflow: visible;
+}
+
+.event-section > .section-number,
+.event-section > h2 {
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.event-section > h2 {
+  max-width: 390px;
+  margin-bottom: 56px;
+  font-size: clamp(48px, 13vw, 64px);
+  line-height: .9;
+}
+
+.event-stack {
+  gap: 22px;
+  overflow: visible;
+}
+
+.event-card {
+  --chapter-accent: #d3ad70;
+  position: sticky;
+  top: max(14px, env(safe-area-inset-top));
+  min-height: min(54svh, 500px);
+  margin: 0 14px;
+  padding: 31px 27px 29px;
+  grid-template-columns: 42px 1fr 28px;
+  align-items: end;
+  border-radius: 27px;
+  border: 1px solid rgba(224,181,108,.35);
+  box-shadow:
+    0 -9px 28px rgba(0,0,0,.18),
+    0 31px 64px rgba(0,0,0,.48),
+    inset 0 1px rgba(255,255,255,.045);
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 82% 14%, color-mix(in srgb, currentColor 18%, transparent), transparent 29%),
+    linear-gradient(145deg, rgba(255,255,255,.045), transparent 33%),
+    #0d1510;
+}
+
+.event-card::after {
+  opacity: .5;
+  background:
+    linear-gradient(180deg, transparent 20%, rgba(2,5,3,.78)),
+    radial-gradient(circle at 80% 18%, currentColor, transparent 38%);
+  mix-blend-mode: soft-light;
+}
+
+.event-card::before {
+  content: attr(data-chapter-title);
+  position: absolute;
+  z-index: 0;
+  left: 20px;
+  right: -60px;
+  top: 18px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(58px, 18vw, 86px);
+  line-height: .72;
+  text-transform: uppercase;
+  letter-spacing: -.035em;
+  color: currentColor;
+  opacity: .055;
+  white-space: normal;
+  pointer-events: none;
+}
+
+.event-card:nth-child(even) {
+  transform: translateX(0);
+}
+
+.event-card .event-index {
+  align-self: start;
+  font-size: 11px;
+  margin-top: 2px;
+  color: #d3ad70;
+}
+
+.event-card > div:nth-child(2) {
+  align-self: end;
+  z-index: 3;
+}
+
+.event-card .event-type {
+  margin-bottom: 13px;
+  color: #d3ad70 !important;
+  font-size: 10px;
+  letter-spacing: .25em;
+}
+
+.event-card h3 {
+  position: relative;
+  z-index: 4;
+  max-width: 330px;
+  margin: 0;
+  font-size: clamp(42px, 12.5vw, 59px);
+  line-height: .82;
+  letter-spacing: -.025em;
+  color: #f1e6cf;
+  text-wrap: balance;
+}
+
+.event-card h3[data-kinetic='decode']::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 1px;
+  margin-top: 20px;
+  background: linear-gradient(90deg, #d3ad70, transparent);
+  transition: width 1s cubic-bezier(.16,1,.3,1) .18s;
+}
+
+.event-card h3.is-kinetic-visible::after { width: min(220px, 72%); }
+
+.event-card p:last-child {
+  margin-top: 19px;
+  color: rgba(239,229,206,.68);
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.event-card .event-mark {
+  align-self: start;
+  color: currentColor;
+  opacity: .72;
+}
+
+.event-chapter-line {
+  position: absolute;
+  left: 27px;
+  right: 27px;
+  bottom: 19px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: rgba(239,229,206,.32);
+  font-size: 8px;
+  letter-spacing: .2em;
+}
+
+.event-chapter-line i {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(211,173,112,.44), transparent);
+}
+.event-chapter-line i:last-child { transform: scaleX(-1); }
+
+.mood-botanical {
+  color: #9bb778;
+  background:
+    radial-gradient(circle at 80% 15%, rgba(110,148,73,.27), transparent 34%),
+    linear-gradient(160deg, #101e13, #071009 64%) !important;
+}
+
+.mood-cinema {
+  color: #c89570;
+  background:
+    radial-gradient(circle at 78% 10%, rgba(156,82,53,.24), transparent 31%),
+    linear-gradient(160deg, #22120e, #0a0907 64%) !important;
+}
+
+.mood-sun {
+  color: #e1bd55;
+  background:
+    radial-gradient(circle at 78% 9%, rgba(225,189,85,.25), transparent 30%),
+    linear-gradient(160deg, #2c250d, #0d1008 66%) !important;
+}
+
+.mood-water {
+  color: #79b9b1;
+  background:
+    radial-gradient(circle at 78% 11%, rgba(65,145,151,.27), transparent 34%),
+    linear-gradient(160deg, #0c2321, #07100f 64%) !important;
+}
+
+.mood-wine {
+  color: #c87a83;
+  background:
+    radial-gradient(circle at 78% 10%, rgba(131,42,55,.31), transparent 34%),
+    linear-gradient(160deg, #291018, #0d080a 64%) !important;
+}
+
+.mood-stars,
+.event-card--constellation {
+  color: #c9c8e3;
+  min-height: min(66svh, 590px);
+  background:
+    radial-gradient(circle at 50% 10%, rgba(117,117,168,.19), transparent 30%),
+    linear-gradient(160deg, #111223, #060711 66%) !important;
+}
+
+/* Kinetic editorial headings elsewhere get a quieter, fashion-magazine reveal. */
+.story-layout h2[data-kinetic],
+.itinerary-section > h2[data-kinetic],
+.venue-card h2[data-kinetic],
+.gallery-section > h2[data-kinetic],
+.rsvp-section > h2[data-kinetic] {
+  overflow: visible;
+}
+
+.story-layout h2[data-kinetic]::after,
+.itinerary-section > h2[data-kinetic]::after,
+.venue-card h2[data-kinetic]::after,
+.gallery-section > h2[data-kinetic]::after,
+.rsvp-section > h2[data-kinetic]::after {
+  content: attr(data-kinetic-ghost);
+  position: absolute;
+  z-index: -1;
+  left: -.02em;
+  top: .34em;
+  font-size: 1.34em;
+  line-height: .72;
+  color: currentColor;
+  opacity: .045;
+  pointer-events: none;
+}
+
+@keyframes sylvaMist {
+  from { transform: translate3d(-12px, 5px, 0) scale(1); opacity: .52; }
+  to { transform: translate3d(16px, -7px, 0) scale(1.08); opacity: .72; }
+}
+
+@keyframes sylvaPollen {
+  0%, 100% { transform: translate3d(-5px, 13px, 0) scale(.8); opacity: .12; }
+  36% { opacity: .55; }
+  67% { transform: translate3d(10px, -16px, 0) scale(1.18); opacity: .34; }
+}
+
+@keyframes sylvaLeafSway {
+  from { translate: -2px 0; rotate: -1.8deg; }
+  to { translate: 4px 2px; rotate: 2.2deg; }
+}
+
+@media (max-width: 365px) {
+  .sylva-world__foliage { width: 35%; }
+  .sylva-world__foliage i { width: 76px; height: 29px; }
+  .sylva-destination .destination-copy { padding-inline: 24px; }
+  .sylva-destination .destination-copy::before { left: 22px; }
+  .event-card { margin-inline: 10px; padding-inline: 22px; }
+  .event-chapter-line { left: 22px; right: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sylva-world__mist,
+  .sylva-world__pollen i,
+  .sylva-world__foliage i {
+    animation: none !important;
+  }
+  .sylva-destination .destination-image,
+  .sylva-world__rays,
+  .sylva-world__ghost,
+  .sylva-world__foliage {
+    transform: none !important;
+  }
+  .kinetic-word__ink {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transition: none !important;
+  }
+  .event-card { position: relative; top: auto; }
+}
