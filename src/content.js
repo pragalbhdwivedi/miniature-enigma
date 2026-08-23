@@ -76,13 +76,13 @@ export const copy = {
     familyTitle: 'From our families, with love',
     brideFamily: `Father — Dr. Vinay Kumar Dwivedi
 Mother — Mrs. Archana Dwivedi
-Bhaiya & Bhabhi — Pragalbh Dwivedi & Nisha Dwivedi
-Bade Bhaiya & Bhabhi — Pankaj Shukla & Neeta Shukla
+Bhaiya and Bhabhi — Pragalbh Dwivedi and Nisha Dwivedi
+Bade Bhaiya and Bhabhi — Pankaj Shukla and Neeta Shukla
 Nephew — Aadidev Dwivedi`,
     groomFamily: `Father — Mr. Shushil Pandey
 Mother — Mrs. Rajwanti Pandey
 Sister — Anjali Pandey
-Didi & Jija — Sushma Pandey & Manish Mishra
+Didi and Jija — Sushma Pandey and Manish Mishra
 Niece — Samridhi Mishra`,
     storyTitle: 'A story still being written',
     storyBody: 'Some chapters are meant to be read. This one is meant to be lived with us.',
@@ -120,14 +120,14 @@ Niece — Samridhi Mishra`,
     familyTitle: 'हमारे परिवारों की ओर से, स्नेह सहित',
     brideFamily: `पिता — Dr. Vinay Kumar Dwivedi
 माता — Mrs. Archana Dwivedi
-भैया एवं भाभी — Pragalbh Dwivedi & Nisha Dwivedi
-बड़े भैया एवं भाभी — Pankaj Shukla & Neeta Shukla
-Nephew — Aadidev Dwivedi`,
+भैया और भाभी — Pragalbh Dwivedi और Nisha Dwivedi
+बड़े भैया और भाभी — Pankaj Shukla और Neeta Shukla
+भतीजा — Aadidev Dwivedi`,
     groomFamily: `पिता — Mr. Shushil Pandey
 माता — Mrs. Rajwanti Pandey
 बहन — Anjali Pandey
-दीदी एवं जीजा — Sushma Pandey & Manish Mishra
-Niece — Samridhi Mishra`,
+दीदी और जीजा — Sushma Pandey और Manish Mishra
+भांजी — Samridhi Mishra`,
     storyTitle: 'एक कहानी जो अभी लिखी जा रही है',
     storyBody: 'कुछ कहानियाँ पढ़ी जाती हैं। यह कहानी आपके साथ जीने के लिए है।',
     destinationTitle: 'जंगल की ओर, साथ-साथ',
