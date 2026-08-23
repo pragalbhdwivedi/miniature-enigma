@@ -30,6 +30,11 @@
           document.head.appendChild(link);
         });
 
+        var motion = document.createElement('script');
+        motion.type = 'module';
+        motion.src = './src/cinematicEnhancements.js';
+        document.body.appendChild(motion);
+
         var script = document.createElement('script');
         script.type = 'module';
         script.src = './src/branchFallback.js';
