@@ -1,0 +1,699 @@
+/* Precision opening art direction based on the approved mobile reference frames.
+   The opening remains live HTML/React, not flattened screenshots. */
+
+:root {
+  --opening-gold: #d3ad70;
+  --opening-gold-bright: #efd095;
+  --opening-green: #0d1b12;
+  --opening-green-2: #14271a;
+  --opening-wine: #39161d;
+  --opening-wine-2: #5b232d;
+  --opening-black: #030705;
+  --opening-stream: url('https://images.unsplash.com/photo-1609428324513-c3d25a7ecc51?auto=format&fit=crop&w=1400&q=86');
+  --opening-tiger-front: url('https://images.unsplash.com/photo-1704852144181-fd3c421daad7?auto=format&fit=crop&w=1200&q=84');
+  --opening-tiger-profile: url('https://images.unsplash.com/photo-1615551298862-0795063e3f1e?auto=format&fit=crop&w=1000&q=82');
+}
+
+/* The reference frames have a fine gold perimeter and a deep black outer edge. */
+.selection-screen,
+.intro-screen,
+.passport-stage {
+  background-color: var(--opening-black);
+  box-shadow:
+    inset 0 0 0 1px rgba(224, 181, 108, .68),
+    inset 0 0 0 5px rgba(0, 0, 0, .76),
+    0 0 80px rgba(0, 0, 0, .55);
+}
+
+.forest-bg,
+.intro-0 .intro-media,
+.intro-2 .intro-media {
+  background-image:
+    linear-gradient(180deg, rgba(2, 8, 5, .20), rgba(2, 6, 4, .72)),
+    radial-gradient(circle at 50% 16%, rgba(186, 141, 67, .13), transparent 34%),
+    var(--opening-stream) !important;
+  background-position: center !important;
+  background-size: cover !important;
+}
+
+.forest-vignette {
+  background:
+    radial-gradient(ellipse at 50% 33%, transparent 16%, rgba(0, 0, 0, .26) 61%, rgba(0, 0, 0, .70) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.10) 54%, rgba(0,0,0,.78));
+}
+
+/* Monogram: cleaner, more ceremonial, closer to the reference. */
+.selection-screen .monogram,
+.intro-screen .monogram,
+.passport-stage .monogram {
+  font-size: clamp(48px, 13vw, 64px);
+  letter-spacing: -4px;
+  color: var(--opening-gold);
+  text-shadow: 0 2px 18px rgba(211, 173, 112, .12);
+  position: relative;
+}
+
+.selection-screen .monogram::after,
+.intro-screen .monogram::after,
+.passport-stage .monogram::after {
+  content: '❧  ❧';
+  display: block;
+  margin-top: 13px;
+  font-size: 16px;
+  letter-spacing: 34px;
+  transform: translateX(15px);
+  color: rgba(211, 173, 112, .82);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 01. SIDE SELECTOR                                                          */
+/* -------------------------------------------------------------------------- */
+.selection-screen:not(.language-screen) .selection-content {
+  justify-content: flex-start;
+  padding-top: max(34px, env(safe-area-inset-top));
+  padding-bottom: calc(22px + env(safe-area-inset-bottom));
+}
+
+.selection-screen:not(.language-screen) .eyebrow {
+  order: 2;
+  margin: 26px 0 0;
+  font-size: 10px;
+  letter-spacing: .20em;
+  color: rgba(221, 187, 127, .78);
+}
+
+.selection-screen:not(.language-screen) h1 {
+  order: 3;
+  margin: 24px auto 2px;
+  font-size: clamp(35px, 9.7vw, 48px);
+  max-width: 390px;
+  color: #ead9b9;
+  line-height: 1.28;
+  text-shadow: 0 2px 24px rgba(0,0,0,.75);
+}
+
+.selection-screen:not(.language-screen) .english-sub {
+  order: 4;
+  margin: 8px 0 18px;
+  font-size: 12px;
+  letter-spacing: .20em;
+  color: var(--opening-gold);
+}
+
+.selection-screen:not(.language-screen) .side-grid {
+  order: 5;
+  position: relative;
+  gap: 22px;
+  margin: 14px 0 0;
+  width: min(100%, 430px);
+}
+
+.selection-screen:not(.language-screen) .side-grid::after {
+  content: 'या';
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(229, 191, 124, .82);
+  background: rgba(5, 12, 8, .96);
+  color: #e4c183;
+  font-family: 'Noto Serif Devanagari', serif;
+  font-size: 17px;
+  box-shadow: 0 5px 24px rgba(0,0,0,.5), inset 0 0 0 2px rgba(211,173,112,.08);
+}
+
+.selection-screen:not(.language-screen) .passport-choice {
+  min-height: clamp(338px, 50.5vh, 430px);
+  border-radius: 19px;
+  padding: 126px 12px 24px;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(222, 183, 116, .80);
+  background:
+    radial-gradient(circle at 50% 21%, rgba(229,198,130,.08), transparent 26%),
+    repeating-linear-gradient(13deg, rgba(255,255,255,.018) 0 1px, transparent 1px 4px),
+    linear-gradient(155deg, #17271b 0%, #0b1710 72%);
+  box-shadow:
+    inset 0 0 0 5px rgba(0,0,0,.20),
+    inset 0 0 0 7px rgba(211,173,112,.09),
+    0 18px 40px rgba(0,0,0,.44);
+}
+
+.selection-screen:not(.language-screen) .passport-choice.groom {
+  background:
+    radial-gradient(circle at 50% 21%, rgba(229,198,130,.08), transparent 26%),
+    repeating-linear-gradient(13deg, rgba(255,255,255,.014) 0 1px, transparent 1px 4px),
+    linear-gradient(155deg, #55232b 0%, #32151b 74%);
+}
+
+.selection-screen:not(.language-screen) .passport-choice::after,
+.language-screen .language-card::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border: 1px solid rgba(225, 190, 126, .24);
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+/* Replace the old mascot crest with a real tiger engraving treatment. */
+.selection-screen:not(.language-screen) .passport-choice .tiger-crest,
+.language-screen .language-card .tiger-crest,
+.passport-stage .cover-crest .tiger-crest,
+.intro-screen .crest-transform .tiger-crest {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.selection-screen:not(.language-screen) .passport-choice::before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  top: 47px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 116px;
+  height: 88px;
+  border: 1px solid rgba(225, 190, 126, .68);
+  border-radius: 58px 58px 9px 9px;
+  background: var(--opening-tiger-profile) 58% 36% / 180% auto no-repeat;
+  filter: grayscale(1) sepia(1) saturate(.75) contrast(1.82) brightness(.87);
+  opacity: .90;
+  box-shadow: inset 0 -22px 28px rgba(8,13,9,.34);
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(180deg, #000 0 70%, transparent 98%);
+  mask-image: linear-gradient(180deg, #000 0 70%, transparent 98%);
+}
+
+.selection-screen:not(.language-screen) .passport-choice strong {
+  margin-top: -70px;
+  font-size: clamp(27px, 7.6vw, 34px);
+  line-height: 1.2;
+  color: var(--opening-gold-bright);
+}
+
+.selection-screen:not(.language-screen) .passport-choice > span {
+  margin-top: 3px;
+  letter-spacing: .14em;
+  font-size: 12px;
+  color: #ddb879;
+}
+
+.selection-screen:not(.language-screen) .passport-choice small {
+  margin-top: 14px;
+  padding-top: 18px;
+  width: 90%;
+  border-top: 1px solid rgba(222,183,116,.34);
+  font-size: clamp(12px, 3.3vw, 14px);
+  line-height: 1.55;
+  color: rgba(239,229,206,.88);
+}
+
+.selection-screen:not(.language-screen) .microcopy {
+  order: 6;
+  margin: clamp(25px, 4vh, 42px) auto 0;
+  max-width: 320px;
+  font-size: 15px;
+  color: #d7bb89;
+}
+
+.selection-screen:not(.language-screen) .microcopy::before {
+  content: '♢';
+  display: block;
+  font-size: 23px;
+  margin-bottom: 7px;
+  color: var(--opening-gold);
+}
+
+.selection-screen:not(.language-screen) .selection-content::after {
+  content: 'कृपया एक विकल्प चुनें  ·  PLEASE SELECT ONE OPTION TO CONTINUE';
+  order: 7;
+  width: min(100%, 420px);
+  margin-top: 20px;
+  padding: 13px 16px;
+  border: 1px solid rgba(211,173,112,.55);
+  border-radius: 15px;
+  background: rgba(6,15,10,.78);
+  color: #d9bd8b;
+  font-family: 'Noto Serif Devanagari', 'Cormorant Garamond', serif;
+  font-size: 10px;
+  letter-spacing: .07em;
+  line-height: 1.5;
+}
+
+/* A restrained photographic tiger at the river edge, as in the approved frame. */
+.selection-screen:not(.language-screen)::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  left: -22px;
+  bottom: 10.5%;
+  width: min(48vw, 225px);
+  aspect-ratio: 1 / 1;
+  background: var(--opening-tiger-profile) 59% 35% / 182% auto no-repeat;
+  filter: brightness(.62) saturate(.88) contrast(1.12);
+  opacity: .56;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 32%, rgba(0,0,0,.82) 55%, transparent 77%);
+  mask-image: radial-gradient(ellipse at center, #000 32%, rgba(0,0,0,.82) 55%, transparent 77%);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 02. LANGUAGE SELECTOR                                                      */
+/* -------------------------------------------------------------------------- */
+.language-screen .selection-content {
+  justify-content: flex-start;
+  padding-top: max(42px, env(safe-area-inset-top));
+}
+
+.language-screen h1 {
+  margin: 60px 0 0;
+  font-size: clamp(43px, 12vw, 58px);
+  color: #dfbd81;
+}
+
+.language-screen .english-sub {
+  margin: 4px 0 20px;
+  letter-spacing: .17em;
+  color: #e2be7e;
+}
+
+.language-screen .selection-note {
+  max-width: 330px;
+  margin: 10px auto 10px;
+  font-size: 16px;
+  color: #d7bb8a;
+}
+
+.language-screen .selection-note::before {
+  content: '';
+  display: block;
+  width: 150px;
+  border-top: 1px solid rgba(211,173,112,.36);
+  margin: 0 auto 22px;
+}
+
+.language-screen .language-grid {
+  position: relative;
+  z-index: 3;
+  gap: 18px;
+  margin-top: 20px;
+  width: min(100%, 430px);
+}
+
+.language-screen .language-card {
+  min-height: clamp(330px, 48vh, 410px);
+  padding: 34px 11px 20px;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(222,183,116,.77);
+  background:
+    repeating-linear-gradient(17deg, rgba(255,255,255,.014) 0 1px, transparent 1px 4px),
+    linear-gradient(155deg, #16271b, #0a150e 76%);
+  box-shadow: inset 0 0 0 5px rgba(0,0,0,.22), 0 16px 36px rgba(0,0,0,.42);
+}
+
+.language-screen .language-card.wine {
+  background:
+    repeating-linear-gradient(17deg, rgba(255,255,255,.012) 0 1px, transparent 1px 4px),
+    linear-gradient(155deg, #5c2630, #30141a 76%);
+}
+
+.language-screen .language-card strong {
+  font-size: clamp(35px, 10vw, 46px);
+  margin-top: 0;
+  color: #e3bf7f;
+}
+
+.language-screen .language-card > span {
+  font-size: 16px;
+  margin-top: 4px;
+  color: #d8b678;
+}
+
+.language-screen .language-card::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 34px;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 1px solid rgba(226,190,126,.38);
+  background: var(--opening-tiger-front) 50% 31% / 165% auto no-repeat;
+  filter: grayscale(1) sepia(1) saturate(.70) contrast(1.86) brightness(.82);
+  mix-blend-mode: screen;
+  opacity: .84;
+  -webkit-mask-image: radial-gradient(circle, #000 47%, transparent 76%);
+  mask-image: radial-gradient(circle, #000 47%, transparent 76%);
+}
+
+/* Tiger partially hidden in the upper-right canopy. */
+.language-screen::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 18px;
+  right: -54px;
+  width: 230px;
+  height: 250px;
+  background: var(--opening-tiger-front) 48% 28% / 160% auto no-repeat;
+  filter: brightness(.36) saturate(.85) contrast(1.28);
+  opacity: .72;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 18%, rgba(0,0,0,.8) 43%, transparent 72%);
+  mask-image: radial-gradient(ellipse at center, #000 18%, rgba(0,0,0,.8) 43%, transparent 72%);
+}
+
+.language-screen .sound-pill {
+  position: relative;
+  z-index: 4;
+  margin-top: 22px;
+  padding: 10px 18px;
+  border-color: rgba(218,179,112,.65);
+  background: rgba(5,12,8,.84);
+  color: #dcb97d;
+}
+
+.language-screen .selection-content::after {
+  content: 'ⓘ   आप भाषा बाद में भी बदल सकते हैं  ·  You can change the language later';
+  position: relative;
+  z-index: 4;
+  width: min(100%, 410px);
+  margin-top: 18px;
+  padding: 15px 18px;
+  border: 1px solid rgba(211,173,112,.48);
+  border-radius: 15px;
+  background: rgba(4,11,7,.74);
+  color: #d3b47c;
+  font-size: 11px;
+  letter-spacing: .03em;
+  line-height: 1.45;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 03–05. FOREST / TIGER / CREST CINEMATIC                                   */
+/* -------------------------------------------------------------------------- */
+.intro-screen .intro-content {
+  padding-top: max(28px, env(safe-area-inset-top));
+}
+
+.intro-screen .intro-content .eyebrow { display: none; }
+
+.intro-screen .intro-content h1 {
+  margin: clamp(108px, 15vh, 150px) auto 8px;
+  color: #e4c18a;
+  font-size: clamp(28px, 7.8vw, 39px);
+  line-height: 1.35;
+  text-shadow: 0 3px 24px rgba(0,0,0,.78);
+}
+
+.intro-screen .intro-content > p:not(.eyebrow) {
+  margin: 3px auto 0;
+  color: #d2b381;
+  max-width: 320px;
+  font-size: 15px;
+}
+
+/* Main photoreal tiger reveal. */
+.intro-1 .intro-media {
+  background-image:
+    linear-gradient(180deg, rgba(1,4,2,.32), rgba(0,0,0,.02) 45%, rgba(0,0,0,.70)),
+    var(--opening-tiger-front) !important;
+  background-size: cover !important;
+  background-position: center 28% !important;
+  filter: brightness(.68) saturate(.96) contrast(1.13) !important;
+  transform: scale(1.06);
+}
+
+.intro-1 .intro-shade {
+  background:
+    radial-gradient(ellipse at 50% 45%, transparent 18%, rgba(0,0,0,.08) 48%, rgba(0,0,0,.70) 100%),
+    linear-gradient(180deg, rgba(1,5,3,.46), transparent 25%, transparent 65%, rgba(1,4,2,.82));
+}
+
+.intro-1 .tiger-reveal-label {
+  margin-top: 4px;
+  color: #dcb979;
+  letter-spacing: .18em;
+}
+
+.intro-screen .tap-hint {
+  color: #e0bd80;
+  margin-top: auto;
+  padding-bottom: 6px;
+}
+
+.intro-screen .progress-dots i {
+  width: 9px;
+  height: 9px;
+  background: rgba(220,191,139,.26);
+}
+
+.intro-screen .progress-dots i.active { background: #e7c784; }
+
+/* Tiger dissolves into a formal gold crest. */
+.intro-2 .intro-shade {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(196,145,62,.12), transparent 36%),
+    linear-gradient(180deg, rgba(1,5,3,.56), rgba(1,4,2,.88));
+}
+
+.intro-2 .crest-transform {
+  width: min(68vw, 292px);
+  aspect-ratio: .90;
+  margin: 18px auto auto;
+  position: relative;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 26px rgba(202,165,102,.30));
+}
+
+.intro-2 .crest-transform::before {
+  content: '';
+  position: absolute;
+  inset: 4%;
+  border-radius: 46% 46% 50% 50%;
+  background: var(--opening-tiger-front) 50% 29% / 166% auto no-repeat;
+  filter: grayscale(1) sepia(1) saturate(.75) contrast(2.05) brightness(.95);
+  mix-blend-mode: screen;
+  opacity: .88;
+  -webkit-mask-image:
+    radial-gradient(ellipse at center, #000 36%, rgba(0,0,0,.85) 52%, transparent 72%);
+  mask-image:
+    radial-gradient(ellipse at center, #000 36%, rgba(0,0,0,.85) 52%, transparent 72%);
+}
+
+.intro-2 .crest-transform::after {
+  content: '❧       ❧';
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  transform: translateX(-50%);
+  width: 118%;
+  text-align: center;
+  color: #dfbc7d;
+  font-size: 46px;
+  letter-spacing: 26px;
+  opacity: .78;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 06. PHYSICAL PASSPORT                                                      */
+/* -------------------------------------------------------------------------- */
+.passport-stage-content {
+  justify-content: flex-start;
+  padding-top: max(30px, env(safe-area-inset-top));
+}
+
+.passport-stage .journey-copy {
+  margin: 32px 0 22px;
+  color: #e4c18a;
+  font-size: clamp(21px, 6vw, 28px);
+}
+
+html[lang='hi'] .passport-stage .journey-copy::after {
+  content: 'WELCOME TO OUR JOURNEY';
+  display: block;
+  margin-top: 5px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  letter-spacing: .12em;
+}
+
+html[lang='en'] .passport-stage .journey-copy::before {
+  content: 'आपका स्वागत है हमारे सफ़र में…';
+  display: block;
+  margin-bottom: 5px;
+  font-family: 'Noto Serif Devanagari', serif;
+  font-size: 20px;
+}
+
+.passport-stage .passport-cover {
+  width: min(86vw, 382px);
+  min-height: clamp(500px, 64vh, 585px);
+  padding: 52px 30px 38px 48px;
+  border-radius: 10px 24px 24px 10px;
+  border: 1px solid rgba(220,181,111,.68);
+  background:
+    radial-gradient(circle at 75% 12%, rgba(255,255,255,.045), transparent 23%),
+    repeating-linear-gradient(29deg, rgba(255,255,255,.016) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(103deg, rgba(0,0,0,.05) 0 1px, transparent 1px 5px),
+    linear-gradient(145deg, #16271c 0%, #0b1710 76%);
+  box-shadow:
+    -14px 8px 0 #07100a,
+    -15px 8px 0 1px rgba(207,169,101,.28),
+    0 26px 62px rgba(0,0,0,.58),
+    inset 0 0 0 5px rgba(0,0,0,.22),
+    inset 0 0 0 7px rgba(211,173,112,.08);
+}
+
+.passport-stage .passport-cover::before {
+  content: 'LOVE  •  ADVENTURE  •  FOREVER';
+  position: absolute;
+  left: 8px;
+  top: 24px;
+  bottom: 24px;
+  width: 30px;
+  display: grid;
+  place-items: center;
+  border-left: 1px solid rgba(211,173,112,.30);
+  border-right: 1px solid rgba(211,173,112,.18);
+  color: rgba(223,188,124,.80);
+  font-size: 10px;
+  letter-spacing: .16em;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.passport-stage .passport-cover::after {
+  content: '✦';
+  position: absolute;
+  z-index: 5;
+  right: -28px;
+  top: 48%;
+  transform: translateY(-50%);
+  width: 68px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(220,181,111,.55);
+  border-radius: 10px 0 0 10px;
+  background:
+    repeating-linear-gradient(24deg, rgba(255,255,255,.015) 0 1px, transparent 1px 4px),
+    #13231a;
+  color: #d2ab69;
+  box-shadow: 0 8px 20px rgba(0,0,0,.38), inset 0 0 0 3px rgba(0,0,0,.20);
+}
+
+.passport-stage .passport-cover h1 {
+  margin-top: 3px;
+  font-size: clamp(43px, 12vw, 55px);
+  line-height: .94;
+  color: #e1bd7e;
+  text-shadow: 0 1px 0 rgba(255,255,255,.08);
+}
+
+.passport-stage .passport-kicker { color: #d7b172; }
+
+.passport-stage .cover-crest {
+  width: 172px;
+  height: 158px;
+  margin: 13px auto 2px;
+  position: relative;
+}
+
+.passport-stage .cover-crest::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--opening-tiger-front) 50% 28% / 164% auto no-repeat;
+  filter: grayscale(1) sepia(1) saturate(.74) contrast(2.0) brightness(.93);
+  mix-blend-mode: screen;
+  opacity: .90;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 37%, rgba(0,0,0,.82) 55%, transparent 73%);
+  mask-image: radial-gradient(ellipse at center, #000 37%, rgba(0,0,0,.82) 55%, transparent 73%);
+}
+
+.passport-stage .cover-crest::after {
+  content: '❧      ❧';
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  transform: translateX(-50%);
+  width: 195px;
+  color: #d9b477;
+  font-size: 31px;
+  letter-spacing: 17px;
+  opacity: .77;
+}
+
+.passport-stage .passport-names {
+  color: #e5c58c;
+  font-size: clamp(18px, 5.2vw, 23px);
+}
+
+.passport-stage .passport-cover > p:not(.passport-kicker) { color: #d7b87f; }
+
+.passport-stage .primary-cta {
+  width: min(78vw, 350px);
+  min-height: 68px;
+  margin-top: 25px;
+  border-radius: 18px;
+  border: 1px solid rgba(218,179,110,.72);
+  background: rgba(5,13,8,.88);
+  color: #dfbd82;
+  font-size: 18px;
+  font-weight: 500;
+  box-shadow: inset 0 0 0 2px rgba(211,173,112,.05), 0 16px 32px rgba(0,0,0,.35);
+}
+
+.passport-stage .primary-cta::before {
+  content: '◎';
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-right: 14px;
+  border-right: 1px solid rgba(211,173,112,.42);
+  padding-right: 15px;
+  font-size: 28px;
+  vertical-align: middle;
+}
+
+.passport-stage .passport-corner {
+  opacity: .82;
+  border-right-color: #bd9150;
+}
+
+/* Keep the references elegant on narrow phones instead of letting text collide. */
+@media (max-width: 365px) {
+  .selection-screen:not(.language-screen) .side-grid,
+  .language-screen .language-grid { gap: 14px; }
+
+  .selection-screen:not(.language-screen) .passport-choice {
+    min-height: 325px;
+    padding-inline: 7px;
+  }
+
+  .selection-screen:not(.language-screen) .passport-choice strong { font-size: 26px; }
+  .selection-screen:not(.language-screen) .passport-choice small { font-size: 11px; }
+  .selection-screen:not(.language-screen) .side-grid::after { width: 40px; height: 40px; font-size: 15px; }
+  .language-screen .language-card { min-height: 316px; }
+  .passport-stage .passport-cover { min-height: 485px; padding-left: 43px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-1 .intro-media { animation: none !important; transform: none !important; }
+  .intro-2 .crest-transform { animation: none !important; }
+}
