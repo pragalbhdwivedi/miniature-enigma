@@ -28,7 +28,7 @@ class MotionCanvas {
     this.lastTime = 0
     this.dpr = Math.min(window.devicePixelRatio || 1, coarsePointer ? 1.35 : 1.75)
 
-    host.prepend(this.canvas)
+    host.appendChild(this.canvas)
     host.classList.add('has-cinematic-canvas')
 
     this.resizeObserver = new ResizeObserver(() => this.resize())
