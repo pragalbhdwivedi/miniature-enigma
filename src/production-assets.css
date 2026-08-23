@@ -96,7 +96,7 @@
   isolation: isolate;
 }
 
-/* Couple story becomes photographic while retaining editorial legibility. */
+/* Couple story uses only the approved first story image. */
 .story-section {
   background-image:
     linear-gradient(90deg, rgba(6,10,7,.98) 0%, rgba(6,10,7,.86) 46%, rgba(6,10,7,.34) 100%),
@@ -109,20 +109,6 @@
 .story-layout {
   position: relative;
   z-index: 2;
-}
-
-/* Use the second story frame as a quiet editorial inset rather than wasting it. */
-.story-layout::after {
-  content: '';
-  display: block;
-  width: min(62vw, 250px);
-  aspect-ratio: 4 / 5;
-  margin: 42px 0 0 auto;
-  border: 1px solid rgba(211,173,112,.42);
-  border-radius: 8px;
-  background: url('./images/couple/couple-story-02.webp') center / cover no-repeat;
-  box-shadow: 0 22px 48px rgba(0,0,0,.34);
-  transform: rotate(2deg);
 }
 
 /* The actual Wyndham uploads now replace the generic destination/venue placeholders. */
@@ -230,10 +216,4 @@
     url('./images/couple/couple-gallery-04.webp') !important;
   background-size: cover !important;
   background-position: center !important;
-}
-
-@media (max-width: 365px) {
-  .story-layout::after {
-    width: min(68vw, 220px);
-  }
 }
