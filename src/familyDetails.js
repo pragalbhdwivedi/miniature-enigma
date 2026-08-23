@@ -45,6 +45,11 @@ const FAMILY_DATA = {
   },
 }
 
+const SIDE_WELCOMES = {
+  bride: 'द्विवेदी परिवार की ओर से आपका स्वागत है',
+  groom: 'पांडेय परिवार की ओर से आपका स्वागत है',
+}
+
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (char) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -81,7 +86,7 @@ function renderApprovedFamilies() {
   const lang = document.documentElement.lang === 'hi' ? 'hi' : 'en'
   const copy = FAMILY_DATA[lang]
   const order = inferExistingOrder(grid)
-  const signature = `${lang}:${order.join('-')}:approved-v2`
+  const signature = `${lang}:${order.join('-')}:approved-v3`
   if (grid.dataset.familySignature === signature) return
 
   grid.innerHTML = order.map((side, index) => cardHtml(copy[side], index, side)).join('')
@@ -89,7 +94,19 @@ function renderApprovedFamilies() {
   section.querySelectorAll('.placeholder-note').forEach((node) => node.remove())
 }
 
-const observer = new MutationObserver(renderApprovedFamilies)
+function renderSideWelcomes() {
+  const bride = document.querySelector('.passport-choice.bride small')
+  const groom = document.querySelector('.passport-choice.groom small')
+  if (bride && bride.textContent !== SIDE_WELCOMES.bride) bride.textContent = SIDE_WELCOMES.bride
+  if (groom && groom.textContent !== SIDE_WELCOMES.groom) groom.textContent = SIDE_WELCOMES.groom
+}
+
+function renderApprovedCopy() {
+  renderApprovedFamilies()
+  renderSideWelcomes()
+}
+
+const observer = new MutationObserver(renderApprovedCopy)
 observer.observe(document.documentElement, { childList: true, subtree: true })
-renderApprovedFamilies()
-window.addEventListener('pageshow', renderApprovedFamilies)
+renderApprovedCopy()
+window.addEventListener('pageshow', renderApprovedCopy)
