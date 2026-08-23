@@ -88,40 +88,12 @@
   filter: saturate(.90) brightness(.68) !important;
 }
 
-/* Family perspective uses bride/groom portraits in the same order as the chosen side. */
+/* Family perspective hooks are ready for the side-aware shell class. */
 .family-grid article {
   position: relative;
   min-height: 150px;
   overflow: hidden;
   isolation: isolate;
-  padding-right: 108px;
-}
-
-.family-grid article::after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  right: -7px;
-  top: 8px;
-  bottom: 8px;
-  width: 126px;
-  border-radius: 12px;
-  background-position: center;
-  background-size: cover;
-  filter: saturate(.78) contrast(1.02);
-  opacity: .76;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 35%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 35%);
-}
-
-.site-shell.side-bride .family-grid article:nth-child(1)::after,
-.site-shell.side-groom .family-grid article:nth-child(2)::after {
-  background-image: url('./images/bride/bride-portrait-main.webp');
-}
-
-.site-shell.side-groom .family-grid article:nth-child(1)::after,
-.site-shell.side-bride .family-grid article:nth-child(2)::after {
-  background-image: url('./images/groom/groom-portrait-main.webp');
 }
 
 /* Couple story becomes photographic while retaining editorial legibility. */
@@ -137,6 +109,47 @@
 .story-layout {
   position: relative;
   z-index: 2;
+}
+
+/* Use the second story frame as a quiet editorial inset rather than wasting it. */
+.story-layout::after {
+  content: '';
+  display: block;
+  width: min(62vw, 250px);
+  aspect-ratio: 4 / 5;
+  margin: 42px 0 0 auto;
+  border: 1px solid rgba(211,173,112,.42);
+  border-radius: 8px;
+  background: url('./images/couple/couple-story-02.webp') center / cover no-repeat;
+  box-shadow: 0 22px 48px rgba(0,0,0,.34);
+  transform: rotate(2deg);
+}
+
+/* The actual Wyndham uploads now replace the generic destination/venue placeholders. */
+.destination-image {
+  background-image:
+    linear-gradient(180deg, rgba(7,12,8,.04), rgba(7,12,8,.22)),
+    url('./images/destination/wyndham-garden-night.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.venue-photo {
+  background-image: url('./images/destination/wyndham-garden-exterior.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.venue-card::before {
+  content: '';
+  display: block;
+  width: min(56vw, 220px);
+  aspect-ratio: 4 / 3;
+  margin: 0 0 24px auto;
+  border: 1px solid rgba(211,173,112,.36);
+  border-radius: 12px;
+  background: url('./images/destination/wyndham-garden-glass-hall.webp') center / cover no-repeat;
+  box-shadow: 0 18px 38px rgba(0,0,0,.28);
 }
 
 /* Uploaded event imagery now drives each kinetic chapter. */
@@ -194,25 +207,33 @@
   opacity: .22;
 }
 
-/* The uploaded gallery contains four frames, so give the fourth a deliberate full-width beat. */
-.gallery-grid {
-  grid-template-columns: 1.15fr .85fr;
-  grid-template-rows: 220px 190px 190px;
+/* Replace the three rendered gallery placeholders with the uploaded couple gallery. */
+.gallery-grid .photo-1 {
+  background-image: url('./images/couple/couple-gallery-01.webp') !important;
+  background-position: center !important;
 }
 
-.gallery-grid .photo-1 { grid-row: 1 / 3; }
-.gallery-grid .photo-4 {
-  grid-column: 1 / -1;
-  grid-row: 3;
-  background-position: center 45%;
+.gallery-grid .photo-2 {
+  background-image: url('./images/couple/couple-gallery-02.webp') !important;
+  background-position: center !important;
+}
+
+.gallery-grid .photo-3 {
+  background-image: url('./images/couple/couple-gallery-03.webp') !important;
+  background-position: center !important;
+}
+
+/* The fourth uploaded gallery frame gets the closing cinematic beat. */
+.closing-section {
+  background-image:
+    linear-gradient(180deg, rgba(4,8,5,.90), rgba(4,8,5,.76)),
+    url('./images/couple/couple-gallery-04.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
 }
 
 @media (max-width: 365px) {
-  .family-grid article {
-    padding-right: 88px;
-  }
-
-  .family-grid article::after {
-    width: 105px;
+  .story-layout::after {
+    width: min(68vw, 220px);
   }
 }
