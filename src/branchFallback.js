@@ -149,10 +149,15 @@ function syncInputs() {
   if (guests) state.rsvp.guests = guests.value
 }
 
-function render() {
+function render({ preserveScroll = false } = {}) {
+  const previousScrollY = window.scrollY
   document.documentElement.lang = state.lang === 'hi' ? 'hi' : 'en'
   root.innerHTML = state.stage === 'side' ? sideScreen() : state.stage === 'language' ? languageScreen() : state.stage === 'intro' ? introScreen() : state.stage === 'passport' ? passportScreen() : siteScreen()
-  window.scrollTo({ top: 0, behavior: 'auto' })
+  if (preserveScroll) {
+    requestAnimationFrame(() => window.scrollTo({ top: previousScrollY, left: 0, behavior: 'auto' }))
+  } else {
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }
 }
 
 root.addEventListener('click', (event) => {
@@ -165,10 +170,10 @@ root.addEventListener('click', (event) => {
   else if (action === 'lang') { state.lang = value; state.stage = 'intro'; state.intro = 0; render() }
   else if (action === 'intro') { if (state.intro < 2) state.intro += 1; else state.stage = 'passport'; render() }
   else if (action === 'open') { state.stage = 'site'; render() }
-  else if (action === 'status') { syncInputs(); state.rsvp.status = value; if (value === 'no') state.rsvp.events = {}; render() }
-  else if (action === 'event') { syncInputs(); state.rsvp.events[value] = !state.rsvp.events[value]; render() }
+  else if (action === 'status') { syncInputs(); state.rsvp.status = value; if (value === 'no') state.rsvp.events = {}; render({ preserveScroll: true }) }
+  else if (action === 'event') { syncInputs(); state.rsvp.events[value] = !state.rsvp.events[value]; render({ preserveScroll: true }) }
   else if (action === 'save') { syncInputs(); state.rsvp = normalizedRsvp(); localStorage.setItem('corbettWeddingRsvp', JSON.stringify({ ...state.rsvp, side: state.side, language: state.lang, submittedAt: new Date().toISOString() })); window.alert(state.lang === 'hi' ? 'आपका RSVP इस डिवाइस पर सुरक्षित कर दिया गया है।' : 'Your RSVP has been saved on this device.') }
-  else if (action === 'whatsapp') { syncInputs(); state.rsvp = normalizedRsvp(); const number = String(config.whatsappNumber || '').replace(/\D/g, ''); window.open(`${number ? `https://wa.me/${number}` : 'https://wa.me/'}?text=${encodeURIComponent(whatsappText())}`, '_blank', 'noopener,noreferrer') }
+  else if (action === 'whatsapp') { syncInputs(); state.rsvp = normalizedRsvp(); window.location.assign(`https://api.whatsapp.com/send?phone=919555877000&text=${encodeURIComponent(whatsappText())}`) }
 })
 
 render()
