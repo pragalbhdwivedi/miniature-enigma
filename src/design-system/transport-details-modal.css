@@ -1,0 +1,292 @@
+/* Module 17 — Transport Learn More modal */
+
+.logistics-panel--transport.transport-summary-ready {
+  position: relative;
+}
+
+.transport-teaser {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: end;
+  padding: 24px 20px;
+  border: 1px solid rgba(99,72,36,.21);
+  border-radius: 19px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.28), rgba(255,255,255,.08)),
+    rgba(224,213,193,.36);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28);
+}
+
+.transport-teaser__copy h3 {
+  margin: 0;
+  color: #2c2820;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(28px, 8vw, 38px);
+  font-weight: 550;
+  line-height: .98;
+}
+
+.transport-teaser__copy > p:last-child {
+  max-width: 285px;
+  margin: 12px 0 0;
+  color: rgba(55,47,37,.64);
+  font-size: 11px;
+  line-height: 1.56;
+}
+
+html[lang='hi'] .transport-teaser__copy h3,
+html[lang='hi'] .transport-modal__header h2 {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+  letter-spacing: 0;
+}
+
+.transport-learn-more {
+  appearance: none;
+  -webkit-appearance: none;
+  min-height: 42px;
+  padding: 10px 15px;
+  border: 1px solid #293e2e;
+  border-radius: 999px;
+  background: #293e2e;
+  color: #f0e5d1;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 8px;
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 7px 18px rgba(31,51,36,.16);
+}
+
+.transport-learn-more::after {
+  content: '  ↗';
+  color: #d7b677;
+}
+
+.transport-learn-more:focus-visible {
+  outline: 2px solid #906b35;
+  outline-offset: 3px;
+}
+
+/* Moradabad is the preferred Prayagraj/Kunda interchange, so expose the onward
+   Ramnagar rail link without counting it as another one of the eight planning options. */
+.rail-connection-note {
+  margin: 14px 0 4px;
+  padding: 15px 16px;
+  border-left: 2px solid #2f4a35;
+  background: rgba(43,67,49,.055);
+}
+
+.rail-connection-note .logistics-kicker {
+  margin-bottom: 6px;
+  color: #526840;
+}
+
+.rail-connection-note strong {
+  display: block;
+  color: #302a20;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 1.05;
+}
+
+.rail-connection-note > p:last-child {
+  margin: 8px 0 0;
+  color: rgba(58,49,37,.64);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+html[lang='hi'] .rail-connection-note strong {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+}
+
+body.transport-modal-open {
+  overflow: hidden;
+}
+
+.transport-modal {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  display: grid;
+  align-items: end;
+  padding: max(14px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom));
+  background: rgba(4,8,6,.72);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 260ms ease, visibility 260ms step-end;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.transport-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 260ms ease, visibility 0ms step-start;
+}
+
+.transport-modal__dialog {
+  width: min(100%, 460px);
+  max-height: min(89svh, 820px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(217,185,124,.25);
+  border-radius: 24px 24px 18px 18px;
+  background:
+    repeating-linear-gradient(17deg, rgba(75,55,31,.016) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, #f2e8d7 0%, #ece0cb 100%);
+  color: #2b281f;
+  box-shadow: 0 28px 88px rgba(0,0,0,.52);
+  transform: translate3d(0, 24px, 0) scale(.985);
+  opacity: .92;
+  transition: transform 340ms cubic-bezier(.2,.76,.18,1), opacity 260ms ease;
+}
+
+.transport-modal.is-open .transport-modal__dialog {
+  transform: none;
+  opacity: 1;
+}
+
+.transport-modal__topbar {
+  flex: 0 0 auto;
+  min-height: 58px;
+  padding: 10px 12px 10px 17px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid rgba(87,64,35,.15);
+  background: rgba(239,227,205,.84);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.transport-modal__folio {
+  color: #80673f;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 7px;
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.transport-modal__close {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(99,73,39,.24);
+  border-radius: 50%;
+  background: rgba(255,255,255,.18);
+  color: #5d482a;
+  font-family: Georgia, serif;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.transport-modal__close:focus-visible {
+  outline: 2px solid #906b35;
+  outline-offset: 2px;
+}
+
+.transport-modal__scroll {
+  min-height: 0;
+  padding: 24px 18px calc(30px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.transport-modal__header {
+  padding: 0 2px 22px;
+  border-bottom: 1px solid rgba(89,66,36,.13);
+}
+
+.transport-modal__header h2 {
+  max-width: 330px;
+  margin: 0;
+  color: #29261f;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(34px, 10vw, 46px);
+  font-weight: 550;
+  line-height: .96;
+}
+
+.transport-modal__header > p:last-child {
+  max-width: 325px;
+  margin: 14px 0 0;
+  color: rgba(55,47,37,.64);
+  font-size: 11px;
+  line-height: 1.58;
+}
+
+.transport-modal .transport-lead {
+  margin-top: 20px;
+  padding: 21px 18px;
+}
+
+.transport-modal .transport-grid {
+  margin: 22px 2px;
+}
+
+.transport-modal .transport-actions {
+  padding-bottom: 3px;
+}
+
+.transport-modal[aria-hidden='true'] {
+  visibility: hidden;
+}
+
+@media (max-width: 365px) {
+  .transport-teaser {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .transport-learn-more {
+    width: 100%;
+  }
+
+  .transport-modal {
+    padding-inline: 6px;
+  }
+
+  .transport-modal__dialog {
+    border-radius: 20px 20px 14px 14px;
+  }
+
+  .transport-modal__scroll {
+    padding-inline: 15px;
+  }
+}
+
+@media (max-height: 700px) {
+  .transport-modal__dialog {
+    max-height: 92svh;
+  }
+
+  .transport-modal__topbar {
+    min-height: 52px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transport-modal,
+  .transport-modal__dialog {
+    transition: none !important;
+  }
+}

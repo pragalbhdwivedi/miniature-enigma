@@ -1,0 +1,883 @@
+/* Module 17 — Stay / Travel / Transport
+   Utility-first editorial field guide. Practical information is allowed to look good,
+   but it does not need to pretend railway timetables are a cinematic climax. */
+
+.utility-section.logistics-ready {
+  position: relative;
+  z-index: 2;
+  display: block;
+  padding: 86px 18px 112px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 86% 3%, rgba(139,105,55,.08), transparent 24%),
+    repeating-linear-gradient(17deg, rgba(76,56,31,.018) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, #eee4d2 0%, #f3eadb 54%, #ede2cf 100%);
+  color: #2b281f;
+}
+
+.utility-section.logistics-ready::before {
+  content: 'FIELD GUIDE';
+  position: absolute;
+  z-index: 0;
+  top: 24px;
+  right: -8px;
+  color: rgba(91,68,37,.045);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(58px, 19vw, 92px);
+  font-weight: 600;
+  line-height: .8;
+  letter-spacing: -.035em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.utility-section.logistics-ready::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 5%, rgba(107,81,45,.035) 5% 5.2%, transparent 5.2% 94.8%, rgba(107,81,45,.035) 94.8% 95%, transparent 95%),
+    radial-gradient(circle at 10% 78%, rgba(44,77,51,.04), transparent 25%);
+}
+
+.utility-section.logistics-ready > .utility-card {
+  display: none !important;
+}
+
+.logistics-shell {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 448px);
+  margin: 0 auto;
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition: opacity .72s ease, transform .9s cubic-bezier(.18,.76,.18,1);
+}
+
+.utility-section.logistics-ready.is-logistics-visible .logistics-shell {
+  opacity: 1;
+  transform: none;
+}
+
+.logistics-header {
+  padding: 0 5px 30px;
+  border-bottom: 1px solid rgba(78,58,31,.20);
+}
+
+.logistics-header__folio,
+.logistics-kicker {
+  margin: 0 0 10px;
+  color: #80673f;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+}
+
+.logistics-header h2 {
+  margin: 0;
+  max-width: 350px;
+  color: #2b281f;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(42px, 12vw, 58px);
+  font-weight: 500;
+  line-height: .94;
+  letter-spacing: -.035em;
+}
+
+.logistics-header > p:last-child {
+  max-width: 330px;
+  margin: 18px 0 0;
+  color: rgba(54,47,36,.66);
+  font-size: 13px;
+  line-height: 1.62;
+}
+
+html[lang='hi'] .logistics-header h2,
+html[lang='hi'] .logistics-disclosure__label strong,
+html[lang='hi'] .stay-lock__title,
+html[lang='hi'] .rail-guide__intro h3,
+html[lang='hi'] .transport-lead h3,
+html[lang='hi'] .road-air-card h4 {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+  letter-spacing: 0;
+}
+
+html[lang='hi'] .logistics-header__folio,
+html[lang='hi'] .logistics-kicker,
+html[lang='hi'] .rail-filter,
+html[lang='hi'] .rail-option__tag,
+html[lang='hi'] .rail-option__station small,
+html[lang='hi'] .logistics-fact__body small {
+  font-family: system-ui, -apple-system, 'Noto Sans Devanagari', sans-serif;
+  letter-spacing: .06em;
+}
+
+.logistics-disclosures {
+  display: flex;
+  flex-direction: column;
+}
+
+.logistics-disclosure {
+  border-bottom: 1px solid rgba(80,58,31,.21);
+}
+
+.logistics-disclosure__trigger {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  min-height: 88px;
+  padding: 18px 5px;
+  display: grid;
+  grid-template-columns: 35px minmax(0, 1fr) 36px;
+  align-items: center;
+  gap: 12px;
+  border: 0;
+  background: transparent;
+  color: #302a20;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.logistics-disclosure__trigger:focus-visible {
+  outline: 2px solid #96733d;
+  outline-offset: -2px;
+  border-radius: 8px;
+}
+
+.logistics-disclosure__index {
+  color: #96733d;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: .16em;
+}
+
+.logistics-disclosure__label {
+  min-width: 0;
+}
+
+.logistics-disclosure__label strong,
+.logistics-disclosure__label small {
+  display: block;
+}
+
+.logistics-disclosure__label strong {
+  color: #2d2921;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(24px, 7vw, 31px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .015em;
+}
+
+.logistics-disclosure__label small {
+  margin-top: 5px;
+  color: rgba(62,53,41,.52);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 8px;
+  font-weight: 650;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.logistics-disclosure__state {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  justify-self: end;
+  border: 1px solid rgba(108,80,40,.28);
+  border-radius: 50%;
+  color: #785b31;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  line-height: 1;
+  transition: transform .3s ease, background .3s ease, color .3s ease;
+}
+
+.logistics-disclosure.is-open .logistics-disclosure__state {
+  transform: rotate(180deg);
+  background: #283d2d;
+  border-color: #283d2d;
+  color: #eee2cb;
+}
+
+.logistics-disclosure__body {
+  padding: 2px 0 30px;
+}
+
+.logistics-disclosure__body[hidden],
+.rail-option[hidden] {
+  display: none !important;
+}
+
+.logistics-panel {
+  animation: logisticsPanelIn .42s cubic-bezier(.2,.75,.18,1) both;
+}
+
+@keyframes logisticsPanelIn {
+  from { opacity: 0; transform: translate3d(0, 8px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Shared fact block ------------------------------------------------------- */
+.logistics-fact {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.logistics-fact__icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(117,86,43,.27);
+  border-radius: 50%;
+  color: #805f31;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.logistics-fact__body {
+  min-width: 0;
+}
+
+.logistics-fact__body small,
+.logistics-fact__body strong,
+.logistics-fact__body p {
+  display: block;
+}
+
+.logistics-fact__body small {
+  margin-bottom: 5px;
+  color: #866d47;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 7px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.logistics-fact__body strong {
+  color: #302a20;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 1.08;
+}
+
+.logistics-fact__body p {
+  margin: 5px 0 0;
+  color: rgba(56,49,38,.58);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.logistics-link,
+.logistics-jump {
+  appearance: none;
+  -webkit-appearance: none;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid rgba(83,63,35,.25);
+  border-radius: 999px;
+  background: rgba(255,255,255,.18);
+  color: #594628;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 8px;
+  font-weight: 720;
+  line-height: 1;
+  letter-spacing: .16em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.logistics-link i {
+  color: #8f6a34;
+  font-family: Georgia, serif;
+  font-size: 12px;
+  font-style: normal;
+}
+
+.logistics-link:focus-visible,
+.logistics-jump:focus-visible,
+.rail-filter:focus-visible {
+  outline: 2px solid #906b35;
+  outline-offset: 3px;
+}
+
+/* Stay -------------------------------------------------------------------- */
+.stay-lock {
+  position: relative;
+  padding: 28px 22px 26px;
+  overflow: hidden;
+  border: 1px solid rgba(115,84,42,.23);
+  border-radius: 20px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.32), rgba(255,255,255,.08)),
+    rgba(221,207,181,.42);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.38);
+}
+
+.stay-lock::after {
+  content: 'RSVP';
+  position: absolute;
+  right: -6px;
+  bottom: -13px;
+  color: rgba(78,58,32,.055);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 76px;
+  font-weight: 650;
+  line-height: .8;
+  letter-spacing: -.03em;
+}
+
+.stay-lock__mark {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 25px;
+  border: 1px solid rgba(98,73,40,.28);
+  border-radius: 50%;
+  color: #745931;
+}
+
+.stay-lock__kicker {
+  margin: 0 0 9px;
+  color: #846b45;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .21em;
+  text-transform: uppercase;
+}
+
+.stay-lock__title {
+  position: relative;
+  z-index: 1;
+  max-width: 310px;
+  margin: 0;
+  color: #29261f;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(30px, 9vw, 42px);
+  font-weight: 550;
+  line-height: .98;
+}
+
+.stay-lock__body {
+  position: relative;
+  z-index: 1;
+  max-width: 310px;
+  margin: 15px 0 0;
+  color: rgba(51,44,35,.67);
+  font-size: 12px;
+  line-height: 1.62;
+}
+
+.stay-facts {
+  margin: 22px 3px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.logistics-panel--stay .logistics-jump {
+  width: 100%;
+  justify-content: center;
+  background: #293e2e;
+  border-color: #293e2e;
+  color: #f0e5d1;
+}
+
+/* Travel summary ---------------------------------------------------------- */
+.travel-summary {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  padding: 21px 18px;
+  border: 1px solid rgba(103,75,37,.22);
+  border-radius: 18px;
+  background: rgba(255,255,255,.14);
+}
+
+.travel-summary .logistics-fact + .logistics-fact {
+  padding-top: 17px;
+  border-top: 1px solid rgba(91,67,37,.13);
+}
+
+.rail-guide__intro {
+  margin: 34px 0 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 15px;
+  align-items: end;
+}
+
+.rail-guide__intro h3,
+.transport-lead h3 {
+  margin: 0;
+  color: #2c2820;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(29px, 8.5vw, 39px);
+  font-weight: 550;
+  line-height: .98;
+}
+
+.rail-guide__intro > div > p:last-child,
+.transport-lead > p:last-child {
+  max-width: 310px;
+  margin: 12px 0 0;
+  color: rgba(55,47,37,.64);
+  font-size: 11px;
+  line-height: 1.58;
+}
+
+.logistics-link--irctc {
+  flex: 0 0 auto;
+  background: #283d2d;
+  border-color: #283d2d;
+  color: #eee2cb;
+}
+
+.logistics-link--irctc i { color: #d9b779; }
+
+/* Train filters ----------------------------------------------------------- */
+.rail-filters {
+  margin: 20px -18px 17px;
+  padding: 0 18px 7px;
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rail-filters::-webkit-scrollbar { display: none; }
+
+.rail-filter {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 9px 13px;
+  border: 1px solid rgba(100,74,39,.22);
+  border-radius: 999px;
+  background: rgba(255,255,255,.15);
+  color: rgba(62,51,37,.69);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 7px;
+  font-weight: 720;
+  line-height: 1;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.rail-filter.is-active {
+  background: #2a3f2e;
+  border-color: #2a3f2e;
+  color: #f0e5d1;
+  box-shadow: 0 6px 15px rgba(29,46,33,.14);
+}
+
+/* Rail options ------------------------------------------------------------ */
+.rail-options {
+  display: grid;
+  gap: 11px;
+}
+
+.rail-option {
+  position: relative;
+  padding: 17px 16px 16px;
+  overflow: hidden;
+  border: 1px solid rgba(103,75,36,.22);
+  border-radius: 17px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.25), rgba(255,255,255,.07)),
+    rgba(229,218,198,.38);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.38);
+}
+
+.rail-option::after {
+  content: attr(data-train-number);
+  position: absolute;
+  z-index: 0;
+  right: -4px;
+  bottom: -11px;
+  color: rgba(86,65,38,.045);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 66px;
+  font-weight: 650;
+  line-height: .8;
+  letter-spacing: -.04em;
+  pointer-events: none;
+}
+
+.rail-option > * {
+  position: relative;
+  z-index: 1;
+}
+
+.rail-option__top,
+.rail-option__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.rail-option__number {
+  color: #8a6938;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+
+.rail-option__tag {
+  color: #69532f;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 6px;
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.rail-option__name {
+  display: block;
+  margin-top: 9px;
+  color: #29261f;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 20px;
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: .015em;
+}
+
+.rail-option__route {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+}
+
+.rail-option__station {
+  min-width: 0;
+}
+
+.rail-option__station--to { text-align: right; }
+
+.rail-option__station small,
+.rail-option__station strong,
+.rail-option__station time {
+  display: block;
+}
+
+.rail-option__station small {
+  margin-bottom: 4px;
+  color: rgba(91,72,45,.55);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 6px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.rail-option__station strong {
+  overflow: hidden;
+  color: #40382b;
+  font-size: 9px;
+  font-weight: 650;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rail-option__station time {
+  margin-top: 6px;
+  color: #283d2d;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 23px;
+  font-weight: 650;
+  line-height: .9;
+}
+
+.rail-option__line {
+  position: relative;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  color: #8b6b38;
+}
+
+.rail-option__line::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(131,95,49,.32), transparent);
+}
+
+.rail-option__line span {
+  position: relative;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(131,96,50,.22);
+  border-radius: 50%;
+  background: #eee4d3;
+  font-size: 9px;
+}
+
+.rail-option__line small {
+  position: absolute;
+  top: 25px;
+  color: rgba(85,68,45,.50);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 6px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.rail-option__meta {
+  margin-top: 18px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(87,65,36,.12);
+  color: rgba(77,62,42,.55);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 6px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.rail-option__note {
+  max-width: 340px;
+  margin: 10px 0 0;
+  color: rgba(58,50,38,.62);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.rail-option--kunda { border-left: 3px solid rgba(44,78,50,.66); }
+.rail-option--prayagraj { border-left: 3px solid rgba(93,73,127,.48); }
+.rail-option--amroha { border-left: 3px solid rgba(143,102,45,.55); }
+.rail-option--delhi { border-left: 3px solid rgba(105,52,59,.62); }
+
+.rail-warning {
+  margin: 18px 0 28px;
+  padding: 15px 16px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  border-left: 2px solid #8c6734;
+  background: rgba(137,99,46,.06);
+}
+
+.rail-warning strong {
+  color: #72552f;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 7px;
+  font-weight: 750;
+  line-height: 1.4;
+  letter-spacing: .14em;
+}
+
+.rail-warning p {
+  margin: 0;
+  color: rgba(61,51,38,.65);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+/* Road / air -------------------------------------------------------------- */
+.road-air-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.road-air-card {
+  position: relative;
+  min-width: 0;
+  padding: 20px 16px 17px;
+  border: 1px solid rgba(94,70,39,.19);
+  border-radius: 17px;
+  background: rgba(255,255,255,.13);
+}
+
+.road-air-card__number {
+  position: absolute;
+  right: 13px;
+  top: 13px;
+  color: rgba(107,78,39,.34);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.road-air-card h4 {
+  margin: 0;
+  color: #322d23;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.02;
+}
+
+.road-air-card > p:not(.logistics-kicker) {
+  min-height: 72px;
+  margin: 11px 0 16px;
+  color: rgba(55,48,38,.62);
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.road-air-card .logistics-link {
+  width: 100%;
+  min-height: 38px;
+  padding-inline: 11px;
+  font-size: 6px;
+}
+
+/* Transport --------------------------------------------------------------- */
+.transport-lead {
+  padding: 25px 20px;
+  border: 1px solid rgba(99,72,36,.21);
+  border-radius: 19px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.28), rgba(255,255,255,.08)),
+    rgba(224,213,193,.36);
+}
+
+.transport-grid {
+  margin: 24px 3px;
+  display: grid;
+  gap: 18px;
+}
+
+.transport-grid .logistics-fact + .logistics-fact {
+  padding-top: 17px;
+  border-top: 1px solid rgba(89,66,36,.12);
+}
+
+.transport-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.transport-actions .logistics-link,
+.transport-actions .logistics-jump {
+  min-width: 0;
+}
+
+.transport-actions .logistics-jump {
+  grid-column: 1 / -1;
+  justify-content: center;
+  background: #293e2e;
+  border-color: #293e2e;
+  color: #f0e5d1;
+}
+
+/* Mobile refinements ------------------------------------------------------ */
+@media (max-width: 365px) {
+  .utility-section.logistics-ready {
+    padding-inline: 15px;
+  }
+
+  .logistics-disclosure__trigger {
+    grid-template-columns: 28px minmax(0, 1fr) 32px;
+    gap: 9px;
+  }
+
+  .logistics-disclosure__label strong {
+    font-size: 23px;
+  }
+
+  .stay-facts,
+  .road-air-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .road-air-card > p:not(.logistics-kicker) {
+    min-height: 0;
+  }
+
+  .rail-guide__intro {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .logistics-link--irctc {
+    width: fit-content;
+  }
+
+  .rail-option {
+    padding-inline: 13px;
+  }
+
+  .rail-option__route {
+    grid-template-columns: minmax(0, 1fr) 38px minmax(0, 1fr);
+    gap: 5px;
+  }
+
+  .rail-option__station time {
+    font-size: 21px;
+  }
+
+  .rail-warning {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+@media (max-height: 700px) {
+  .utility-section.logistics-ready {
+    padding-top: 72px;
+  }
+
+  .logistics-disclosure__trigger {
+    min-height: 78px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logistics-shell,
+  .logistics-panel,
+  .logistics-disclosure__state {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .logistics-shell {
+    opacity: 1 !important;
+  }
+}
