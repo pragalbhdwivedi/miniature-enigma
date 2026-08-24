@@ -1,0 +1,424 @@
+/* Module 08 — Family Introduction
+   Editorial roster treatment layered over the approved FAMILY_DATA renderer.
+   The family dataset remains the source of truth; this file changes presentation only. */
+
+.family-section.family-editorial-ready {
+  --family-paper: #e8dcc4;
+  --family-paper-deep: #d8c5a3;
+  --family-ink: #182019;
+  --family-muted: rgba(38, 43, 34, .58);
+  --family-gold: #9b7a44;
+  --family-line: rgba(73, 57, 35, .16);
+  --family-bride: #304a35;
+  --family-groom: #6d3039;
+  position: relative;
+  overflow: hidden;
+  padding: 82px 22px 92px;
+  background:
+    radial-gradient(circle at 84% 8%, rgba(255,255,255,.42), transparent 23%),
+    repeating-linear-gradient(14deg, rgba(88,67,41,.025) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(103deg, rgba(255,255,255,.05) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, #eee4d1 0%, var(--family-paper) 72%, #e1d2b6 100%);
+  color: var(--family-ink);
+  isolation: isolate;
+}
+
+.family-section.family-editorial-ready::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  z-index: 0;
+  border: 1px solid rgba(77, 59, 33, .12);
+  pointer-events: none;
+}
+
+.family-section.family-editorial-ready::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 18px;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, rgba(123,92,47,.20) 12%, rgba(123,92,47,.20) 88%, transparent);
+  pointer-events: none;
+}
+
+.family-section.family-editorial-ready > * {
+  position: relative;
+  z-index: 2;
+}
+
+.family-section.family-editorial-ready > .section-number {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  font-size: 10px;
+  letter-spacing: .24em;
+  color: rgba(70,55,34,.58);
+}
+
+.family-section.family-editorial-ready > .section-number::after {
+  content: '';
+  width: 54px;
+  border-top: 1px solid rgba(122,91,46,.38);
+}
+
+.family-section.family-editorial-ready > h2 {
+  width: min(94%, 390px);
+  max-width: none;
+  margin: 0 0 18px;
+  color: #1a211a;
+  font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+  font-size: clamp(45px, 12vw, 62px);
+  font-weight: 500;
+  line-height: .96;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+
+html[lang='hi'] .family-section.family-editorial-ready > h2 {
+  font-family: var(--font-devanagari-display, 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif);
+  font-size: clamp(39px, 10.4vw, 54px);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.family-editorial-intro {
+  width: min(100%, 390px);
+  margin: 0 0 38px;
+  padding: 13px 0 0;
+  border-top: 1px solid rgba(82,61,35,.20);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  color: rgba(62,49,31,.62);
+}
+
+.family-editorial-intro__families {
+  font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.family-editorial-intro__folio {
+  flex: 0 0 auto;
+  font-size: 9px;
+  letter-spacing: .20em;
+  color: rgba(75,59,37,.46);
+}
+
+html[lang='hi'] .family-editorial-intro__families {
+  font-family: var(--font-devanagari-text, 'Noto Serif Devanagari', serif);
+  letter-spacing: .035em;
+  text-transform: none;
+}
+
+.family-section.family-editorial-ready .family-grid {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+.family-section.family-editorial-ready .family-card {
+  --family-accent: var(--family-bride);
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 0 !important;
+  margin: 0;
+  padding: 30px 17px 30px 18px !important;
+  overflow: hidden;
+  border: 1px solid rgba(68,52,31,.14) !important;
+  border-radius: 2px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.24), transparent 34%),
+    rgba(255,255,255,.10) !important;
+  box-shadow:
+    0 18px 40px rgba(65,48,24,.06),
+    inset 0 1px 0 rgba(255,255,255,.30);
+  isolation: isolate;
+  opacity: 1;
+}
+
+.family-section.family-editorial-ready .family-card--groom {
+  --family-accent: var(--family-groom);
+}
+
+.family-section.family-editorial-ready .family-card--lead {
+  padding-top: 34px !important;
+  border-color: color-mix(in srgb, var(--family-accent) 25%, transparent) !important;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--family-accent) 6%, transparent), transparent 42%),
+    rgba(255,255,255,.14) !important;
+  box-shadow:
+    0 22px 48px rgba(55,42,24,.085),
+    inset 3px 0 0 color-mix(in srgb, var(--family-accent) 72%, transparent),
+    inset 0 1px 0 rgba(255,255,255,.36);
+}
+
+.family-section.family-editorial-ready .family-card--secondary {
+  margin-top: 34px;
+}
+
+.family-section.family-editorial-ready .family-card--secondary::before {
+  content: '&';
+  position: absolute;
+  z-index: 5;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 42px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  background: var(--family-paper);
+  color: rgba(122,91,46,.62);
+  font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+  font-size: 18px;
+  font-style: italic;
+}
+
+.family-section.family-editorial-ready .family-card::after {
+  content: attr(data-family-surname);
+  position: absolute;
+  z-index: -1;
+  right: -7px;
+  top: 11px;
+  max-width: 96%;
+  overflow: hidden;
+  color: color-mix(in srgb, var(--family-accent) 6%, transparent);
+  font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+  font-size: clamp(65px, 19vw, 92px);
+  font-weight: 600;
+  line-height: .78;
+  letter-spacing: -.055em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+html[lang='hi'] .family-section.family-editorial-ready .family-card::after {
+  font-family: var(--font-devanagari-display, 'Tiro Devanagari Hindi', serif);
+  font-size: clamp(57px, 16vw, 78px);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.family-section.family-editorial-ready .family-card-topline {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  align-items: end;
+  gap: 12px;
+  margin: 0 0 26px;
+  padding: 0 0 19px;
+  border-bottom: 1px solid rgba(71,54,33,.18);
+}
+
+.family-section.family-editorial-ready .family-card-topline > span {
+  align-self: start;
+  padding-top: 4px;
+  color: color-mix(in srgb, var(--family-accent) 76%, #5e513b);
+  font-size: 10px;
+  letter-spacing: .24em;
+}
+
+.family-section.family-editorial-ready .family-card-topline > strong {
+  position: relative;
+  color: var(--family-accent);
+  font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+  font-size: clamp(24px, 6.5vw, 31px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.015em;
+}
+
+html[lang='hi'] .family-section.family-editorial-ready .family-card-topline > strong {
+  font-family: var(--font-devanagari-display, 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif);
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+.family-section.family-editorial-ready .family-card-topline > strong::after {
+  content: attr(data-family-side-label);
+  display: block;
+  margin-top: 7px;
+  color: rgba(55,48,36,.47);
+  font-family: var(--font-ui, Arial, sans-serif);
+  font-size: 8px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: .20em;
+  text-transform: uppercase;
+}
+
+html[lang='hi'] .family-section.family-editorial-ready .family-card-topline > strong::after {
+  font-family: var(--font-devanagari-text, 'Noto Serif Devanagari', serif);
+  letter-spacing: .04em;
+  text-transform: none;
+}
+
+.family-section.family-editorial-ready .family-card dl {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+}
+
+.family-section.family-editorial-ready .family-person {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px minmax(82px, 30%) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 10px;
+  min-height: 58px;
+  padding: 14px 0 13px;
+  border-top: 1px solid rgba(68,52,31,.12);
+}
+
+.family-section.family-editorial-ready .family-person:first-child {
+  border-top: 0;
+}
+
+.family-section.family-editorial-ready .family-person::before {
+  content: attr(data-family-row);
+  align-self: start;
+  padding-top: 2px;
+  color: rgba(64,54,40,.36);
+  font-family: var(--font-ui, Arial, sans-serif);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .16em;
+}
+
+.family-section.family-editorial-ready .family-person dt,
+.family-section.family-editorial-ready .family-person dd {
+  margin: 0;
+}
+
+.family-section.family-editorial-ready .family-person dt {
+  color: color-mix(in srgb, var(--family-accent) 74%, #5c5548);
+  font-family: var(--font-ui, Arial, sans-serif);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.family-section.family-editorial-ready .family-person dd {
+  color: #171d17;
+  font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+  font-size: clamp(20px, 5.3vw, 25px);
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -.012em;
+  text-wrap: pretty;
+}
+
+html[lang='hi'] .family-section.family-editorial-ready .family-person dt {
+  font-family: var(--font-devanagari-text, 'Noto Serif Devanagari', serif);
+  font-size: 10px;
+  letter-spacing: .015em;
+  text-transform: none;
+}
+
+html[lang='hi'] .family-section.family-editorial-ready .family-person dd {
+  font-family: var(--font-devanagari-text, 'Noto Serif Devanagari', serif);
+  line-height: 1.22;
+  letter-spacing: 0;
+}
+
+/* Motion Primitives-style in-view choreography, kept deliberately quiet. */
+.family-section.family-editorial-ready.family-motion-ready .family-editorial-intro,
+.family-section.family-editorial-ready.family-motion-ready .family-card {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity .68s ease,
+    transform .82s cubic-bezier(.18,.72,.2,1);
+}
+
+.family-section.family-editorial-ready.family-motion-ready .family-card .family-person {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition:
+    opacity .56s ease,
+    transform .68s cubic-bezier(.18,.72,.2,1);
+  transition-delay: calc(150ms + (var(--family-row-index, 0) * 58ms));
+}
+
+.family-section.family-editorial-ready.family-motion-ready.family-in-view .family-editorial-intro,
+.family-section.family-editorial-ready.family-motion-ready.family-in-view .family-card {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+
+.family-section.family-editorial-ready.family-motion-ready.family-in-view .family-card--lead {
+  transition-delay: 80ms;
+}
+
+.family-section.family-editorial-ready.family-motion-ready.family-in-view .family-card--secondary {
+  transition-delay: 180ms;
+}
+
+.family-section.family-editorial-ready.family-motion-ready.family-in-view .family-card .family-person {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+
+.family-section.family-editorial-ready.family-motion-ready.family-in-view .family-card--secondary .family-person {
+  transition-delay: calc(260ms + (var(--family-row-index, 0) * 58ms));
+}
+
+@media (max-width: 365px) {
+  .family-section.family-editorial-ready {
+    padding-inline: 18px;
+  }
+
+  .family-section.family-editorial-ready .family-card {
+    padding-inline: 14px !important;
+  }
+
+  .family-section.family-editorial-ready .family-person {
+    grid-template-columns: 24px 76px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .family-section.family-editorial-ready .family-person dd {
+    font-size: clamp(18px, 5.1vw, 22px);
+  }
+}
+
+@media (max-height: 720px) {
+  .family-section.family-editorial-ready {
+    padding-top: 68px;
+    padding-bottom: 78px;
+  }
+
+  .family-section.family-editorial-ready .family-card {
+    padding-top: 25px !important;
+    padding-bottom: 25px !important;
+  }
+
+  .family-section.family-editorial-ready .family-person {
+    min-height: 52px;
+    padding-block: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .family-section.family-editorial-ready.family-motion-ready .family-editorial-intro,
+  .family-section.family-editorial-ready.family-motion-ready .family-card,
+  .family-section.family-editorial-ready.family-motion-ready .family-card .family-person {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
