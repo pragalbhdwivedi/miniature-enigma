@@ -1,0 +1,8 @@
+{
+  "maxImages": 20,
+  "pattern": "gallery-{nn}.webp",
+  "first": "gallery-01.webp",
+  "last": "gallery-20.webp",
+  "contiguous": true,
+  "note": "Add WebP files in numerical order. The gallery auto-discovers files from 01 until the first missing number."
+}
