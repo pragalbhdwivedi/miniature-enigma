@@ -56,28 +56,6 @@ html.motion-system-ready {
     color var(--motion-ui) var(--motion-ease-ui) !important;
 }
 
-/* Keep tactile press feedback consistent and restrained. */
-@media (prefers-reduced-motion: no-preference) {
-  :where(
-    .passport-choice,
-    .language-card,
-    .primary-cta,
-    .secondary-cta,
-    .back-button,
-    .sound-pill,
-    .sound-float,
-    .site-sound,
-    .bottom-nav.nav-system-ready button,
-    .wedding-gallery-control,
-    .wedding-gallery-lightbox__close,
-    .transport-learn-more,
-    .transport-modal__close,
-    .rsvp-wizard__nav button
-  ):active {
-    transform: scale(.975);
-  }
-}
-
 /* -------------------------------------------------------------------------- */
 /* UI surfaces                                                                */
 /* -------------------------------------------------------------------------- */
