@@ -1,0 +1,140 @@
+/* Royal Indian typography system
+   English editorial: Cormorant Garamond (already loaded in styles.css)
+   Hindi reading: Tiro Devanagari Hindi
+   Hindi display: Rozha One
+   Loaded last from main.jsx so these role-based rules override legacy font declarations. */
+@import url('https://fonts.googleapis.com/css2?family=Rozha+One&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap');
+
+:root {
+  --font-editorial-en: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-reading-hi: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+  --font-display-hi: 'Rozha One', 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+}
+
+/* English luxury / fashion-editorial layer */
+.monogram,
+.eyebrow,
+.english-sub,
+.passport-kicker,
+.passport-cover h1,
+.passport-names,
+.passport-location,
+.hero-copy h1,
+.hero-stamp,
+.event-card h3,
+.story-layout blockquote,
+.closing-section strong,
+.closing-section > span {
+  font-family: var(--font-editorial-en);
+}
+
+/* Static bilingual opening: Hindi remains explicitly Indic even before a language is chosen. */
+.selection-content h1,
+.passport-choice small,
+.microcopy,
+.selection-note,
+.tap-hint span,
+.journey-copy {
+  font-family: var(--font-reading-hi);
+  font-feature-settings: 'kern' 1;
+  line-height: 1.42;
+}
+
+.passport-choice strong,
+.language-card:not(.wine) strong {
+  font-family: var(--font-display-hi);
+  font-weight: 400;
+  line-height: 1.18;
+}
+
+.language-card.wine strong {
+  font-family: var(--font-editorial-en);
+  font-weight: 600;
+}
+
+/* Hindi site mode: display hierarchy becomes more ceremonial, body copy remains highly readable. */
+.lang-hi h2,
+.lang-hi .utility-card h2,
+.lang-hi .day-content h3 {
+  font-family: var(--font-display-hi);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: 0;
+  word-break: keep-all;
+}
+
+.lang-hi p,
+.lang-hi label,
+.lang-hi input,
+.lang-hi button,
+.lang-hi .family-grid,
+.lang-hi .timeline-item span,
+.lang-hi .placeholder-note,
+.lang-hi .venue-card,
+.lang-hi .destination-copy,
+.lang-hi .rsvp-form,
+.lang-hi .bottom-nav span {
+  font-family: var(--font-reading-hi);
+  line-height: 1.48;
+  word-break: keep-all;
+}
+
+.lang-hi .section-number,
+.lang-hi .event-type {
+  font-family: var(--font-reading-hi);
+  letter-spacing: .04em;
+  text-transform: none;
+}
+
+/* Locked English brand/event titles must stay editorial even inside Hindi mode. */
+.lang-hi .event-card h3,
+.lang-hi .passport-names,
+.lang-hi .hero-copy h1,
+.lang-hi .monogram,
+.lang-hi .eyebrow,
+.lang-hi .hero-stamp,
+.lang-hi .closing-section strong,
+.lang-hi .closing-section > span {
+  font-family: var(--font-editorial-en);
+}
+
+/* The intro and passport live outside .site-shell, so use the document language state. */
+html[lang='hi'] .intro-content h1,
+html[lang='hi'] .intro-content > p:not(.eyebrow),
+html[lang='hi'] .tiger-reveal-label,
+html[lang='hi'] .tap-hint span,
+html[lang='hi'] .journey-copy,
+html[lang='hi'] .primary-cta {
+  font-family: var(--font-reading-hi);
+  line-height: 1.42;
+  word-break: keep-all;
+}
+
+html[lang='en'] .intro-content h1,
+html[lang='en'] .journey-copy,
+html[lang='en'] .primary-cta {
+  font-family: var(--font-editorial-en);
+}
+
+/* Ceremonial utility class for future Hindi phrases such as शुभ विवाह / स्नेह निमंत्रण. */
+.devanagari-display {
+  font-family: var(--font-display-hi) !important;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.devanagari-reading {
+  font-family: var(--font-reading-hi) !important;
+  line-height: 1.48;
+}
+
+.editorial-english {
+  font-family: var(--font-editorial-en) !important;
+}
+
+@media (max-width: 365px) {
+  .lang-hi h2 { line-height: 1.22; }
+  .selection-content h1 { line-height: 1.38; }
+  .passport-choice strong { font-size: 25px; }
+}
