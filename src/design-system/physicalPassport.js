@@ -5,9 +5,46 @@
 
 const mountedHosts = new Set()
 const stateByHost = new WeakMap()
+let viewportRaf = 0
 
 function setImportant(element, property, value) {
   element?.style.setProperty(property, value, 'important')
+}
+
+function visibleViewportHeight() {
+  const visualHeight = window.visualViewport?.height
+  if (Number.isFinite(visualHeight) && visualHeight > 0) return Math.round(visualHeight)
+  if (Number.isFinite(window.innerHeight) && window.innerHeight > 0) return Math.round(window.innerHeight)
+  return Math.round(document.documentElement.clientHeight || 640)
+}
+
+function applyViewportBox(host) {
+  const state = stateByHost.get(host)
+  if (!state) return
+  const height = `${visibleViewportHeight()}px`
+
+  // Use measured pixels instead of relying on vh/svh semantics. Mobile Safari changes
+  // its visible viewport as browser chrome expands/collapses, and older Safari does not
+  // support svh. visualViewport gives us the space the guest can actually tap in.
+  setImportant(host, 'height', height)
+  setImportant(host, 'min-height', height)
+  setImportant(host, 'max-height', height)
+  setImportant(host, 'overflow', 'hidden')
+
+  setImportant(state.content, 'height', height)
+  setImportant(state.content, 'min-height', height)
+  setImportant(state.content, 'max-height', height)
+  setImportant(state.content, 'overflow', 'hidden')
+}
+
+function scheduleViewportUpdate() {
+  if (viewportRaf) return
+  viewportRaf = window.requestAnimationFrame(() => {
+    viewportRaf = 0
+    for (const host of mountedHosts) {
+      if (host.isConnected) applyViewportBox(host)
+    }
+  })
 }
 
 function mount(host) {
@@ -28,21 +65,11 @@ function mount(host) {
   host.style.perspective = 'none'
   content.style.perspective = 'none'
 
-  // Mobile Safari exposes multiple viewport concepts as its browser chrome expands and
-  // collapses. Keep the passport stage on the stable small viewport and anchor the REAL
-  // React/fallback CTA inside that box. This avoids a fixed-position control drifting
-  // behind Safari UI while preserving one authoritative click handler.
-  setImportant(host, 'height', '100svh')
-  setImportant(host, 'min-height', '100svh')
-  setImportant(host, 'max-height', '100svh')
-  setImportant(host, 'overflow', 'hidden')
-
-  setImportant(content, 'height', '100svh')
-  setImportant(content, 'min-height', '100svh')
-  setImportant(content, 'max-height', '100svh')
-  setImportant(content, 'overflow', 'hidden')
+  applyViewportBox(host)
   setImportant(content, 'padding-bottom', 'calc(88px + env(safe-area-inset-bottom, 0px))')
 
+  // Anchor the REAL React/fallback button inside the measured visible viewport box.
+  // There is no synthetic click and no second navigation authority.
   setImportant(button, 'position', 'absolute')
   setImportant(button, 'left', '50%')
   setImportant(button, 'bottom', 'max(18px, calc(env(safe-area-inset-bottom, 0px) + 10px))')
@@ -99,6 +126,9 @@ const observer = new MutationObserver(() => {
 
 function start() {
   observer.observe(document.body, { childList: true, subtree: true })
+  window.addEventListener('resize', scheduleViewportUpdate, { passive: true })
+  window.visualViewport?.addEventListener('resize', scheduleViewportUpdate, { passive: true })
+  window.visualViewport?.addEventListener('scroll', scheduleViewportUpdate, { passive: true })
   scan()
 }
 
