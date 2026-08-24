@@ -16,6 +16,7 @@ import './design-system/language-selection.css'
 import './design-system/forest-cinematic.css'
 import './design-system/tiger-reveal.css'
 import './design-system/tiger-crest-transition.css'
+import './design-system/physical-passport.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
@@ -27,6 +28,7 @@ import './design-system/languageSelection.js'
 import './design-system/forestCinematic.js'
 import './design-system/tigerReveal.js'
 import './design-system/tigerCrestTransition.js'
+import './design-system/physicalPassport.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
