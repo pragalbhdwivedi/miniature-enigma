@@ -23,13 +23,21 @@ function activateButton(button) {
 
 function mount(host) {
   if (mountedHosts.has(host)) return
+  const content = host.querySelector('.passport-stage-content')
   const cover = host.querySelector('.passport-cover')
   const button = host.querySelector('.primary-cta')
-  if (!cover || !button) return
+  if (!content || !cover || !button) return
 
   mountedHosts.add(host)
   host.classList.add('passport-physical-ready')
   host.dataset.passportPhase = '1'
+
+  // The retired 3D page-flip left perspective on both ancestors. In Mobile Safari,
+  // a perspective ancestor establishes a containing block for fixed descendants,
+  // which can pull the viewport-fixed Open Invitation CTA below the visible screen.
+  // The page-flip no longer exists, so remove that containment while this stage lives.
+  host.style.perspective = 'none'
+  content.style.perspective = 'none'
 
   // Remove any stale Module 06 interior left by a hot reload or source fallback.
   host.querySelector(':scope > .passport-cinematic-world')?.remove()
@@ -69,6 +77,7 @@ function mount(host) {
   cover.addEventListener('click', coverClickHandler)
   cover.addEventListener('keydown', coverKeyHandler)
   handlersByHost.set(host, {
+    content,
     button,
     cover,
     buttonHandler,
@@ -87,7 +96,9 @@ function unmount(host) {
     bound.cover.removeAttribute('tabindex')
     bound.cover.removeAttribute('aria-label')
     delete bound.cover.dataset.passportTapTarget
+    bound.content.style.removeProperty('perspective')
   }
+  host.style.removeProperty('perspective')
   handlersByHost.delete(host)
   host.querySelector(':scope > .passport-cinematic-world')?.remove()
   host.classList.remove('passport-physical-ready', 'passport-is-opening')
