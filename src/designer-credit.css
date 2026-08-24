@@ -15,6 +15,15 @@
   border-top: 0;
 }
 
+/* Module 22 supplies the structural handoff; Module 23 owns the final colophon surface. */
+.site-shell > .closing-section.closing-cinematic-ready + .designer-credit {
+  margin-top: -1px;
+  border-top-color: transparent;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(202,165,102,.055), transparent 32%),
+    linear-gradient(180deg, #040605 0%, #050806 100%);
+}
+
 .designer-credit::before {
   content: '';
   position: absolute;
