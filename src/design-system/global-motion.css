@@ -147,18 +147,21 @@ html.motion-system-ready {
 /* -------------------------------------------------------------------------- */
 /* Motion budget                                                              */
 /* -------------------------------------------------------------------------- */
-/* Sections are tagged by globalMotion.js. Pausing their CSS keyframes while
-   offscreen prevents decorative loops from consuming work the guest cannot see. */
-html.motion-system-ready [data-motion-visibility='idle'] *,
-html.motion-system-ready [data-motion-visibility='idle'] *::before,
-html.motion-system-ready [data-motion-visibility='idle'] *::after {
+/* Sections are tagged by globalMotion.js. Root motion attributes deliberately
+   raise specificity above module-level `animation: ... !important` declarations. */
+html.motion-system-ready[data-motion][data-motion-input]
+  [data-motion-section='true'][data-motion-visibility='idle'] *,
+html.motion-system-ready[data-motion][data-motion-input]
+  [data-motion-section='true'][data-motion-visibility='idle'] *::before,
+html.motion-system-ready[data-motion][data-motion-input]
+  [data-motion-section='true'][data-motion-visibility='idle'] *::after {
   animation-play-state: paused !important;
 }
 
-/* A hidden browser tab should not keep decorative CSS motion alive. */
-html.motion-system-ready[data-motion-page='hidden'] *,
-html.motion-system-ready[data-motion-page='hidden'] *::before,
-html.motion-system-ready[data-motion-page='hidden'] *::after {
+/* A hidden browser tab must outrank even highly specific infinite animations. */
+html.motion-system-ready[data-motion-page='hidden'][data-motion][data-motion-input] *,
+html.motion-system-ready[data-motion-page='hidden'][data-motion][data-motion-input] *::before,
+html.motion-system-ready[data-motion-page='hidden'][data-motion][data-motion-input] *::after {
   animation-play-state: paused !important;
 }
 
@@ -170,20 +173,17 @@ html.motion-system-ready[data-motion-page='hidden'] *::after {
     scroll-behavior: auto !important;
   }
 
-  html.motion-system-ready *,
-  html.motion-system-ready *::before,
-  html.motion-system-ready *::after {
+  /* The document-level attributes make this rule more specific than the
+     standardized `transition: ... !important` declarations above and the
+     module-specific important shorthands it is intended to neutralize. */
+  html.motion-system-ready[data-motion='reduced'][data-motion-input][data-motion-page] *,
+  html.motion-system-ready[data-motion='reduced'][data-motion-input][data-motion-page] *::before,
+  html.motion-system-ready[data-motion='reduced'][data-motion-input][data-motion-page] *::after {
     animation-duration: .01ms !important;
     animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
     transition-delay: 0ms !important;
     scroll-behavior: auto !important;
-  }
-
-  html.motion-system-ready [data-motion-visibility='idle'] *,
-  html.motion-system-ready [data-motion-visibility='idle'] *::before,
-  html.motion-system-ready [data-motion-visibility='idle'] *::after {
-    animation-play-state: running !important;
   }
 }
