@@ -1,0 +1,453 @@
+/* Module 10 — Jim Corbett Destination Chapter
+   Place-making first: one approved Wyndham night photograph, oversized destination
+   typography, restrained atmospheric depth and a publication-style location lockup. */
+
+.destination-section.destination-world-ready {
+  --destination-photo-y: 0px;
+  --destination-word-y: 0px;
+  --destination-near-y: 0px;
+  --destination-far-y: 0px;
+  position: relative;
+  min-height: 118svh;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 72% 18%, rgba(190, 150, 82, .09), transparent 27%),
+    linear-gradient(180deg, #07110b 0%, #08120c 56%, #0b150f 100%);
+  color: #efe5ce;
+}
+
+.destination-section.destination-world-ready::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(12deg, rgba(255,255,255,.008) 0 1px, transparent 1px 5px),
+    radial-gradient(circle at 12% 42%, rgba(122, 149, 96, .08), transparent 31%),
+    radial-gradient(circle at 90% 58%, rgba(110, 79, 46, .10), transparent 33%);
+  opacity: .9;
+}
+
+.destination-section.destination-world-ready::after {
+  content: '03';
+  position: absolute;
+  z-index: 2;
+  right: -8px;
+  bottom: 24px;
+  color: rgba(223, 191, 132, .055);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(118px, 38vw, 178px);
+  font-weight: 500;
+  line-height: .78;
+  letter-spacing: -.08em;
+  pointer-events: none;
+}
+
+.destination-world-ready .destination-image {
+  position: relative;
+  z-index: 2;
+  min-height: 74svh;
+  margin: 0;
+  overflow: hidden;
+  background-image:
+    linear-gradient(180deg, rgba(3,8,5,.02), rgba(3,8,5,.10) 52%, rgba(4,9,6,.76) 100%),
+    url('../images/destination/wyndham-garden-night.webp') !important;
+  background-size: cover !important;
+  background-position: center 50% !important;
+  filter: saturate(.82) contrast(1.04) brightness(.80);
+  transform: translate3d(0, var(--destination-photo-y), 0) scale(1.055);
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.destination-world-ready .destination-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(3,8,5,.42), transparent 24%, transparent 74%, rgba(3,8,5,.24)),
+    radial-gradient(ellipse at 50% 43%, transparent 22%, rgba(2,6,4,.13) 61%, rgba(1,4,2,.52) 100%);
+}
+
+.destination-world-ready .destination-image::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 38%;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, #08120c 94%);
+}
+
+.destination-wordmark {
+  position: absolute;
+  z-index: 4;
+  top: clamp(78px, 12svh, 118px);
+  left: 50%;
+  width: 106%;
+  transform: translate3d(-50%, var(--destination-word-y), 0);
+  color: rgba(239, 213, 161, .18);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(72px, 24vw, 116px);
+  font-weight: 500;
+  line-height: .74;
+  letter-spacing: -.055em;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  text-shadow: 0 10px 34px rgba(0,0,0,.14);
+  will-change: transform;
+}
+
+.destination-wordmark::after {
+  content: '';
+  display: block;
+  width: min(76vw, 330px);
+  height: 1px;
+  margin: 20px auto 0;
+  background: linear-gradient(90deg, transparent, rgba(228, 193, 128, .55), transparent);
+}
+
+.destination-atmosphere {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.destination-mist {
+  position: absolute;
+  left: -24%;
+  width: 148%;
+  height: 120px;
+  border-radius: 50%;
+  opacity: .12;
+  filter: blur(24px);
+  background: linear-gradient(90deg, transparent 4%, rgba(224, 231, 213, .55) 33%, rgba(222, 226, 208, .28) 65%, transparent 95%);
+}
+
+.destination-mist--one {
+  top: 38%;
+  transform: translate3d(var(--destination-far-y), 0, 0) rotate(-2deg);
+}
+
+.destination-mist--two {
+  top: 51%;
+  opacity: .08;
+  transform: translate3d(calc(var(--destination-far-y) * -1), 0, 0) rotate(1deg);
+}
+
+.destination-foliage {
+  position: absolute;
+  inset: 0;
+  transform: translate3d(0, var(--destination-near-y), 0);
+  will-change: transform;
+}
+
+.destination-leaf {
+  position: absolute;
+  width: 82px;
+  height: 32px;
+  border-radius: 100% 0 100% 0;
+  background: linear-gradient(145deg, rgba(28, 53, 34, .93), rgba(7, 16, 10, .96));
+  box-shadow: inset 0 0 18px rgba(122, 151, 89, .05), 0 10px 24px rgba(0,0,0,.18);
+  transform-origin: 8% 50%;
+}
+
+.destination-leaf::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 74%;
+  height: 1px;
+  background: rgba(139, 160, 105, .16);
+  transform: rotate(-7deg);
+  transform-origin: left;
+}
+
+.destination-leaf--one {
+  top: 19%;
+  left: -34px;
+  transform: rotate(18deg) scale(1.24);
+  opacity: .82;
+  animation: destinationLeafOne 8.4s ease-in-out infinite alternate;
+}
+
+.destination-leaf--two {
+  top: 31%;
+  right: -39px;
+  transform: rotate(164deg) scale(1.34);
+  opacity: .74;
+  animation: destinationLeafTwo 9.8s ease-in-out infinite alternate;
+}
+
+.destination-leaf--three {
+  top: 61%;
+  left: -48px;
+  transform: rotate(-12deg) scale(1.52);
+  opacity: .66;
+  animation: destinationLeafThree 10.8s ease-in-out infinite alternate;
+}
+
+.destination-leaf--four {
+  top: 68%;
+  right: -45px;
+  transform: rotate(178deg) scale(1.18);
+  opacity: .58;
+  animation: destinationLeafTwo 11.6s ease-in-out infinite alternate-reverse;
+}
+
+.destination-copy.destination-editorial-copy {
+  position: relative;
+  z-index: 7;
+  margin-top: -13svh;
+  padding: 0 25px 82px;
+  color: #efe5ce;
+  background:
+    linear-gradient(180deg, rgba(8,18,12,0) 0%, rgba(8,18,12,.91) 13svh, rgba(8,18,12,.98) 38%, #0a140e 100%);
+}
+
+.destination-copy.destination-editorial-copy::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 14px;
+  right: 14px;
+  top: 12svh;
+  bottom: 34px;
+  border-left: 1px solid rgba(218, 182, 117, .14);
+  border-right: 1px solid rgba(218, 182, 117, .08);
+  pointer-events: none;
+}
+
+.destination-copy.destination-editorial-copy .section-number {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  color: rgba(221, 188, 127, .78);
+  font-size: 10px;
+  letter-spacing: .24em;
+}
+
+.destination-copy.destination-editorial-copy .section-number::after {
+  content: '';
+  width: 52px;
+  height: 1px;
+  background: rgba(218, 182, 117, .42);
+}
+
+.destination-copy.destination-editorial-copy h2 {
+  max-width: 390px;
+  margin: 0 0 24px;
+  color: #f0e6d2;
+  font-size: clamp(49px, 14vw, 68px);
+  font-weight: 500;
+  line-height: .91;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+  transform: translateY(22px);
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+  transition:
+    transform 760ms cubic-bezier(.2,.75,.18,1),
+    opacity 620ms ease,
+    clip-path 820ms cubic-bezier(.2,.75,.18,1);
+}
+
+.destination-copy.destination-editorial-copy > p:not(.section-number) {
+  max-width: 330px;
+  margin: 0 0 34px;
+  color: rgba(239,229,206,.72);
+  font-size: clamp(16px, 4.4vw, 19px);
+  line-height: 1.58;
+  transform: translateY(18px);
+  opacity: 0;
+  transition: transform 680ms cubic-bezier(.2,.75,.18,1) 150ms, opacity 560ms ease 150ms;
+}
+
+.destination-location-lockup {
+  position: relative;
+  margin-top: 30px;
+  padding: 22px 0 0 58px;
+  border-top: 1px solid rgba(216, 180, 115, .26);
+  transform: translateY(18px);
+  opacity: 0;
+  transition: transform 680ms cubic-bezier(.2,.75,.18,1) 260ms, opacity 560ms ease 260ms;
+}
+
+.destination-location-lockup::before {
+  content: '⌖';
+  position: absolute;
+  left: 0;
+  top: 22px;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(216,180,115,.42);
+  border-radius: 50%;
+  color: #d9b878;
+  font-size: 17px;
+}
+
+.destination-location-lockup strong,
+.destination-location-lockup span {
+  display: block;
+  margin: 0 !important;
+}
+
+.destination-location-lockup strong {
+  color: #e7c88d !important;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(23px, 6.6vw, 31px) !important;
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.destination-location-lockup span {
+  margin-top: 7px !important;
+  color: rgba(239,229,206,.62) !important;
+  font-size: 11px !important;
+  line-height: 1.35;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.destination-location-lockup::after {
+  content: 'RAMNAGAR · JIM CORBETT';
+  display: block;
+  margin-top: 18px;
+  color: rgba(218,182,117,.54);
+  font-size: 9px;
+  letter-spacing: .25em;
+}
+
+.destination-passage-mark {
+  position: absolute;
+  z-index: 6;
+  top: calc(72svh - 35px);
+  left: 50%;
+  width: 70px;
+  height: 70px;
+  transform: translateX(-50%) rotate(45deg);
+  border: 1px solid rgba(220, 186, 124, .24);
+  background: rgba(6,14,9,.46);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.destination-passage-mark::before,
+.destination-passage-mark::after {
+  content: '';
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(220,186,124,.19);
+}
+
+.destination-passage-mark::after {
+  inset: 27px;
+  background: rgba(220,186,124,.62);
+  border: 0;
+}
+
+.destination-section.destination-in-view .destination-copy h2 {
+  transform: translateY(0);
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+}
+
+.destination-section.destination-in-view .destination-copy > p:not(.section-number),
+.destination-section.destination-in-view .destination-location-lockup {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.destination-section.destination-in-view .destination-wordmark {
+  animation: destinationWordBreath 5.8s ease-in-out 1 both;
+}
+
+html[lang='hi'] .destination-copy.destination-editorial-copy h2,
+.lang-hi .destination-copy.destination-editorial-copy h2 {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+  font-size: clamp(43px, 12vw, 60px);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+html[lang='hi'] .destination-copy.destination-editorial-copy > p:not(.section-number),
+.lang-hi .destination-copy.destination-editorial-copy > p:not(.section-number) {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+  line-height: 1.75;
+}
+
+@keyframes destinationLeafOne {
+  from { transform: rotate(18deg) scale(1.24); }
+  to { transform: rotate(23deg) translate3d(5px, 4px, 0) scale(1.27); }
+}
+
+@keyframes destinationLeafTwo {
+  from { transform: rotate(164deg) scale(1.34); }
+  to { transform: rotate(158deg) translate3d(-6px, 5px, 0) scale(1.37); }
+}
+
+@keyframes destinationLeafThree {
+  from { transform: rotate(-12deg) scale(1.52); }
+  to { transform: rotate(-7deg) translate3d(6px, -3px, 0) scale(1.55); }
+}
+
+@keyframes destinationWordBreath {
+  0% { letter-spacing: -.075em; opacity: .08; }
+  48% { letter-spacing: -.045em; opacity: .22; }
+  100% { letter-spacing: -.055em; opacity: .18; }
+}
+
+@media (max-width: 365px) {
+  .destination-world-ready .destination-image { min-height: 70svh; }
+  .destination-copy.destination-editorial-copy { margin-top: -11svh; padding-inline: 21px; }
+  .destination-wordmark { top: 92px; font-size: clamp(66px, 23vw, 88px); }
+  .destination-location-lockup { padding-left: 50px; }
+  .destination-location-lockup::before { width: 34px; height: 34px; }
+}
+
+@media (max-height: 700px) {
+  .destination-section.destination-world-ready { min-height: 112svh; }
+  .destination-world-ready .destination-image { min-height: 66svh; }
+  .destination-copy.destination-editorial-copy { margin-top: -9svh; padding-bottom: 66px; }
+  .destination-passage-mark { top: calc(64svh - 32px); width: 62px; height: 62px; }
+  .destination-wordmark { top: 74px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .destination-world-ready .destination-image,
+  .destination-wordmark,
+  .destination-foliage,
+  .destination-mist {
+    transform: none !important;
+    will-change: auto !important;
+  }
+
+  .destination-leaf,
+  .destination-section.destination-in-view .destination-wordmark {
+    animation: none !important;
+  }
+
+  .destination-copy.destination-editorial-copy h2,
+  .destination-copy.destination-editorial-copy > p:not(.section-number),
+  .destination-location-lockup {
+    transform: none !important;
+    opacity: 1 !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+}
