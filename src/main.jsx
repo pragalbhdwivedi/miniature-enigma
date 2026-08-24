@@ -22,6 +22,7 @@ import './design-system/family-introduction.css'
 import './design-system/couple-story.css'
 import './design-system/corbett-destination.css'
 import './design-system/itinerary-navigator.css'
+import './design-system/celebration-chapters.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
@@ -39,6 +40,7 @@ import './design-system/familyIntroduction.js'
 import './design-system/coupleStory.js'
 import './design-system/corbettDestination.js'
 import './design-system/itineraryNavigator.js'
+import './design-system/celebrationChapters.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
