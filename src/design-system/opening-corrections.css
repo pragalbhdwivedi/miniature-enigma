@@ -86,6 +86,12 @@
   display: none !important;
 }
 
+/* At the final handoff the transition art must disappear completely, otherwise the
+   settled engraved WebP can read as a faint second tiger on OLED screens. */
+.intro-screen.intro-2.crest-transition-ready[data-crest-phase='3'] .crest-transition-world__art {
+  opacity: 0 !important;
+}
+
 /* Passport cover uses the approved front medallion WebP instead of the inline SVG. */
 .passport-stage .cover-crest::before {
   content: '' !important;
@@ -136,17 +142,18 @@ body.passport-handoff-active::after {
   100% { opacity: 0; }
 }
 
-/* Keep OPEN INVITATION inside the visible Safari viewport. The previous normal-flow
-   placement could fall below a non-scrollable 100svh screen on short iPhones. */
+/* Reserve breathing room under the cover, but anchor the CTA to the viewport itself.
+   Absolute positioning here previously tracked an over-tall content column on short
+   iPhones and could place the button below the initial visible area. */
 .passport-stage .passport-stage-content {
-  padding-bottom: calc(102px + var(--safe-bottom)) !important;
+  padding-bottom: calc(88px + var(--safe-bottom)) !important;
 }
 
 .passport-stage .primary-cta {
-  position: absolute !important;
+  position: fixed !important;
   z-index: 30 !important;
   left: 50% !important;
-  bottom: calc(18px + var(--safe-bottom)) !important;
+  bottom: max(18px, calc(env(safe-area-inset-bottom, 0px) + 10px)) !important;
   width: min(calc(100% - 44px), 360px) !important;
   min-height: 62px !important;
   margin: 0 !important;
