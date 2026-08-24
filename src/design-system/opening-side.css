@@ -1,0 +1,505 @@
+/*
+  Wedding design system · Opening / Side Selector
+
+  Art-direction synthesis, implemented specifically for this invitation:
+  - React Bits-inspired masked editorial entrances
+  - Motion Primitives-inspired shared selection state and stagger rhythm
+  - Cult UI-inspired tactile paper/leather texture layering
+
+  No third-party runtime is imported here. The implementation stays CSS/DOM-first for
+  Mobile Safari performance and keeps the existing React + raw fallback paths intact.
+*/
+
+:root {
+  --ka-open-gold: #d7b26f;
+  --ka-open-gold-bright: #f0d295;
+  --ka-open-ivory: #f1e4c8;
+  --ka-open-green: #0a1710;
+  --ka-open-green-raised: #13261a;
+  --ka-open-wine: #351218;
+  --ka-open-wine-raised: #57202a;
+  --ka-open-ease-editorial: cubic-bezier(.22, 1, .36, 1);
+  --ka-open-ease-ui: cubic-bezier(.2, .75, .25, 1);
+}
+
+/* The selector is treated as a complete art-directed cover, not a generic form. */
+.selection-screen:not(.language-screen) {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.selection-screen:not(.language-screen) .forest-vignette {
+  z-index: 0;
+}
+
+/* Fine paper/noise language without another bitmap request. */
+.selection-screen:not(.language-screen) .forest-vignette::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .22;
+  background:
+    repeating-linear-gradient(0deg, rgba(244, 221, 175, .045) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .025) 0 1px, transparent 1px 5px),
+    radial-gradient(circle at 18% 22%, rgba(240, 207, 144, .12), transparent 28%),
+    radial-gradient(circle at 82% 78%, rgba(106, 75, 35, .10), transparent 30%);
+  mix-blend-mode: soft-light;
+}
+
+.selection-screen:not(.language-screen) .selection-content {
+  position: relative;
+  z-index: 3;
+  box-sizing: border-box;
+  width: min(100%, 470px);
+  min-height: 100svh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding:
+    max(10px, env(safe-area-inset-top, 0px))
+    clamp(16px, 4.4vw, 22px)
+    calc(30px + env(safe-area-inset-bottom, 0px)) !important;
+  justify-content: flex-start !important;
+}
+
+/* 01 · Brand focus. The uploaded KA mark gets the first visual beat. */
+.selection-screen:not(.language-screen) .monogram {
+  flex: 0 0 19svh;
+  min-height: 19svh !important;
+  max-height: 178px;
+  opacity: 0;
+  transform: translateY(-8px) scale(.965);
+  animation: kaOpeningBrandIn 820ms var(--ka-open-ease-editorial) 40ms forwards;
+}
+
+.selection-screen:not(.language-screen) .monogram.monogram--image img[data-ka-logo] {
+  height: min(16.5svh, 150px) !important;
+  max-height: 150px !important;
+  filter:
+    brightness(0)
+    saturate(100%)
+    invert(80%)
+    sepia(29%)
+    saturate(920%)
+    hue-rotate(358deg)
+    brightness(96%)
+    contrast(90%)
+    drop-shadow(0 12px 28px rgba(0, 0, 0, .48)) !important;
+}
+
+/* 02 · The Corbett Wedding becomes the second clear focus. */
+.selection-screen:not(.language-screen) .eyebrow {
+  margin: -2px auto 0 !important;
+  color: var(--ka-open-gold-bright) !important;
+  opacity: 0;
+  transform: translateY(11px);
+  animation: kaOpeningTitleIn 720ms var(--ka-open-ease-editorial) 220ms forwards;
+}
+
+.selection-screen:not(.language-screen) .eyebrow::before {
+  font-size: clamp(27px, 7.7vw, 38px) !important;
+  font-weight: 550 !important;
+  line-height: .95 !important;
+  letter-spacing: .105em !important;
+  text-wrap: balance;
+}
+
+.selection-screen:not(.language-screen) .eyebrow::after {
+  margin-top: 12px !important;
+  font-size: clamp(9px, 2.5vw, 11px) !important;
+  letter-spacing: .31em !important;
+}
+
+/* React Bits-style masked heading entrance, simplified for reliable iOS rendering. */
+.selection-screen:not(.language-screen) h1 {
+  max-width: 420px !important;
+  margin: 19px auto 0 !important;
+  font-size: clamp(31px, 8.6vw, 43px) !important;
+  font-weight: 500 !important;
+  line-height: 1.22 !important;
+  letter-spacing: -.018em;
+  color: var(--ka-open-ivory) !important;
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(18px);
+  animation: kaOpeningMaskIn 760ms var(--ka-open-ease-editorial) 390ms forwards;
+}
+
+.selection-screen:not(.language-screen) .english-sub {
+  margin: 8px 0 12px !important;
+  font-size: clamp(10px, 2.8vw, 12px) !important;
+  letter-spacing: .235em !important;
+  color: rgba(226, 191, 126, .90) !important;
+  opacity: 0;
+  transform: translateY(7px);
+  animation: kaOpeningSoftIn 600ms var(--ka-open-ease-editorial) 560ms forwards;
+}
+
+/* Shared-selection container. ::before behaves like Motion Primitives' moving
+   selected background, while the cards remain real accessible buttons. */
+.selection-screen:not(.language-screen) .side-grid {
+  --ka-card-gap: clamp(12px, 3.4vw, 20px);
+  position: relative !important;
+  z-index: 4;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: var(--ka-card-gap) !important;
+  width: 100% !important;
+  max-width: 438px;
+  margin: 13px auto 0 !important;
+  isolation: isolate;
+}
+
+.selection-screen:not(.language-screen) .side-grid::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -5px;
+  bottom: -5px;
+  left: -5px;
+  width: calc((100% - var(--ka-card-gap)) / 2 + 10px);
+  border-radius: 24px;
+  border: 1px solid rgba(239, 204, 137, 0);
+  background: radial-gradient(circle at 50% 18%, rgba(240, 204, 134, .14), transparent 54%);
+  box-shadow: 0 0 0 1px rgba(224, 183, 112, 0), 0 20px 52px rgba(0, 0, 0, 0);
+  opacity: 0;
+  transform: translateX(0) scale(.975);
+  transition:
+    transform 360ms var(--ka-open-ease-ui),
+    opacity 220ms ease,
+    border-color 220ms ease,
+    box-shadow 360ms var(--ka-open-ease-ui);
+  pointer-events: none;
+}
+
+.selection-screen:not(.language-screen) .side-grid[data-selected='bride']::before,
+.selection-screen:not(.language-screen) .side-grid[data-selected='groom']::before {
+  opacity: 1;
+  border-color: rgba(240, 204, 134, .72);
+  box-shadow:
+    0 0 0 1px rgba(224, 183, 112, .16),
+    0 20px 52px rgba(0, 0, 0, .46),
+    0 0 36px rgba(220, 180, 108, .12);
+  transform: translateX(0) scale(1);
+}
+
+.selection-screen:not(.language-screen) .side-grid[data-selected='groom']::before {
+  transform: translateX(calc(100% + var(--ka-card-gap) - 10px)) scale(1);
+}
+
+/* Central OR is a quiet bridge, not a third competing card. */
+.selection-screen:not(.language-screen) .side-grid::after {
+  z-index: 9 !important;
+  width: 44px !important;
+  height: 44px !important;
+  border: 1px solid rgba(238, 201, 131, .72) !important;
+  background:
+    radial-gradient(circle at 40% 32%, rgba(255,255,255,.08), transparent 42%),
+    rgba(5, 12, 8, .96) !important;
+  color: var(--ka-open-gold-bright) !important;
+  box-shadow:
+    0 9px 25px rgba(0,0,0,.60),
+    inset 0 0 0 3px rgba(211,173,112,.055) !important;
+  opacity: 0;
+  animation: kaOpeningSoftIn 500ms var(--ka-open-ease-editorial) 900ms forwards;
+}
+
+/* Tactile leather cards, adapted from the Cult UI texture principle. */
+.selection-screen:not(.language-screen) .passport-choice {
+  z-index: 2;
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: clamp(322px, 45svh, 388px) !important;
+  padding: 141px clamp(10px, 3vw, 16px) 23px !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(221, 181, 111, .58) !important;
+  overflow: hidden;
+  cursor: pointer;
+  touch-action: manipulation;
+  opacity: 0;
+  transform: translateY(28px) scale(.965);
+  transition:
+    transform 340ms var(--ka-open-ease-ui),
+    opacity 260ms ease,
+    filter 260ms ease,
+    border-color 260ms ease,
+    box-shadow 340ms var(--ka-open-ease-ui) !important;
+  will-change: transform;
+}
+
+.selection-screen:not(.language-screen) .passport-choice.bride {
+  background:
+    radial-gradient(circle at 28% 10%, rgba(240, 207, 142, .10), transparent 32%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(92deg, rgba(0,0,0,.10) 0 1px, transparent 1px 6px),
+    linear-gradient(150deg, #17291d 0%, var(--ka-open-green) 74%, #061009 100%) !important;
+  animation: kaOpeningCardIn 720ms var(--ka-open-ease-editorial) 650ms forwards;
+}
+
+.selection-screen:not(.language-screen) .passport-choice.groom {
+  background:
+    radial-gradient(circle at 28% 10%, rgba(240, 207, 142, .10), transparent 32%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(92deg, rgba(0,0,0,.11) 0 1px, transparent 1px 6px),
+    linear-gradient(150deg, #5a242d 0%, var(--ka-open-wine) 74%, #210b10 100%) !important;
+  animation: kaOpeningCardIn 720ms var(--ka-open-ease-editorial) 755ms forwards;
+}
+
+.selection-screen:not(.language-screen) .passport-choice::after {
+  inset: 8px !important;
+  border-radius: 14px !important;
+  border-color: rgba(235, 199, 131, .26) !important;
+  background:
+    linear-gradient(115deg, rgba(255,255,255,.035), transparent 28%, transparent 72%, rgba(255,255,255,.018)),
+    repeating-linear-gradient(35deg, rgba(237, 210, 156, .025) 0 1px, transparent 1px 7px);
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,.25),
+    inset 0 16px 30px rgba(255,255,255,.016),
+    inset 0 -28px 45px rgba(0,0,0,.12);
+}
+
+.selection-screen:not(.language-screen) .passport-choice::before {
+  top: 33px !important;
+  width: min(29vw, 124px) !important;
+  height: min(25vw, 108px) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  filter: drop-shadow(0 11px 22px rgba(0,0,0,.38)) !important;
+  transform: translateX(-50%) scale(.96) !important;
+  transition:
+    transform 380ms var(--ka-open-ease-ui),
+    filter 380ms var(--ka-open-ease-ui),
+    opacity 260ms ease !important;
+}
+
+.selection-screen:not(.language-screen) .passport-choice strong {
+  position: relative;
+  z-index: 3;
+  margin-top: 0 !important;
+  font-size: clamp(25px, 6.8vw, 32px) !important;
+  font-weight: 600;
+  color: var(--ka-open-gold-bright) !important;
+  text-shadow: 0 3px 18px rgba(0,0,0,.42);
+}
+
+.selection-screen:not(.language-screen) .passport-choice > span {
+  position: relative;
+  z-index: 3;
+  margin-top: 7px !important;
+  font-size: clamp(10px, 2.7vw, 12px) !important;
+  letter-spacing: .19em !important;
+  color: rgba(230, 194, 127, .90) !important;
+}
+
+.selection-screen:not(.language-screen) .passport-choice small {
+  position: relative;
+  z-index: 3;
+  width: 100% !important;
+  margin-top: 18px !important;
+  padding: 18px 2px 0 !important;
+  border-top: 1px solid rgba(229, 190, 120, .26) !important;
+  font-size: clamp(11px, 3vw, 13.5px) !important;
+  line-height: 1.58 !important;
+  color: rgba(245, 235, 215, .88) !important;
+  text-wrap: balance;
+}
+
+/* Motion-Primitives-style selected state. */
+.selection-screen:not(.language-screen) .passport-choice.is-selected {
+  transform: translateY(-6px) scale(1.018) !important;
+  border-color: rgba(245, 211, 145, .94) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(245, 211, 145, .10),
+    inset 0 0 42px rgba(235, 198, 128, .045),
+    0 22px 50px rgba(0, 0, 0, .52),
+    0 0 28px rgba(224, 181, 110, .10) !important;
+}
+
+.selection-screen:not(.language-screen) .passport-choice.is-selected::before {
+  transform: translateX(-50%) scale(1.045) !important;
+  filter:
+    drop-shadow(0 14px 26px rgba(0,0,0,.42))
+    drop-shadow(0 0 12px rgba(230,190,116,.14)) !important;
+}
+
+.selection-screen:not(.language-screen) .passport-choice.is-dimmed {
+  opacity: .58 !important;
+  transform: translateY(2px) scale(.982) !important;
+  filter: saturate(.72) brightness(.83);
+}
+
+.selection-screen:not(.language-screen) .passport-choice:focus-visible {
+  outline: 2px solid var(--ka-open-gold-bright) !important;
+  outline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .selection-screen:not(.language-screen) .passport-choice:not(.is-selected):not(.is-dimmed):hover {
+    transform: translateY(-4px) scale(1.012);
+    border-color: rgba(239, 203, 136, .80) !important;
+  }
+}
+
+.selection-screen:not(.language-screen) .microcopy {
+  margin: clamp(20px, 3.3svh, 32px) auto 0 !important;
+  font-size: clamp(13px, 3.5vw, 15px) !important;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: kaOpeningSoftIn 560ms var(--ka-open-ease-editorial) 1s forwards;
+}
+
+.selection-screen:not(.language-screen) .microcopy::before {
+  margin-bottom: 4px !important;
+  font-size: 18px !important;
+}
+
+.selection-screen:not(.language-screen) .selection-content::after {
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: 438px;
+  margin-top: 14px !important;
+  padding: 11px 15px !important;
+  border-radius: 13px !important;
+  border-color: rgba(217, 177, 107, .39) !important;
+  background: rgba(5, 14, 9, .68) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(8px);
+  animation: kaOpeningSoftIn 520ms var(--ka-open-ease-editorial) 1.08s forwards;
+}
+
+/* The river tiger becomes environmental rather than a competing focal point. */
+.selection-screen:not(.language-screen)::after {
+  left: -20px !important;
+  bottom: 7.5% !important;
+  width: min(36vw, 170px) !important;
+  opacity: .55 !important;
+  filter: brightness(.80) saturate(.84) !important;
+}
+
+@keyframes kaOpeningBrandIn {
+  from { opacity: 0; transform: translateY(-8px) scale(.965); filter: blur(5px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes kaOpeningTitleIn {
+  from { opacity: 0; transform: translateY(11px); letter-spacing: .17em; }
+  to { opacity: 1; transform: translateY(0); letter-spacing: normal; }
+}
+
+@keyframes kaOpeningMaskIn {
+  from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(18px); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
+}
+
+@keyframes kaOpeningSoftIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes kaOpeningCardIn {
+  from { opacity: 0; transform: translateY(28px) scale(.965); filter: blur(3px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* Compact phones still get the same hierarchy; only the vertical rhythm compresses. */
+@media (max-width: 390px) {
+  .selection-screen:not(.language-screen) .selection-content {
+    padding-inline: 13px !important;
+  }
+
+  .selection-screen:not(.language-screen) .monogram {
+    flex-basis: 17svh;
+    min-height: 17svh !important;
+  }
+
+  .selection-screen:not(.language-screen) .monogram.monogram--image img[data-ka-logo] {
+    height: min(14.5svh, 122px) !important;
+  }
+
+  .selection-screen:not(.language-screen) .eyebrow::before {
+    font-size: clamp(24px, 7.5vw, 30px) !important;
+  }
+
+  .selection-screen:not(.language-screen) h1 {
+    margin-top: 15px !important;
+    font-size: clamp(29px, 8.3vw, 36px) !important;
+  }
+
+  .selection-screen:not(.language-screen) .side-grid {
+    --ka-card-gap: 11px;
+  }
+
+  .selection-screen:not(.language-screen) .passport-choice {
+    min-height: 312px !important;
+    padding: 128px 9px 18px !important;
+    border-radius: 17px !important;
+  }
+
+  .selection-screen:not(.language-screen) .passport-choice::before {
+    top: 29px !important;
+    width: min(31vw, 112px) !important;
+    height: min(27vw, 98px) !important;
+  }
+
+  .selection-screen:not(.language-screen) .side-grid::after {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 14px !important;
+  }
+}
+
+@media (max-height: 760px) {
+  .selection-screen:not(.language-screen) .monogram {
+    flex-basis: 15svh;
+    min-height: 15svh !important;
+  }
+
+  .selection-screen:not(.language-screen) .monogram.monogram--image img[data-ka-logo] {
+    height: min(13svh, 106px) !important;
+  }
+
+  .selection-screen:not(.language-screen) .passport-choice {
+    min-height: 292px !important;
+    padding-top: 117px !important;
+  }
+
+  .selection-screen:not(.language-screen) .passport-choice::before {
+    top: 24px !important;
+    height: 88px !important;
+  }
+
+  .selection-screen:not(.language-screen) .microcopy {
+    margin-top: 15px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .selection-screen:not(.language-screen) .monogram,
+  .selection-screen:not(.language-screen) .eyebrow,
+  .selection-screen:not(.language-screen) h1,
+  .selection-screen:not(.language-screen) .english-sub,
+  .selection-screen:not(.language-screen) .passport-choice,
+  .selection-screen:not(.language-screen) .side-grid::after,
+  .selection-screen:not(.language-screen) .microcopy,
+  .selection-screen:not(.language-screen) .selection-content::after {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    filter: none;
+  }
+
+  .selection-screen:not(.language-screen) .side-grid::before,
+  .selection-screen:not(.language-screen) .passport-choice,
+  .selection-screen:not(.language-screen) .passport-choice::before {
+    transition-duration: 1ms !important;
+  }
+}
