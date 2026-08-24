@@ -123,6 +123,11 @@ function updateParallax() {
     section.style.setProperty('--destination-word-y', `${wordY.toFixed(2)}px`)
     section.style.setProperty('--destination-near-y', `${nearY.toFixed(2)}px`)
     section.style.setProperty('--destination-far-y', `${farY.toFixed(2)}px`)
+
+    // Keep the mirrored mist transform explicit rather than depending on typed
+    // CSS arithmetic support, which remains inconsistent across Mobile Safari.
+    const reverseMist = section.querySelector('.destination-mist--two')
+    if (reverseMist) reverseMist.style.transform = `translate3d(${(-farY).toFixed(2)}px, 0, 0) rotate(1deg)`
   }
 }
 
