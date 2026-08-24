@@ -7,9 +7,16 @@ const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.m
 const mountedHosts = new Set()
 const timersByHost = new WeakMap()
 const handlersByHost = new WeakMap()
+let handoffCleanupTimer = 0
 
 function text(node, fallback = '') {
   return node?.textContent?.trim() || fallback
+}
+
+function escapeHtml(value = '') {
+  return String(value).replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[char]))
 }
 
 function createWorld(host) {
@@ -41,12 +48,6 @@ function createWorld(host) {
   return world
 }
 
-function escapeHtml(value = '') {
-  return String(value).replace(/[&<>"']/g, (char) => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
-  }[char]))
-}
-
 function syncGeometry(host) {
   const cover = host.querySelector('.passport-cover')
   if (!cover?.isConnected) return
@@ -67,6 +68,14 @@ function clearTimers(host) {
 function setPhase(host, phase) {
   if (!host.isConnected || !host.matches('.passport-stage')) return
   host.dataset.passportPhase = String(phase)
+}
+
+function beginHandoff(duration = 940) {
+  document.body.classList.add('passport-handoff-active')
+  window.clearTimeout(handoffCleanupTimer)
+  handoffCleanupTimer = window.setTimeout(() => {
+    document.body.classList.remove('passport-handoff-active')
+  }, duration)
 }
 
 function replayOriginalClick(host, button) {
@@ -93,11 +102,8 @@ function beginOpen(host, button, event) {
 
   if (reducedMotion) {
     setPhase(host, 4)
-    document.body.classList.add('passport-handoff-active')
-    const timers = [
-      window.setTimeout(() => replayOriginalClick(host, button), 120),
-      window.setTimeout(() => document.body.classList.remove('passport-handoff-active'), 760),
-    ]
+    beginHandoff(760)
+    const timers = [window.setTimeout(() => replayOriginalClick(host, button), 120)]
     timersByHost.set(host, timers)
     return
   }
@@ -106,9 +112,8 @@ function beginOpen(host, button, event) {
   const timers = [
     window.setTimeout(() => setPhase(host, 3), 360),
     window.setTimeout(() => setPhase(host, 4), 1080),
-    window.setTimeout(() => document.body.classList.add('passport-handoff-active'), 1480),
+    window.setTimeout(() => beginHandoff(940), 1480),
     window.setTimeout(() => replayOriginalClick(host, button), 1710),
-    window.setTimeout(() => document.body.classList.remove('passport-handoff-active'), 2420),
   ]
   timersByHost.set(host, timers)
 }
