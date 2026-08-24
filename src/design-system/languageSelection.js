@@ -17,6 +17,8 @@ function inferLanguage(button) {
 }
 
 function currentSide() {
+  const memorySide = window.__weddingOpeningSide
+  if (memorySide === 'groom' || memorySide === 'bride') return memorySide
   const side = document.documentElement.dataset.weddingSide
   return side === 'groom' ? 'groom' : side === 'bride' ? 'bride' : null
 }
