@@ -197,7 +197,7 @@
   width: min(42vw, 176px);
   aspect-ratio: 1 / 1;
   margin: 0 auto 22px;
-  background: url('./images/tiger/tiger-medallion-front.PNG') center / contain no-repeat;
+  background: url('./images/tiger/tiger-medallion-front.webp') center / contain no-repeat;
   filter: drop-shadow(0 12px 24px rgba(0,0,0,.38));
 }
 
