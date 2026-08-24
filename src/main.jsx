@@ -15,6 +15,7 @@ import './design-system/opening-side.css'
 import './design-system/language-selection.css'
 import './design-system/forest-cinematic.css'
 import './design-system/tiger-reveal.css'
+import './design-system/tiger-crest-transition.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
@@ -25,6 +26,7 @@ import './design-system/openingSide.js'
 import './design-system/languageSelection.js'
 import './design-system/forestCinematic.js'
 import './design-system/tigerReveal.js'
+import './design-system/tigerCrestTransition.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
