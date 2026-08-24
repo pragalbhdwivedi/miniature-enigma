@@ -1,44 +1,32 @@
 # Tiger assets
 
-Use transparent-background PNGs for engraved medallions/cutouts.
+Production tiger media uses WebP. The opening keeps one major photorealistic tiger appearance only; all earlier/later tiger treatments are restrained engraved/vector motifs.
 
-Required filenames:
+Canonical filenames:
 
-1. `tiger-medallion-bride.png`
-   - Bride-side selector card
-   - Left-facing/profile engraved Bengal tiger
-   - Antique-gold line/etch treatment
-   - Transparent background
+1. `tiger-medallion-bride.webp`
+   - Optional bride-side engraved source asset
+   - Not shown as a major photorealistic reveal
 
-2. `tiger-medallion-groom.png`
-   - Groom-side selector card
-   - Right-facing/profile engraved Bengal tiger
-   - Antique-gold line/etch treatment
-   - Transparent background
+2. `tiger-medallion-groom.webp`
+   - Optional groom-side engraved source asset
+   - Not shown as a major photorealistic reveal
 
-3. `tiger-medallion-front.png`
-   - Shared front-facing engraved tiger medallion
-   - Used on language cards, tiger-to-crest transition and passport cover
-   - Laurel/botanical surround permitted
-   - Transparent background
+3. `tiger-medallion-front.webp`
+   - Shared front-facing source asset for restrained engraved treatments when needed
 
-4. `tiger-forest-peek.png`
-   - Photoreal tiger face/eye partially hidden by foliage
-   - Used in the upper-right of the language selection screen
-   - Transparent/cutout PNG
+4. `tiger-forest-peek.webp`
+   - Reserved source asset; do not create another major photographic tiger appearance before the reveal
 
-5. `tiger-river-profile.png`
-   - Photoreal tiger at the river edge/profile
-   - Used low in the Bride/Groom selector environment
-   - Transparent/cutout PNG
+5. `tiger-river-profile.webp`
+   - Reserved source asset; do not create another major photographic tiger appearance before the reveal
 
-6. `tiger-reveal-front.png`
-   - Main photoreal front-facing Bengal tiger reveal
-   - Full head/shoulders/front-leg composition suitable for the cinematic stream scene
-   - Transparent/cutout PNG
+6. `tiger-reveal-front.webp`
+   - The single major photorealistic Bengal tiger reveal
+   - Full head/shoulders/front-leg composition for the cinematic Corbett sequence
 
-7. `tiger-transition-engraved.png`
-   - Gold engraved version of the reveal tiger for the photographic-to-engraved transition
-   - Transparent background
+7. `tiger-transition-engraved.webp`
+   - Engraved source asset retained for production use where appropriate
+   - The current tiger-to-crest transition prefers the lightweight inline engraved/vector crest after the photographic reveal
 
-Production note: do not use the old geometric/cartoon tiger crest for these opening screens.
+Performance rule: do not reintroduce the retired PNG versions. Keep opening imagery deferred to the stage where it is actually needed.
