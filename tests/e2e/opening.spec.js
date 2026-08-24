@@ -21,9 +21,79 @@ async function expectLargeTapTarget(locator) {
   expect(box.height).toBeGreaterThanOrEqual(48)
 }
 
-async function runOpening(page, testInfo, { side = 'bride', lang = 'en' } = {}) {
+async function installMutationObserverDiagnostics(page) {
+  await page.addInitScript(() => {
+    const NativeMutationObserver = window.MutationObserver
+    let nextId = 0
+    const diagnostics = []
+    window.__weddingMutationObserverDiagnostics = diagnostics
+
+    window.MutationObserver = class DiagnosticMutationObserver {
+      constructor(callback) {
+        const record = {
+          id: ++nextId,
+          callbacks: 0,
+          mutationRecords: 0,
+          cutoff: false,
+          target: '',
+          options: null,
+          stack: new Error('MutationObserver created here').stack || '',
+          source: String(callback).slice(0, 900),
+        }
+        diagnostics.push(record)
+        this.__record = record
+        this.__native = new NativeMutationObserver((mutations) => {
+          record.callbacks += 1
+          record.mutationRecords += mutations.length
+
+          // Diagnostic run only. If an observer enters a microtask storm, cut it off
+          // so WebKit can yield and tell the test which observer was responsible.
+          if (record.callbacks > 12) {
+            record.cutoff = true
+            this.__native.disconnect()
+            return
+          }
+
+          callback(mutations, this)
+        })
+      }
+
+      observe(target, options) {
+        const id = target?.id ? `#${target.id}` : ''
+        const classes = typeof target?.className === 'string' && target.className
+          ? `.${target.className.trim().replace(/\s+/g, '.')}`
+          : ''
+        this.__record.target = `${target?.nodeName || 'unknown'}${id}${classes}`
+        this.__record.options = { ...options }
+        return this.__native.observe(target, options)
+      }
+
+      disconnect() {
+        return this.__native.disconnect()
+      }
+
+      takeRecords() {
+        return this.__native.takeRecords()
+      }
+    }
+  })
+}
+
+async function dumpMutationObserverDiagnostics(page) {
+  const diagnostics = await page.evaluate(() => window.__weddingMutationObserverDiagnostics || [])
+  const ranked = diagnostics
+    .slice()
+    .sort((a, b) => b.callbacks - a.callbacks || b.mutationRecords - a.mutationRecords)
+    .slice(0, 12)
+  console.log(`MUTATION_OBSERVER_DIAGNOSTICS ${JSON.stringify(ranked)}`)
+  return ranked
+}
+
+async function runOpening(page, testInfo, { side = 'bride', lang = 'en', observerDiagnostics = false } = {}) {
   const pageErrors = []
   page.on('pageerror', (error) => pageErrors.push(error.message))
+
+  if (observerDiagnostics) await installMutationObserverDiagnostics(page)
 
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await expect(page.locator('.selection-screen:not(.language-screen)')).toBeVisible()
@@ -79,8 +149,6 @@ async function runOpening(page, testInfo, { side = 'bride', lang = 'en' } = {}) 
   expect(crestBox.width).toBeGreaterThan(120)
   expect(crestBox.height).toBeGreaterThan(120)
 
-  /* Module 05 deliberately spends ~2.2 s transforming photography into the
-     engraved crest. Verify the final phase, not an arbitrary mid-animation frame. */
   await expect.poll(() => crestScreen.getAttribute('data-crest-phase'), {
     timeout: 4_500,
     message: 'Tiger-to-crest choreography should reach its settled phase',
@@ -116,11 +184,22 @@ async function runOpening(page, testInfo, { side = 'bride', lang = 'en' } = {}) 
   await expect(page.locator('.site-shell')).toBeVisible()
   await expect(page.locator('#home')).toBeVisible()
   await capture(page, testInfo, '07-site')
+
+  if (observerDiagnostics) {
+    const ranked = await dumpMutationObserverDiagnostics(page)
+    const cutoffs = ranked.filter((record) => record.cutoff)
+    expect(cutoffs, `MutationObserver callback storm detected: ${JSON.stringify(cutoffs)}`).toEqual([])
+  }
+
   expect(pageErrors, `Unexpected page errors: ${pageErrors.join(' | ')}`).toEqual([])
 }
 
 test('Bride side English opening reaches the invitation', async ({ page }, testInfo) => {
-  await runOpening(page, testInfo, { side: 'bride', lang: 'en' })
+  await runOpening(page, testInfo, {
+    side: 'bride',
+    lang: 'en',
+    observerDiagnostics: testInfo.project.name === 'webkit-320',
+  })
 })
 
 test('Groom side Hindi opening reaches the invitation', async ({ page }, testInfo) => {
