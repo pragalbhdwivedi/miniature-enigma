@@ -69,7 +69,8 @@ async function runOpening(page, testInfo, { side = 'bride', lang = 'en' } = {}) 
   await capture(page, testInfo, '04-tiger')
   await tigerContinue.click()
 
-  await expect(page.locator('.intro-screen.intro-2')).toBeVisible()
+  const crestScreen = page.locator('.intro-screen.intro-2')
+  await expect(crestScreen).toBeVisible()
   const crest = page.locator('.intro-2 .crest-transform')
   await expect(crest).toBeVisible()
   await expectPseudoAsset(crest, 'tiger-transition-engraved')
@@ -77,8 +78,18 @@ async function runOpening(page, testInfo, { side = 'bride', lang = 'en' } = {}) 
   expect(crestBox).not.toBeNull()
   expect(crestBox.width).toBeGreaterThan(120)
   expect(crestBox.height).toBeGreaterThan(120)
-  const crestOpacity = await crest.evaluate((element) => Number.parseFloat(getComputedStyle(element).opacity))
-  expect(crestOpacity).toBeGreaterThan(0.5)
+
+  /* Module 05 deliberately spends ~2.2 s transforming photography into the
+     engraved crest. Verify the final phase, not an arbitrary mid-animation frame. */
+  await expect.poll(() => crestScreen.getAttribute('data-crest-phase'), {
+    timeout: 4_500,
+    message: 'Tiger-to-crest choreography should reach its settled phase',
+  }).toBe('3')
+  await expect.poll(() => crest.evaluate((element) => Number.parseFloat(getComputedStyle(element).opacity)), {
+    timeout: 2_000,
+    message: 'Final engraved crest should become visibly settled',
+  }).toBeGreaterThan(0.75)
+
   const crestContinue = page.locator('.intro-2 .tap-hint')
   await expectLargeTapTarget(crestContinue)
   await capture(page, testInfo, '05-crest')
