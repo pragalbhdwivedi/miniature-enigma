@@ -30,6 +30,7 @@ import './design-system/glass-architecture.css'
 import './design-system/stay-travel-transport.css'
 import './design-system/transport-details-modal.css'
 import './design-system/wedding-gallery.css'
+import './design-system/bottom-navigation.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
@@ -55,6 +56,7 @@ import './design-system/glassArchitecture.js'
 import './design-system/stayTravelTransport.js'
 import './design-system/transport-details-modal.js'
 import './design-system/weddingGallery.js'
+import './design-system/bottomNavigation.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
