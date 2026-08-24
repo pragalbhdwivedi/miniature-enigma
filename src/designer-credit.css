@@ -1,21 +1,59 @@
-/* Quiet end-credit treatment, intentionally subordinate to the wedding closing frame. */
+/* Module 23 — Designer / Hosting Footer
+   A deliberately quiet production colophon. It should finish the invitation, not compete with it. */
 .designer-credit {
   position: relative;
   z-index: 3;
-  padding: 30px 22px calc(104px + env(safe-area-inset-bottom, 0px));
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: -1px;
+  padding: 24px 22px calc(100px + env(safe-area-inset-bottom, 0px));
   text-align: center;
   background:
-    radial-gradient(circle at 50% 0%, rgba(202,165,102,.08), transparent 45%),
-    #050806;
-  color: rgba(239,229,206,.64);
-  border-top: 1px solid rgba(202,165,102,.12);
+    radial-gradient(circle at 50% 0%, rgba(202,165,102,.055), transparent 32%),
+    linear-gradient(180deg, #040605 0%, #050806 100%);
+  color: rgba(239,229,206,.62);
+  border-top: 0;
+}
+
+/* Module 22 supplies the structural handoff; Module 23 owns the final colophon surface. */
+.site-shell > .closing-section.closing-cinematic-ready + .designer-credit {
+  margin-top: -1px;
+  border-top-color: transparent;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(202,165,102,.055), transparent 32%),
+    linear-gradient(180deg, #040605 0%, #050806 100%);
+}
+
+.designer-credit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .2;
+  background:
+    repeating-linear-gradient(96deg, transparent 0 35px, rgba(232,199,133,.018) 36px 37px),
+    repeating-linear-gradient(6deg, transparent 0 47px, rgba(255,255,255,.012) 48px 49px);
 }
 
 .designer-credit__rule {
-  width: 52px;
+  position: relative;
+  width: 78px;
   height: 1px;
-  margin: 0 auto 18px;
-  background: linear-gradient(90deg, transparent, rgba(229,198,130,.72), transparent);
+  margin: 0 auto 17px;
+  background: linear-gradient(90deg, transparent, rgba(229,198,130,.62), transparent);
+}
+
+.designer-credit__rule::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border: 1px solid rgba(229,198,130,.48);
+  background: #040605;
 }
 
 .designer-credit p {
@@ -27,42 +65,127 @@
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: center;
-  gap: 5px;
+  gap: 5px 7px;
+  min-height: 34px;
   font-size: 12px;
-  letter-spacing: .08em;
+  line-height: 1.45;
+  letter-spacing: .055em;
 }
 
-.designer-credit__line span {
+.designer-credit__label {
   text-transform: uppercase;
-  font-size: 9px;
-  letter-spacing: .18em;
-  color: rgba(239,229,206,.42);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8px;
+  line-height: 1.4;
+  letter-spacing: .19em;
+  color: rgba(239,229,206,.38);
 }
 
 .designer-credit a {
-  color: #d9b572;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
   text-decoration: none;
   text-underline-offset: 4px;
-  transition: opacity .2s ease;
 }
 
-.designer-credit a:active,
-.designer-credit a:hover {
-  opacity: .72;
+.designer-credit__maker {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 2px;
+  color: #d9b572;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 13px;
+  letter-spacing: .04em;
+  border-bottom: 1px solid rgba(217,181,114,.24);
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
 }
 
 .designer-credit__meta {
-  margin-top: 8px !important;
+  margin-top: 2px !important;
+  min-height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
-  font-size: 9px;
-  letter-spacing: .16em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 8px;
+  line-height: 1.45;
+  letter-spacing: .17em;
   text-transform: uppercase;
-  color: rgba(239,229,206,.34);
+  color: rgba(239,229,206,.28);
 }
 
-.designer-credit__meta a {
-  color: rgba(239,229,206,.48);
+.designer-credit__host {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  color: rgba(239,229,206,.45);
+  transition:
+    color 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.designer-credit__year {
+  color: rgba(239,229,206,.30);
+}
+
+.designer-credit a:focus-visible {
+  outline: 1px solid rgba(229,198,130,.72);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+.designer-credit a:active {
+  opacity: .72;
+  transform: translateY(1px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .designer-credit__maker:hover {
+    color: #e5c686;
+    border-bottom-color: rgba(229,198,134,.52);
+  }
+
+  .designer-credit__host:hover {
+    color: rgba(239,229,206,.72);
+  }
+}
+
+@media (max-width: 340px) {
+  .designer-credit {
+    padding-inline: 18px;
+  }
+
+  .designer-credit__line {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .designer-credit__maker {
+    min-height: 31px;
+  }
+}
+
+@media (max-height: 690px) {
+  .designer-credit {
+    padding-top: 20px;
+    padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .designer-credit a {
+    transition: none !important;
+  }
+
+  .designer-credit a:active {
+    transform: none;
+  }
 }
