@@ -1,14 +1,16 @@
-// Four lightweight cinematic movements for the Corbett invitation.
-// Motion language is adapted from MIT-licensed ThreeUI Community concepts:
-// Particle Drift, Engraved Certificate, Woven Cloth and Constellation Field.
-// This implementation intentionally uses Canvas 2D/CSS rather than shipping Three.js/WebGL
-// so the WhatsApp-first mobile invitation stays fast on iPhone and Android.
+// Lightweight cinematic atmosphere shared by the opening forest and the Pheras stars.
+// Corrective pass after Codex review: inactive detached canvases are explicitly
+// destroyed, reduced-motion changes are honored live, and the obsolete passport
+// engraving canvas / woven handoff are no longer mounted.
 
 const GOLD = '229, 198, 130'
 const IVORY = '239, 229, 206'
-const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
-const coarsePointer = window.matchMedia?.('(pointer: coarse)')?.matches ?? true
+const motionQuery = window.matchMedia?.('(prefers-reduced-motion: reduce)')
+const pointerQuery = window.matchMedia?.('(pointer: coarse)')
+let reducedMotion = motionQuery?.matches ?? false
+let coarsePointer = pointerQuery?.matches ?? true
 const instances = new WeakMap()
+const liveInstances = new Set()
 
 function randomBetween(min, max) {
   return min + Math.random() * (max - min)
@@ -26,29 +28,34 @@ class MotionCanvas {
     this.active = true
     this.frame = null
     this.lastTime = 0
+    this.destroyed = false
     this.dpr = Math.min(window.devicePixelRatio || 1, coarsePointer ? 1.35 : 1.75)
 
     host.appendChild(this.canvas)
     host.classList.add('has-cinematic-canvas')
+    liveInstances.add(this)
 
     this.resizeObserver = new ResizeObserver(() => this.resize())
     this.resizeObserver.observe(host)
 
     this.intersectionObserver = new IntersectionObserver(([entry]) => {
       this.active = entry.isIntersecting
-      if (this.active && !this.frame && !reducedMotion) this.frame = requestAnimationFrame((time) => this.tick(time))
+      if (this.active && !this.frame && !reducedMotion) {
+        this.frame = requestAnimationFrame((time) => this.tick(time))
+      }
     }, { rootMargin: '120px 0px' })
     this.intersectionObserver.observe(host)
 
     this.resize()
-    if (reducedMotion) this.draw(0, 0)
-    else this.frame = requestAnimationFrame((time) => this.tick(time))
+    this.handleMotionPreference()
   }
 
   resize() {
+    if (this.destroyed || !this.host.isConnected) return
     const rect = this.host.getBoundingClientRect()
     this.width = Math.max(1, rect.width)
     this.height = Math.max(1, rect.height)
+    this.dpr = Math.min(window.devicePixelRatio || 1, coarsePointer ? 1.35 : 1.75)
     this.canvas.width = Math.round(this.width * this.dpr)
     this.canvas.height = Math.round(this.height * this.dpr)
     this.ctx?.setTransform(this.dpr, 0, 0, this.dpr, 0, 0)
@@ -57,7 +64,6 @@ class MotionCanvas {
   }
 
   seed() {
-    if (this.kind === 'engraving') return
     const base = this.kind === 'stars' ? 34 : 30
     const count = Math.max(18, Math.round(base * Math.min(1.15, this.width / 390)))
     this.nodes = Array.from({ length: count }, () => ({
@@ -70,10 +76,27 @@ class MotionCanvas {
     }))
   }
 
+  handleMotionPreference() {
+    if (this.destroyed) return
+    if (reducedMotion) {
+      if (this.frame) cancelAnimationFrame(this.frame)
+      this.frame = null
+      this.lastTime = 0
+      this.draw(0, 0)
+      return
+    }
+
+    if (this.active && !this.frame) {
+      this.lastTime = 0
+      this.frame = requestAnimationFrame((time) => this.tick(time))
+    }
+  }
+
   tick(time) {
     this.frame = null
-    if (!this.host.isConnected) return this.destroy()
-    if (!this.active) return
+    if (this.destroyed || !this.host.isConnected) return this.destroy()
+    if (reducedMotion || !this.active) return
+
     const dt = Math.min(32, Math.max(0, time - (this.lastTime || time)))
     this.lastTime = time
     this.draw(time, dt)
@@ -83,7 +106,6 @@ class MotionCanvas {
   draw(time, dt) {
     if (!this.ctx) return
     if (this.kind === 'forest') this.drawForest(time, dt)
-    else if (this.kind === 'engraving') this.drawEngraving(time)
     else if (this.kind === 'stars') this.drawStars(time, dt)
   }
 
@@ -109,44 +131,6 @@ class MotionCanvas {
       ctx.arc(node.x, node.y, node.radius * 4.8, 0, Math.PI * 2)
       ctx.fill()
     }
-  }
-
-  drawEngraving(time) {
-    const ctx = this.ctx
-    ctx.clearRect(0, 0, this.width, this.height)
-    const cx = this.width * 0.5
-    const cy = this.height * 0.46
-    const pulse = reducedMotion ? 0 : Math.sin(time * 0.00075) * 2.5
-
-    ctx.save()
-    ctx.translate(cx, cy)
-    ctx.strokeStyle = `rgba(${GOLD}, 0.16)`
-    ctx.lineWidth = 0.72
-
-    for (let i = 0; i < 13; i += 1) {
-      ctx.save()
-      ctx.rotate((i - 6) * 0.048)
-      const rx = Math.max(38, this.width * (0.17 + i * 0.019)) + pulse
-      const ry = Math.max(52, this.height * (0.12 + i * 0.012))
-      ctx.setLineDash([1.5 + (i % 3), 4.5 + (i % 4)])
-      ctx.beginPath()
-      ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2)
-      ctx.stroke()
-      ctx.restore()
-    }
-
-    ctx.setLineDash([])
-    ctx.strokeStyle = `rgba(${IVORY}, 0.07)`
-    for (let y = -this.height * 0.34; y < this.height * 0.35; y += 14) {
-      ctx.beginPath()
-      for (let x = -this.width * 0.44; x <= this.width * 0.44; x += 8) {
-        const wave = Math.sin((x + time * 0.012) * 0.038) * 2.1
-        if (x === -this.width * 0.44) ctx.moveTo(x, y + wave)
-        else ctx.lineTo(x, y + wave)
-      }
-      ctx.stroke()
-    }
-    ctx.restore()
   }
 
   drawStars(time, dt) {
@@ -200,11 +184,16 @@ class MotionCanvas {
   }
 
   destroy() {
+    if (this.destroyed) return
+    this.destroyed = true
     if (this.frame) cancelAnimationFrame(this.frame)
     this.frame = null
     this.resizeObserver?.disconnect()
     this.intersectionObserver?.disconnect()
     this.canvas?.remove()
+    this.host?.classList?.remove('has-cinematic-canvas')
+    instances.delete(this.host)
+    liveInstances.delete(this)
   }
 }
 
@@ -221,8 +210,11 @@ function markEditorialHero(hero) {
 }
 
 function scan() {
+  for (const instance of [...liveInstances]) {
+    if (!instance.host.isConnected) instance.destroy()
+  }
+
   document.querySelectorAll('.intro-screen').forEach((host) => ensureCanvas(host, 'forest'))
-  document.querySelectorAll('.passport-cover').forEach((host) => ensureCanvas(host, 'engraving'))
   document.querySelectorAll('.editorial-hero').forEach(markEditorialHero)
   document.querySelectorAll('.event-card h3').forEach((heading) => {
     if (heading.textContent?.trim() !== 'Written in the Stars') return
@@ -233,21 +225,18 @@ function scan() {
   })
 }
 
-function runWovenTransition() {
-  if (reducedMotion || document.querySelector('.woven-page-transition')) return
-  const layer = document.createElement('div')
-  layer.className = 'woven-page-transition'
-  layer.setAttribute('aria-hidden', 'true')
-  layer.innerHTML = '<div class="woven-page-transition__cloth"></div><div class="woven-page-transition__paper"></div>'
-  document.body.appendChild(layer)
-  window.setTimeout(() => layer.remove(), 1150)
+function handleMotionChange(event) {
+  reducedMotion = event.matches
+  for (const instance of [...liveInstances]) instance.handleMotionPreference()
 }
 
-document.addEventListener('click', (event) => {
-  const target = event.target
-  if (!(target instanceof Element)) return
-  if (target.closest('.passport-stage .primary-cta')) runWovenTransition()
-}, { capture: true })
+function handlePointerChange(event) {
+  coarsePointer = event.matches
+  for (const instance of [...liveInstances]) instance.resize()
+}
+
+motionQuery?.addEventListener?.('change', handleMotionChange)
+pointerQuery?.addEventListener?.('change', handlePointerChange)
 
 let scanQueued = false
 const observer = new MutationObserver(() => {
@@ -259,12 +248,10 @@ const observer = new MutationObserver(() => {
   })
 })
 
-if (document.body) {
+function start() {
   observer.observe(document.body, { childList: true, subtree: true })
   scan()
-} else {
-  document.addEventListener('DOMContentLoaded', () => {
-    observer.observe(document.body, { childList: true, subtree: true })
-    scan()
-  }, { once: true })
 }
+
+if (document.body) start()
+else document.addEventListener('DOMContentLoaded', start, { once: true })
