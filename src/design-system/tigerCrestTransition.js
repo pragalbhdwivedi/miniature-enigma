@@ -1,13 +1,13 @@
 // Module 05 — Tiger → Engraved Crest Transformation
-// Corrective pass: the single photoreal tiger still carries into this step, but the
-// engraved phase now reuses the existing inline TigerCrest vector instead of loading
-// another multi-megabyte PNG. React / fallback remain authoritative.
+// The single photoreal tiger carries into this step, then the approved engraved WebP
+// takes over. React / fallback remain authoritative; this module only choreographs
+// the visual handoff and never clones a second tiger crest into the same frame.
 
 const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
 const mountedHosts = new Set()
 const timersByHost = new WeakMap()
 
-function createWorld(host) {
+function createWorld() {
   const world = document.createElement('div')
   world.className = 'crest-transition-world'
   world.setAttribute('aria-hidden', 'true')
@@ -22,15 +22,6 @@ function createWorld(host) {
     <div class="crest-transition-world__grain"></div>
     <div class="crest-transition-world__burnish"></div>
   `
-
-  const source = host.querySelector('.crest-transform .tiger-crest')
-  const engraved = world.querySelector('.crest-transition-world__engraved')
-  if (source && engraved) {
-    const vector = source.cloneNode(true)
-    vector.classList.add('crest-transition-world__engraved-svg')
-    engraved.appendChild(vector)
-  }
-
   return world
 }
 
@@ -52,7 +43,7 @@ function mount(host) {
   host.classList.add('crest-transition-ready')
 
   if (!host.querySelector(':scope > .crest-transition-world')) {
-    const world = createWorld(host)
+    const world = createWorld()
     const content = host.querySelector('.intro-content')
     host.insertBefore(world, content || null)
   }
