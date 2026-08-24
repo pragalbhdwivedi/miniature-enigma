@@ -1,0 +1,435 @@
+/* Module 04 — One Wild Moment
+   One major photoreal tiger appearance. Photography leads; typography and effects
+   stay subordinate. Uses the approved local tiger reveal asset already bound by
+   production-assets.css. No additional media or WebGL payload. */
+
+.intro-screen.intro-1 {
+  --tiger-gold: #dfbd7a;
+  --tiger-ivory: #f2e8d2;
+  --tiger-ink: #020403;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 42%, #101b12 0%, #040705 52%, #010201 100%);
+}
+
+/* Keep the existing uploaded tiger as the only hero image. */
+.intro-screen.intro-1 .intro-media {
+  z-index: 1;
+  opacity: 1;
+  transform: scale(1.055) translate3d(0, .8%, 0);
+  transform-origin: 50% 43%;
+  filter: none !important;
+  transition:
+    opacity 1.05s ease,
+    transform 7.5s cubic-bezier(.18,.72,.18,1),
+    filter 1.3s ease;
+  will-change: transform, opacity;
+}
+
+.intro-screen.intro-1 .intro-shade {
+  z-index: 3;
+  background:
+    radial-gradient(ellipse at 50% 39%, transparent 14%, rgba(0,0,0,.04) 38%, rgba(0,0,0,.52) 78%, rgba(0,0,0,.82) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.54) 0%, rgba(0,0,0,.02) 23%, rgba(0,0,0,.04) 57%, rgba(0,0,0,.88) 100%);
+  pointer-events: none;
+}
+
+.tiger-cinematic-world {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.tiger-cinematic-world > * {
+  position: absolute;
+  pointer-events: none;
+}
+
+.tiger-cinematic-world__blackout {
+  inset: 0;
+  background: #010201;
+  opacity: 0;
+  transition: opacity .9s ease;
+}
+
+/* A narrow warm shaft reveals the eyes/face, then disappears. */
+.tiger-cinematic-world__light {
+  top: -18%;
+  left: 18%;
+  width: 72%;
+  height: 92%;
+  transform: rotate(-8deg) translate3d(-36%,0,0);
+  background:
+    linear-gradient(101deg,
+      transparent 16%,
+      rgba(238,211,151,.015) 29%,
+      rgba(238,211,151,.14) 42%,
+      rgba(255,229,171,.22) 47%,
+      rgba(238,211,151,.07) 54%,
+      transparent 67%);
+  filter: blur(10px);
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+/* Soft shadow foliage frames the tiger without adding another animal image. */
+.tiger-cinematic-world__canopy {
+  top: -12%;
+  bottom: -10%;
+  width: 38%;
+  opacity: .90;
+  filter: blur(.4px);
+}
+
+.tiger-cinematic-world__canopy::before,
+.tiger-cinematic-world__canopy::after {
+  content: '';
+  position: absolute;
+  width: 92%;
+  aspect-ratio: .72;
+  border-radius: 78% 18% 70% 24%;
+  background:
+    radial-gradient(ellipse at 36% 38%, #102116 0 17%, #07100b 42%, #010302 73%);
+  box-shadow:
+    24px 90px 0 -18px #06100a,
+    -14px 180px 0 -27px #010302,
+    34px 270px 0 -31px #07110b,
+    4px 365px 0 -36px #010302;
+}
+
+.tiger-cinematic-world__canopy--left {
+  left: -28%;
+  transform: rotate(8deg);
+}
+
+.tiger-cinematic-world__canopy--left::before { top: 2%; right: 0; transform: rotate(18deg); }
+.tiger-cinematic-world__canopy--left::after { top: 46%; right: -7%; transform: rotate(31deg) scale(.78); }
+
+.tiger-cinematic-world__canopy--right {
+  right: -29%;
+  transform: scaleX(-1) rotate(7deg);
+}
+
+.tiger-cinematic-world__canopy--right::before { top: 8%; right: 1%; transform: rotate(22deg); }
+.tiger-cinematic-world__canopy--right::after { top: 50%; right: -8%; transform: rotate(35deg) scale(.82); }
+
+/* Very soft breath/mist near the lower face. */
+.tiger-cinematic-world__breath {
+  left: 18%;
+  right: 18%;
+  top: 50%;
+  height: 18%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(223,226,207,.13), rgba(183,198,177,.035) 45%, transparent 72%);
+  filter: blur(22px);
+  opacity: 0;
+}
+
+/* Fine optical grain keeps the large PNG from feeling like a cut-out. */
+.tiger-cinematic-world__grain {
+  inset: -35%;
+  opacity: .14;
+  background-image:
+    repeating-radial-gradient(circle at 21% 17%, rgba(255,255,255,.10) 0 .45px, transparent .55px 3px),
+    repeating-radial-gradient(circle at 71% 63%, rgba(0,0,0,.20) 0 .45px, transparent .55px 3.4px);
+  background-size: 5px 5px, 7px 7px;
+  mix-blend-mode: soft-light;
+  transform: rotate(2deg);
+}
+
+/* Thin editorial viewfinder marks, not a literal camera UI. */
+.tiger-cinematic-world__frame {
+  inset: max(15px, env(safe-area-inset-top)) 14px calc(14px + env(safe-area-inset-bottom));
+  border: 1px solid rgba(223,189,122,.18);
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity .8s ease;
+}
+
+.tiger-cinematic-world__frame::before,
+.tiger-cinematic-world__frame::after {
+  content: '';
+  position: absolute;
+  width: 38px;
+  height: 38px;
+}
+
+.tiger-cinematic-world__frame::before {
+  top: -1px;
+  left: -1px;
+  border-top: 1px solid rgba(239,207,144,.70);
+  border-left: 1px solid rgba(239,207,144,.70);
+}
+
+.tiger-cinematic-world__frame::after {
+  right: -1px;
+  bottom: -1px;
+  border-right: 1px solid rgba(239,207,144,.54);
+  border-bottom: 1px solid rgba(239,207,144,.54);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Editorial hierarchy                                                        */
+/* -------------------------------------------------------------------------- */
+.intro-screen.intro-1 .intro-content {
+  z-index: 6;
+  justify-content: flex-end;
+  align-items: flex-start;
+  text-align: left;
+  padding:
+    max(28px, env(safe-area-inset-top))
+    clamp(22px, 6vw, 34px)
+    calc(30px + env(safe-area-inset-bottom));
+}
+
+.intro-screen.intro-1 .intro-content > .monogram {
+  position: absolute;
+  top: max(28px, env(safe-area-inset-top));
+  left: 50%;
+  width: clamp(48px, 13vw, 64px) !important;
+  min-height: 66px !important;
+  transform: translateX(-50%);
+  opacity: .84;
+}
+
+.intro-screen.intro-1 .intro-content > .monogram.monogram--image img[data-ka-logo] {
+  width: clamp(48px, 13vw, 64px) !important;
+  max-height: 66px !important;
+}
+
+.intro-screen.intro-1 .intro-content > .eyebrow {
+  display: block;
+  order: 1;
+  margin: 0 0 10px;
+  color: rgba(232,205,151,.78);
+  font-size: 9px;
+  letter-spacing: .28em;
+  line-height: 1.4;
+}
+
+/* Existing sentence becomes a quiet supporting line. */
+.intro-screen.intro-1 .intro-content > h1 {
+  order: 3;
+  width: min(92%, 360px);
+  margin: 10px 0 0;
+  color: rgba(242,232,210,.78);
+  font-size: clamp(14px, 3.7vw, 17px);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: .015em;
+  text-shadow: 0 3px 18px rgba(0,0,0,.78);
+}
+
+/* This is the actual hero title. */
+.intro-screen.intro-1 .tiger-reveal-label {
+  order: 2;
+  width: min(100%, 410px);
+  margin: 0;
+  color: var(--tiger-ivory);
+  font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
+  font-size: clamp(43px, 12.2vw, 66px);
+  font-weight: 500;
+  line-height: .93;
+  letter-spacing: -.035em;
+  text-transform: none;
+  text-wrap: balance;
+  text-shadow: 0 7px 30px rgba(0,0,0,.86);
+}
+
+html[lang='hi'] .intro-screen.intro-1 .tiger-reveal-label {
+  font-family: var(--font-devanagari-display, 'Tiro Devanagari Hindi', serif);
+  font-size: clamp(39px, 10.8vw, 58px);
+  line-height: 1.06;
+  letter-spacing: 0;
+}
+
+.intro-screen.intro-1 .tap-hint,
+.intro-screen.intro-1 .intro-continue {
+  order: 4;
+  position: relative;
+  inset: auto;
+  width: min(100%, 390px);
+  min-height: 58px;
+  margin: 22px 0 0;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid rgba(145,237,136,.50);
+  border-radius: 16px;
+  background: rgba(24,114,47,.30);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 9px 30px rgba(0,0,0,.30), inset 0 0 22px rgba(120,255,126,.045);
+  color: #defbd9;
+}
+
+.intro-screen.intro-1 .tap-hint span,
+.intro-screen.intro-1 .intro-continue {
+  font-size: 12px;
+  letter-spacing: .08em;
+}
+
+.intro-screen.intro-1 .progress-dots {
+  order: 5;
+  position: relative;
+  inset: auto;
+  align-self: center;
+  margin: 13px auto 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Staged reveal. Without JS, all content remains visible.                     */
+/* -------------------------------------------------------------------------- */
+.intro-screen.intro-1.tiger-cinematic-ready .intro-content > .monogram,
+.intro-screen.intro-1.tiger-cinematic-ready .intro-content > .eyebrow,
+.intro-screen.intro-1.tiger-cinematic-ready .intro-content > h1,
+.intro-screen.intro-1.tiger-cinematic-ready .tiger-reveal-label,
+.intro-screen.intro-1.tiger-cinematic-ready .tap-hint,
+.intro-screen.intro-1.tiger-cinematic-ready .intro-continue,
+.intro-screen.intro-1.tiger-cinematic-ready .progress-dots {
+  opacity: 0;
+  transform: translate3d(0, 13px, 0);
+  transition:
+    opacity .7s ease,
+    transform .9s cubic-bezier(.18,.72,.2,1);
+}
+
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='0'] .intro-media {
+  opacity: .15;
+  transform: scale(1.095) translate3d(0,1.2%,0);
+  filter: brightness(.40) saturate(.60) contrast(1.08) !important;
+}
+
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='0'] .tiger-cinematic-world__blackout {
+  opacity: .76;
+}
+
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='1'] .intro-media {
+  opacity: .63;
+  transform: scale(1.078) translate3d(0,.8%,0);
+  filter: brightness(.70) saturate(.86) contrast(1.06) !important;
+}
+
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='1'] .tiger-cinematic-world__blackout {
+  opacity: .32;
+}
+
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='1'] .tiger-cinematic-world__light {
+  opacity: .86;
+  animation: tigerLightSweep 1.15s cubic-bezier(.22,.72,.18,1) 1 both;
+}
+
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='1'] .tiger-cinematic-world__frame {
+  opacity: .42;
+}
+
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='2'] .intro-media,
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='3'] .intro-media {
+  opacity: .98;
+  transform: scale(1.025) translate3d(0,0,0);
+  filter: brightness(.94) saturate(.96) contrast(1.03) !important;
+}
+
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='2'] .tiger-cinematic-world__blackout,
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='3'] .tiger-cinematic-world__blackout {
+  opacity: .03;
+}
+
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='2'] .tiger-cinematic-world__breath,
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='3'] .tiger-cinematic-world__breath {
+  opacity: .28;
+  animation: tigerBreath 4.8s ease-in-out infinite alternate;
+}
+
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='2'] .tiger-cinematic-world__frame,
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='3'] .tiger-cinematic-world__frame {
+  opacity: .50;
+}
+
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='2'] .intro-content > .monogram,
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='3'] .intro-content > .monogram,
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='2'] .intro-content > .eyebrow,
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='3'] .intro-content > .eyebrow {
+  opacity: .78;
+  transform: translate3d(0,0,0);
+}
+
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='2'] .tiger-reveal-label,
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='2'] .intro-content > h1,
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='3'] .tiger-reveal-label,
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='3'] .intro-content > h1 {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='3'] .tap-hint,
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='3'] .intro-continue,
+.intro-screen.intro-1.tiger-cinematic-ready[data-tiger-phase='3'] .progress-dots {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+
+@keyframes tigerLightSweep {
+  0% { transform: rotate(-8deg) translate3d(-46%,0,0); opacity: 0; }
+  22% { opacity: .78; }
+  67% { opacity: .84; }
+  100% { transform: rotate(-8deg) translate3d(52%,0,0); opacity: 0; }
+}
+
+@keyframes tigerBreath {
+  from { transform: translate3d(-5%,0,0) scaleX(.82); opacity: .12; }
+  to { transform: translate3d(7%,-2%,0) scaleX(1.08); opacity: .28; }
+}
+
+@media (max-height: 720px) {
+  .intro-screen.intro-1 .intro-content {
+    padding-bottom: calc(18px + env(safe-area-inset-bottom));
+  }
+
+  .intro-screen.intro-1 .tiger-reveal-label {
+    font-size: clamp(38px, 10.5vw, 52px);
+  }
+
+  .intro-screen.intro-1 .intro-content > h1 {
+    margin-top: 7px;
+    font-size: 13px;
+  }
+
+  .intro-screen.intro-1 .tap-hint,
+  .intro-screen.intro-1 .intro-continue {
+    min-height: 52px;
+    margin-top: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-screen.intro-1 .intro-media,
+  .intro-screen.intro-1.tiger-cinematic-ready .intro-media {
+    opacity: .96 !important;
+    transform: scale(1.025) !important;
+    transition: none !important;
+    filter: brightness(.92) saturate(.94) contrast(1.03) !important;
+  }
+
+  .intro-screen.intro-1.tiger-cinematic-ready .intro-content > .monogram,
+  .intro-screen.intro-1.tiger-cinematic-ready .intro-content > .eyebrow,
+  .intro-screen.intro-1.tiger-cinematic-ready .intro-content > h1,
+  .intro-screen.intro-1.tiger-cinematic-ready .tiger-reveal-label,
+  .intro-screen.intro-1.tiger-cinematic-ready .tap-hint,
+  .intro-screen.intro-1.tiger-cinematic-ready .intro-continue,
+  .intro-screen.intro-1.tiger-cinematic-ready .progress-dots {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .tiger-cinematic-world__light,
+  .tiger-cinematic-world__breath {
+    display: none;
+  }
+}
