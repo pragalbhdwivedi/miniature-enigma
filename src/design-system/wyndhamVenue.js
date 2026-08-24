@@ -153,12 +153,13 @@ function createViewer() {
     if (!isOpen) return
     isOpen = false
     window.clearTimeout(closeTimer)
+    const returnTarget = opener
+    opener = null
     root.classList.remove('is-open')
-    root.setAttribute('aria-hidden', 'true')
     unlockPage()
+    returnTarget?.focus?.({ preventScroll: true })
     closeTimer = window.setTimeout(() => {
-      opener?.focus?.({ preventScroll: true })
-      opener = null
+      if (!isOpen) root.setAttribute('aria-hidden', 'true')
     }, reducedMotion ? 0 : 310)
   }
 
@@ -249,7 +250,7 @@ function createViewer() {
   return viewerController
 }
 
-function createHeroTrigger(section, venuePhoto) {
+function createHeroTrigger(venuePhoto) {
   let trigger = venuePhoto.querySelector(':scope > .venue-photo-trigger')
   if (trigger) return trigger
 
@@ -313,7 +314,7 @@ function mount(section) {
   if (!venuePhoto || !venueCard) return
 
   section.classList.add('venue-editorial-ready')
-  const heroTrigger = createHeroTrigger(section, venuePhoto)
+  const heroTrigger = createHeroTrigger(venuePhoto)
   const detailGrid = createDetailGrid(venueCard)
   const locationLink = venueCard.querySelector('.text-link')
   locationLink?.classList.add('venue-location-link')
