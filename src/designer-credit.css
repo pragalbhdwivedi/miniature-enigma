@@ -1,0 +1,68 @@
+/* Quiet end-credit treatment, intentionally subordinate to the wedding closing frame. */
+.designer-credit {
+  position: relative;
+  z-index: 3;
+  padding: 30px 22px calc(104px + env(safe-area-inset-bottom, 0px));
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(202,165,102,.08), transparent 45%),
+    #050806;
+  color: rgba(239,229,206,.64);
+  border-top: 1px solid rgba(202,165,102,.12);
+}
+
+.designer-credit__rule {
+  width: 52px;
+  height: 1px;
+  margin: 0 auto 18px;
+  background: linear-gradient(90deg, transparent, rgba(229,198,130,.72), transparent);
+}
+
+.designer-credit p {
+  margin: 0;
+}
+
+.designer-credit__line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 5px;
+  font-size: 12px;
+  letter-spacing: .08em;
+}
+
+.designer-credit__line span {
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: .18em;
+  color: rgba(239,229,206,.42);
+}
+
+.designer-credit a {
+  color: #d9b572;
+  text-decoration: none;
+  text-underline-offset: 4px;
+  transition: opacity .2s ease;
+}
+
+.designer-credit a:active,
+.designer-credit a:hover {
+  opacity: .72;
+}
+
+.designer-credit__meta {
+  margin-top: 8px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 9px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(239,229,206,.34);
+}
+
+.designer-credit__meta a {
+  color: rgba(239,229,206,.48);
+}

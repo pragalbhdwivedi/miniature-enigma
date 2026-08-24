@@ -9,11 +9,13 @@ import './production-assets.css'
 import './final-polish.css'
 import './family-details.css'
 import './logo-branding.css'
+import './designer-credit.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
 import './familyDetails.js'
 import './logoBranding.js'
+import './designerCredit.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
