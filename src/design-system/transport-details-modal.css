@@ -72,6 +72,40 @@ html[lang='hi'] .transport-modal__header h2 {
   outline-offset: 3px;
 }
 
+/* Moradabad is the preferred Prayagraj/Kunda interchange, so expose the onward
+   Ramnagar rail link without counting it as another one of the eight planning options. */
+.rail-connection-note {
+  margin: 14px 0 4px;
+  padding: 15px 16px;
+  border-left: 2px solid #2f4a35;
+  background: rgba(43,67,49,.055);
+}
+
+.rail-connection-note .logistics-kicker {
+  margin-bottom: 6px;
+  color: #526840;
+}
+
+.rail-connection-note strong {
+  display: block;
+  color: #302a20;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 1.05;
+}
+
+.rail-connection-note > p:last-child {
+  margin: 8px 0 0;
+  color: rgba(58,49,37,.64);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+html[lang='hi'] .rail-connection-note strong {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+}
+
 body.transport-modal-open {
   overflow: hidden;
 }
