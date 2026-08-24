@@ -1,0 +1,361 @@
+/* Module 22 — Closing Wedding Screen */
+
+.closing-section.closing-cinematic-ready {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 92svh;
+  padding: 108px 24px calc(118px + env(safe-area-inset-bottom, 0px));
+  background:
+    radial-gradient(circle at 50% 30%, rgba(113, 78, 45, .16), transparent 24%),
+    radial-gradient(circle at 50% 58%, rgba(44, 63, 39, .22), transparent 42%),
+    linear-gradient(180deg, #07100b 0%, #060a07 50%, #040605 100%) !important;
+  background-image:
+    radial-gradient(circle at 50% 30%, rgba(113, 78, 45, .16), transparent 24%),
+    radial-gradient(circle at 50% 58%, rgba(44, 63, 39, .22), transparent 42%),
+    linear-gradient(180deg, #07100b 0%, #060a07 50%, #040605 100%) !important;
+  color: #efe5ce;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.closing-section.closing-cinematic-ready::before,
+.closing-section.closing-cinematic-ready::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.closing-section.closing-cinematic-ready::before {
+  inset: 0;
+  z-index: -2;
+  opacity: .22;
+  background:
+    repeating-linear-gradient(98deg, transparent 0 27px, rgba(232, 199, 133, .025) 28px 29px),
+    repeating-linear-gradient(8deg, transparent 0 37px, rgba(255,255,255,.018) 38px 39px);
+  mix-blend-mode: screen;
+}
+
+.closing-section.closing-cinematic-ready::after {
+  inset: auto 0 0;
+  height: 32%;
+  z-index: -1;
+  background: linear-gradient(180deg, transparent, rgba(2,4,3,.72));
+}
+
+.closing-cinematic__atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.closing-cinematic__glow {
+  position: absolute;
+  left: 50%;
+  top: 16%;
+  width: min(76vw, 330px);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(213, 179, 111, .12), rgba(213,179,111,.035) 32%, transparent 68%);
+  filter: blur(3px);
+}
+
+.closing-cinematic__horizon {
+  position: absolute;
+  left: 50%;
+  bottom: 18%;
+  width: min(78vw, 350px);
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(208,171,104,.22), transparent);
+}
+
+.closing-cinematic__particles {
+  position: absolute;
+  inset: 0;
+}
+
+.closing-cinematic__particles i {
+  position: absolute;
+  left: var(--closing-particle-x);
+  top: var(--closing-particle-y);
+  width: var(--closing-particle-size);
+  height: var(--closing-particle-size);
+  border-radius: 50%;
+  background: rgba(226, 192, 126, .72);
+  box-shadow: 0 0 8px rgba(226,192,126,.24);
+  opacity: 0;
+  animation: closingParticleDrift var(--closing-particle-duration) linear var(--closing-particle-delay) infinite;
+  animation-play-state: paused;
+}
+
+.closing-section.is-closing-visible .closing-cinematic__particles i {
+  animation-play-state: running;
+}
+
+.closing-cinematic__kicker {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 22px !important;
+  color: rgba(221,187,119,.78) !important;
+  font-size: 9px !important;
+  line-height: 1.2;
+  letter-spacing: .27em;
+  text-transform: uppercase;
+}
+
+.closing-cinematic__medallion {
+  position: relative;
+  z-index: 2;
+  width: 156px;
+  height: 156px;
+  margin-bottom: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(214, 176, 106, .38);
+  background:
+    radial-gradient(circle at 50% 42%, rgba(196,160,93,.11), transparent 55%),
+    rgba(8, 13, 9, .66);
+  box-shadow:
+    inset 0 0 0 8px rgba(214,176,106,.028),
+    inset 0 0 0 9px rgba(214,176,106,.12),
+    0 24px 60px rgba(0,0,0,.32);
+}
+
+.closing-cinematic__medallion::before,
+.closing-cinematic__medallion::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.closing-cinematic__medallion::before {
+  inset: -10px;
+  border: 1px solid rgba(214,176,106,.12);
+}
+
+.closing-cinematic__medallion::after {
+  inset: 16px;
+  border: 1px dashed rgba(214,176,106,.13);
+}
+
+.closing-cinematic__medallion-inner {
+  width: 112px;
+  height: 124px;
+  display: grid;
+  place-items: center;
+}
+
+.closing-cinematic__medallion .tiger-crest {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 5px 14px rgba(0,0,0,.32));
+}
+
+.closing-cinematic__medallion .crest-line {
+  stroke: rgba(225,190,120,.82);
+  stroke-width: 1.35;
+}
+
+.closing-cinematic__medallion .crest-fill {
+  fill: rgba(225,190,120,.82);
+}
+
+.closing-section .closing-cinematic__source-crest {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.closing-cinematic__title {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 380px);
+  margin: 0 !important;
+  font-size: clamp(35px, 10vw, 48px) !important;
+  line-height: .98 !important;
+  font-weight: 500 !important;
+  letter-spacing: -.035em;
+  color: #f2e8d3;
+}
+
+.closing-cinematic__names {
+  position: relative;
+  z-index: 2;
+  margin: 28px 0 0 !important;
+  color: #d9b572 !important;
+  font-size: clamp(22px, 6.8vw, 30px) !important;
+  line-height: 1.08;
+  letter-spacing: -.018em;
+}
+
+.closing-cinematic__hashtag {
+  position: relative;
+  z-index: 2;
+  margin: 20px 0 0 !important;
+  color: rgba(239,229,206,.82) !important;
+  font-size: clamp(17px, 5vw, 22px) !important;
+  line-height: 1.2;
+  font-weight: 400 !important;
+  font-style: italic;
+}
+
+.closing-cinematic__rule {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 72px;
+  height: 1px;
+  margin: 28px auto 20px;
+  background: linear-gradient(90deg, transparent, rgba(214,176,106,.72), transparent);
+}
+
+.closing-cinematic__date {
+  position: relative;
+  z-index: 2;
+  display: block;
+  color: rgba(218,187,127,.72) !important;
+  font-size: 9px !important;
+  letter-spacing: .18em !important;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.closing-cinematic__final-mark {
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin-top: 26px;
+  color: rgba(218,187,127,.56);
+  font-size: 12px;
+}
+
+.closing-cinematic-ready .closing-cinematic__kicker,
+.closing-cinematic-ready .closing-cinematic__medallion,
+.closing-cinematic-ready .closing-cinematic__title,
+.closing-cinematic-ready .closing-cinematic__names,
+.closing-cinematic-ready .closing-cinematic__hashtag,
+.closing-cinematic-ready .closing-cinematic__rule,
+.closing-cinematic-ready .closing-cinematic__date,
+.closing-cinematic-ready .closing-cinematic__final-mark {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition:
+    opacity 700ms cubic-bezier(.22,.72,.2,1),
+    transform 760ms cubic-bezier(.22,.72,.2,1);
+}
+
+.closing-cinematic-ready .closing-cinematic__medallion {
+  transform: translate3d(0, 18px, 0) scale(.96);
+}
+
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__kicker,
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__medallion,
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__title,
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__names,
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__hashtag,
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__rule,
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__date,
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__final-mark {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__medallion { transition-delay: 90ms; }
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__title { transition-delay: 180ms; }
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__names { transition-delay: 270ms; }
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__hashtag { transition-delay: 340ms; }
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__rule,
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__date { transition-delay: 410ms; }
+.closing-cinematic-ready.is-closing-visible .closing-cinematic__final-mark { transition-delay: 470ms; }
+
+/* Deliberate handoff into the existing design / hosting credit. Module 23 owns its final polish. */
+.closing-section.closing-cinematic-ready + .designer-credit {
+  margin-top: -1px;
+  border-top-color: transparent;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(202,165,102,.055), transparent 34%),
+    #040605;
+}
+
+@keyframes closingParticleDrift {
+  0% { opacity: 0; transform: translate3d(0, 9px, 0) scale(.8); }
+  16% { opacity: .34; }
+  58% { opacity: .22; }
+  100% { opacity: 0; transform: translate3d(5px, -42px, 0) scale(1.05); }
+}
+
+@media (max-width: 365px) {
+  .closing-section.closing-cinematic-ready {
+    min-height: 88svh;
+    padding-inline: 20px;
+  }
+
+  .closing-cinematic__medallion {
+    width: 142px;
+    height: 142px;
+    margin-bottom: 26px;
+  }
+
+  .closing-cinematic__medallion-inner {
+    width: 101px;
+    height: 112px;
+  }
+
+  .closing-cinematic__date {
+    max-width: 285px;
+  }
+}
+
+@media (max-height: 690px) {
+  .closing-section.closing-cinematic-ready {
+    min-height: 720px;
+    padding-top: 78px;
+    padding-bottom: calc(104px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .closing-cinematic__medallion {
+    width: 132px;
+    height: 132px;
+    margin-bottom: 22px;
+  }
+
+  .closing-cinematic__medallion-inner {
+    width: 94px;
+    height: 104px;
+  }
+
+  .closing-cinematic__names { margin-top: 22px !important; }
+  .closing-cinematic__hashtag { margin-top: 15px !important; }
+  .closing-cinematic__rule { margin-top: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .closing-cinematic__particles i {
+    display: none;
+    animation: none !important;
+  }
+
+  .closing-cinematic-ready .closing-cinematic__kicker,
+  .closing-cinematic-ready .closing-cinematic__medallion,
+  .closing-cinematic-ready .closing-cinematic__title,
+  .closing-cinematic-ready .closing-cinematic__names,
+  .closing-cinematic-ready .closing-cinematic__hashtag,
+  .closing-cinematic-ready .closing-cinematic__rule,
+  .closing-cinematic-ready .closing-cinematic__date,
+  .closing-cinematic-ready .closing-cinematic__final-mark {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
