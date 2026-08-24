@@ -19,6 +19,7 @@ import './design-system/tiger-crest-transition.css'
 import './design-system/physical-passport.css'
 import './design-system/couple-editorial-hero.css'
 import './design-system/family-introduction.css'
+import './design-system/couple-story.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
@@ -33,6 +34,7 @@ import './design-system/tigerCrestTransition.js'
 import './design-system/physicalPassport.js'
 import './design-system/coupleEditorialHero.js'
 import './design-system/familyIntroduction.js'
+import './design-system/coupleStory.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
