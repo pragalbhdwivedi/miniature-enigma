@@ -9,57 +9,49 @@
   pointer-events: none !important;
 }
 
-/* The opening uses one photorealistic tiger only: the dedicated reveal. The side,
-   language and passport stages use the existing inline engraved/vector crest. */
+/* Restore the approved WebP medallions. These are recurring emblem treatments, not
+   extra photoreal hero reveals, so the single cinematic tiger invariant remains intact. */
 .selection-screen:not(.language-screen) .passport-choice::before,
+.language-screen .language-card::before {
+  content: '' !important;
+  display: block !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+.selection-screen:not(.language-screen) .passport-choice.bride::before {
+  background-image: var(--asset-tiger-bride) !important;
+  opacity: .98 !important;
+}
+
+.selection-screen:not(.language-screen) .passport-choice.groom::before {
+  background-image: var(--asset-tiger-groom) !important;
+  opacity: .98 !important;
+}
+
+.language-screen .language-card::before {
+  background-image: var(--asset-tiger-front) !important;
+  opacity: .96 !important;
+}
+
+/* The card DOM still contains the old inline crest for no-JS fallback. Once the
+   production WebP binding is available, never paint both on top of each other. */
+.selection-screen:not(.language-screen) .passport-choice .tiger-crest,
+.language-screen .language-card .tiger-crest {
+  display: none !important;
+}
+
+/* Do not restore the old full-screen peek/river tiger decorations. The major
+   photoreal presence stays reserved for the dedicated reveal step. */
 .selection-screen:not(.language-screen)::after,
-.language-screen .language-card::before,
 .language-screen::after {
   content: none !important;
   background: none !important;
-}
-
-.selection-screen:not(.language-screen) .passport-choice .tiger-crest {
-  position: absolute !important;
-  z-index: 3 !important;
-  top: 29px !important;
-  left: 50% !important;
-  width: min(29vw, 118px) !important;
-  height: min(31vw, 126px) !important;
-  opacity: .92 !important;
-  transform: translateX(-50%) !important;
-  filter: drop-shadow(0 12px 22px rgba(0,0,0,.38));
-  pointer-events: none !important;
-}
-
-.language-screen .language-card .tiger-crest {
-  position: absolute !important;
-  z-index: 2 !important;
-  left: 50% !important;
-  bottom: 27px !important;
-  width: min(30vw, 116px) !important;
-  height: min(34vw, 132px) !important;
-  opacity: .84 !important;
-  transform: translateX(-50%) !important;
-  filter: drop-shadow(0 12px 22px rgba(0,0,0,.34));
-  pointer-events: none !important;
-}
-
-.selection-screen:not(.language-screen) .passport-choice .crest-line,
-.language-screen .language-card .crest-line,
-.passport-stage .cover-crest .crest-line,
-.intro-screen.intro-2 .crest-transform .crest-line,
-.crest-transition-world__engraved-svg .crest-line {
-  stroke: rgba(229, 194, 128, .88) !important;
-  stroke-width: 1.4 !important;
-}
-
-.selection-screen:not(.language-screen) .passport-choice .crest-fill,
-.language-screen .language-card .crest-fill,
-.passport-stage .cover-crest .crest-fill,
-.intro-screen.intro-2 .crest-transform .crest-fill,
-.crest-transition-world__engraved-svg .crest-fill {
-  fill: rgba(229, 194, 128, .88) !important;
 }
 
 /* The earlier screen promised a language switch later that does not exist. */
@@ -69,53 +61,58 @@
 }
 
 /* -------------------------------------------------------------------------- */
-/* Tiger → crest: reuse the inline vector for engraving instead of another PNG. */
+/* Tiger → crest: one engraved WebP only. No cloned SVG on top of it. */
 /* -------------------------------------------------------------------------- */
 .crest-transition-world__engraved {
-  display: grid !important;
-  place-items: center;
-  background: none !important;
+  display: block !important;
+  background: var(--asset-tiger-engraved) center 44% / contain no-repeat !important;
 }
 
 .crest-transition-world__engraved-svg {
-  width: min(64vw, 270px) !important;
-  height: auto !important;
-  max-height: 62% !important;
-  opacity: .96 !important;
-  filter: drop-shadow(0 0 20px rgba(211,173,112,.16));
+  display: none !important;
 }
 
-.intro-screen.intro-2 .crest-transform::before,
-.passport-stage .cover-crest::before {
-  content: none !important;
-  background: none !important;
+.intro-screen.intro-2 .crest-transform::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: -5% !important;
+  background: var(--asset-tiger-engraved) center / contain no-repeat !important;
+  opacity: .98 !important;
+  filter: drop-shadow(0 0 24px rgba(211,173,112,.16)) !important;
+  pointer-events: none !important;
 }
 
 .intro-screen.intro-2 .crest-transform .tiger-crest {
+  display: none !important;
+}
+
+/* Passport cover uses the approved front medallion WebP instead of the inline SVG. */
+.passport-stage .cover-crest::before {
+  content: '' !important;
   display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-  opacity: .96 !important;
-  position: relative !important;
-  inset: auto !important;
-  transform: none !important;
-  filter: drop-shadow(0 0 24px rgba(211,173,112,.16));
+  background: var(--asset-tiger-front) center / contain no-repeat !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  opacity: .98 !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
 }
 
 .passport-stage .cover-crest .tiger-crest {
-  display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-  opacity: .96 !important;
-  position: relative !important;
-  inset: auto !important;
-  transform: none !important;
-  filter: drop-shadow(0 8px 20px rgba(0,0,0,.34));
+  display: none !important;
 }
 
 /* The old engraving canvas forced overflow:hidden and clipped the physical clasp. */
 .passport-stage .passport-cover {
   overflow: visible !important;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.passport-stage .passport-cover:focus-visible {
+  outline: 2px solid rgba(239,211,154,.92) !important;
+  outline-offset: 5px !important;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -137,6 +134,54 @@ body.passport-handoff-active::after {
   34% { opacity: .78; }
   55% { opacity: .58; }
   100% { opacity: 0; }
+}
+
+/* Keep OPEN INVITATION inside the visible Safari viewport. The previous normal-flow
+   placement could fall below a non-scrollable 100svh screen on short iPhones. */
+.passport-stage .passport-stage-content {
+  padding-bottom: calc(102px + var(--safe-bottom)) !important;
+}
+
+.passport-stage .primary-cta {
+  position: absolute !important;
+  z-index: 30 !important;
+  left: 50% !important;
+  bottom: calc(18px + var(--safe-bottom)) !important;
+  width: min(calc(100% - 44px), 360px) !important;
+  min-height: 62px !important;
+  margin: 0 !important;
+  transform: translateX(-50%) !important;
+  border: 1px solid rgba(226,188,118,.72) !important;
+  border-radius: 18px !important;
+  background:
+    linear-gradient(115deg, rgba(14,38,23,.98), rgba(35,78,43,.94)),
+    #163622 !important;
+  color: #f2e5c8 !important;
+  box-shadow:
+    0 16px 38px rgba(0,0,0,.42),
+    inset 0 0 0 1px rgba(255,235,194,.045),
+    inset 0 12px 24px rgba(255,255,255,.025) !important;
+  letter-spacing: .10em !important;
+  text-transform: uppercase;
+  cursor: pointer;
+  pointer-events: auto !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.passport-stage.passport-physical-ready[data-passport-phase='1'] .primary-cta {
+  opacity: 1 !important;
+  transform: translateX(-50%) !important;
+}
+
+.passport-stage.passport-is-opening .primary-cta {
+  opacity: .64 !important;
+  transform: translateX(-50%) translate3d(0,4px,0) scale(.99) !important;
+}
+
+.passport-stage .primary-cta:focus-visible {
+  outline: 2px solid rgba(240,210,150,.92) !important;
+  outline-offset: 4px !important;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -202,6 +247,21 @@ body.passport-handoff-active::after {
   .intro-screen .tap-hint span,
   .intro-screen .intro-continue span {
     font-size: 12.5px !important;
+  }
+
+  .passport-stage .primary-cta {
+    width: calc(100% - 32px) !important;
+    min-height: 60px !important;
+  }
+}
+
+@media (max-height: 720px) {
+  .passport-stage .passport-cover {
+    min-height: 450px !important;
+  }
+
+  .passport-stage .journey-copy {
+    margin-block: 12px 10px !important;
   }
 }
 
