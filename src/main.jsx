@@ -27,6 +27,8 @@ import './design-system/event-photography.css'
 import './design-system/written-in-stars.css'
 import './design-system/wyndham-venue.css'
 import './design-system/glass-architecture.css'
+import './design-system/stay-travel-transport.css'
+import './design-system/transport-details-modal.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
@@ -49,6 +51,8 @@ import './design-system/eventPhotography.js'
 import './design-system/writtenInStars.js'
 import './design-system/wyndhamVenue.js'
 import './design-system/glassArchitecture.js'
+import './design-system/stayTravelTransport.js'
+import './design-system/transport-details-modal.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
