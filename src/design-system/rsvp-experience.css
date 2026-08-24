@@ -1,0 +1,529 @@
+/* Module 20 — Guided RSVP Experience */
+
+.rsvp-section.rsvp-experience-ready {
+  position: relative;
+  overflow: hidden;
+  padding-top: 84px;
+  padding-bottom: calc(126px + env(safe-area-inset-bottom));
+  background:
+    repeating-linear-gradient(19deg, rgba(70,52,29,.018) 0 1px, transparent 1px 8px),
+    radial-gradient(circle at 88% 12%, rgba(154,119,63,.11), transparent 31%),
+    linear-gradient(180deg, #f0e5d1 0%, #e9dcc5 100%);
+}
+
+.rsvp-section.rsvp-experience-ready::before,
+.rsvp-section.rsvp-experience-ready::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.rsvp-section.rsvp-experience-ready::before {
+  inset: 17px;
+  border: 1px solid rgba(101,75,39,.16);
+  border-radius: 2px;
+}
+
+.rsvp-section.rsvp-experience-ready::after {
+  width: 176px;
+  height: 176px;
+  right: -76px;
+  top: 44px;
+  border: 1px solid rgba(125,91,46,.13);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 15px rgba(125,91,46,.025);
+}
+
+.rsvp-experience-ready > .section-number,
+.rsvp-experience-ready > h2,
+.rsvp-experience-ready > .rsvp-form {
+  position: relative;
+  z-index: 2;
+}
+
+.rsvp-experience-ready > .section-number {
+  margin-bottom: 12px;
+}
+
+.rsvp-experience-ready > h2 {
+  max-width: 320px;
+  margin-bottom: 34px;
+}
+
+.rsvp-form.rsvp-wizard-ready {
+  --rsvp-ink: #2c2921;
+  --rsvp-muted: rgba(55,48,38,.62);
+  --rsvp-line: rgba(92,68,36,.2);
+  --rsvp-gold: #9a763e;
+  --rsvp-forest: #283d2d;
+  min-height: 590px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0;
+  color: var(--rsvp-ink);
+}
+
+.rsvp-wizard__chrome {
+  padding: 0 2px 24px;
+  border-bottom: 1px solid var(--rsvp-line);
+}
+
+.rsvp-wizard__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.rsvp-wizard__journey,
+.rsvp-wizard__count,
+.rsvp-wizard__kicker {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 7px;
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.rsvp-wizard__journey {
+  color: rgba(69,55,36,.52);
+}
+
+.rsvp-wizard__count,
+.rsvp-wizard__kicker {
+  color: var(--rsvp-gold);
+}
+
+.rsvp-wizard__kicker {
+  margin: 0 0 9px;
+}
+
+.rsvp-wizard__title {
+  max-width: 330px;
+  margin: 0;
+  color: var(--rsvp-ink);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(38px, 11.5vw, 52px);
+  font-weight: 520;
+  line-height: .94;
+  letter-spacing: -.025em;
+  outline: none;
+}
+
+html[lang='hi'] .rsvp-wizard__title {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+  font-size: clamp(34px, 10vw, 46px);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.rsvp-wizard__note {
+  max-width: 315px;
+  margin: 14px 0 0;
+  color: var(--rsvp-muted);
+  font-size: 11px;
+  line-height: 1.58;
+}
+
+.rsvp-wizard__progress {
+  margin-top: 24px;
+}
+
+.rsvp-wizard__track {
+  display: block;
+  width: 100%;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(87,64,33,.13);
+}
+
+.rsvp-wizard__fill {
+  --rsvp-progress: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #76562e, #c29b58);
+  transform: scaleX(var(--rsvp-progress));
+  transform-origin: left center;
+  transition: transform 520ms cubic-bezier(.2,.75,.2,1);
+}
+
+.rsvp-wizard__dots {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -3px;
+}
+
+.rsvp-wizard__dots i {
+  width: 7px;
+  height: 7px;
+  border: 1px solid rgba(95,71,39,.35);
+  border-radius: 50%;
+  background: #eadcc5;
+  transform: scale(.78);
+  transition: transform 300ms ease, background 300ms ease, border-color 300ms ease;
+}
+
+.rsvp-wizard__dots i.is-passed {
+  border-color: #96703a;
+  background: #96703a;
+}
+
+.rsvp-wizard__dots i.is-current {
+  transform: scale(1.35);
+  box-shadow: 0 0 0 4px rgba(151,113,58,.1);
+}
+
+.rsvp-wizard-ready > [data-rsvp-step] {
+  animation: rsvpStepIn 520ms cubic-bezier(.2,.76,.18,1) both;
+}
+
+.rsvp-wizard-ready[data-rsvp-direction='back'] > [data-rsvp-step] {
+  animation-name: rsvpStepBack;
+}
+
+.rsvp-wizard-ready > [data-rsvp-step][hidden] {
+  display: none !important;
+}
+
+.rsvp-wizard-ready label[data-rsvp-step] {
+  min-height: 124px;
+  padding: 20px 18px 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  border: 1px solid var(--rsvp-line);
+  border-radius: 18px;
+  background: rgba(255,255,255,.14);
+  color: #715b3b;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 8px;
+  font-weight: 720;
+  line-height: 1.3;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+}
+
+.rsvp-wizard-ready label[data-rsvp-step] input {
+  width: 100%;
+  min-height: 52px;
+  margin-top: auto;
+  padding: 10px 1px 5px;
+  border: 0;
+  border-bottom: 1px solid rgba(78,57,29,.3);
+  border-radius: 0;
+  background: transparent;
+  color: var(--rsvp-ink);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 27px;
+  font-weight: 520;
+  line-height: 1.05;
+  outline: none;
+  box-shadow: none;
+}
+
+html[lang='hi'] .rsvp-wizard-ready label[data-rsvp-step] input {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+  font-size: 23px;
+}
+
+.rsvp-wizard-ready label[data-rsvp-step] input:focus {
+  border-bottom-color: #8e6936;
+}
+
+.rsvp-wizard-ready label[data-rsvp-step='2'] {
+  min-height: 170px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.rsvp-wizard-ready label[data-rsvp-step='2'] input {
+  width: 128px;
+  min-height: 80px;
+  margin: 5px auto 0;
+  text-align: center;
+  color: var(--rsvp-forest);
+  font-size: 58px;
+  font-variant-numeric: tabular-nums;
+}
+
+.rsvp-wizard-ready .status-toggle[data-rsvp-step] {
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 0;
+}
+
+.rsvp-wizard-ready .status-toggle[data-rsvp-step] button {
+  position: relative;
+  min-height: 82px;
+  padding: 18px 52px 18px 19px;
+  border: 1px solid var(--rsvp-line);
+  border-radius: 17px;
+  background: rgba(255,255,255,.12);
+  color: #554936;
+  text-align: left;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 23px;
+  font-weight: 560;
+  transition: transform 160ms ease, background 260ms ease, border-color 260ms ease, color 260ms ease;
+}
+
+html[lang='hi'] .rsvp-wizard-ready .status-toggle[data-rsvp-step] button {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+  font-size: 20px;
+}
+
+.rsvp-wizard-ready .status-toggle[data-rsvp-step] button::after {
+  content: '';
+  position: absolute;
+  width: 21px;
+  height: 21px;
+  right: 19px;
+  top: 50%;
+  border: 1px solid rgba(89,66,35,.38);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow: inset 0 0 0 5px #eadcc5;
+}
+
+.rsvp-wizard-ready .status-toggle[data-rsvp-step] button.active,
+.rsvp-wizard-ready .status-toggle[data-rsvp-step] button[aria-pressed='true'] {
+  border-color: var(--rsvp-forest);
+  background: var(--rsvp-forest);
+  color: #f1e7d5;
+}
+
+.rsvp-wizard-ready .status-toggle[data-rsvp-step] button.active::after,
+.rsvp-wizard-ready .status-toggle[data-rsvp-step] button[aria-pressed='true']::after {
+  border-color: #d7b97a;
+  background: #d7b97a;
+  box-shadow: inset 0 0 0 5px var(--rsvp-forest);
+}
+
+.rsvp-wizard-ready .event-checks[data-rsvp-step] {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin: 0;
+}
+
+.rsvp-wizard-ready .event-checks[data-rsvp-step] button {
+  min-height: 59px;
+  padding: 10px 13px;
+  border: 1px solid var(--rsvp-line);
+  border-radius: 14px;
+  background: rgba(255,255,255,.12);
+  color: #423a2f;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.1;
+}
+
+.rsvp-wizard-ready .event-checks[data-rsvp-step] button span {
+  flex: 0 0 29px;
+  width: 29px;
+  height: 29px;
+  border-color: rgba(91,66,34,.28);
+  color: #876638;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+}
+
+.rsvp-wizard-ready .event-checks[data-rsvp-step] button.selected,
+.rsvp-wizard-ready .event-checks[data-rsvp-step] button[aria-pressed='true'] {
+  border-color: rgba(47,72,52,.44);
+  background: rgba(47,72,52,.12);
+  color: #26392a;
+}
+
+.rsvp-wizard__summary {
+  padding: 7px 0 2px;
+  border-top: 1px solid var(--rsvp-line);
+}
+
+.rsvp-review-row {
+  display: grid;
+  grid-template-columns: 94px minmax(0, 1fr);
+  gap: 14px;
+  align-items: baseline;
+  padding: 13px 2px;
+  border-bottom: 1px dotted rgba(87,65,35,.18);
+}
+
+.rsvp-review-row small {
+  color: #876b43;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 7px;
+  font-weight: 740;
+  line-height: 1.35;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.rsvp-review-row strong {
+  color: #342f27;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 17px;
+  font-weight: 570;
+  line-height: 1.25;
+  text-align: right;
+}
+
+html[lang='hi'] .rsvp-review-row strong {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+}
+
+.rsvp-wizard-ready .primary-cta.whatsapp[data-rsvp-step='4'],
+.rsvp-wizard-ready .secondary-cta[data-rsvp-step='4'] {
+  min-height: 54px;
+  margin-top: 2px;
+  border-radius: 999px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.rsvp-wizard-ready .primary-cta.whatsapp[data-rsvp-step='4'] {
+  margin-top: 13px;
+  background: var(--rsvp-forest);
+  box-shadow: 0 11px 24px rgba(36,57,40,.14);
+}
+
+.rsvp-wizard-ready .secondary-cta[data-rsvp-step='4'] {
+  border-color: rgba(84,61,31,.28);
+  background: transparent;
+  color: #665033;
+}
+
+.rsvp-wizard__nav {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--rsvp-line);
+}
+
+.rsvp-wizard__nav button {
+  appearance: none;
+  -webkit-appearance: none;
+  min-height: 50px;
+  border-radius: 999px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rsvp-wizard__back {
+  min-width: 82px;
+  padding: 0 17px;
+  border: 1px solid rgba(91,67,35,.24);
+  background: transparent;
+  color: #725a39;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.rsvp-wizard__next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 18px 0 21px;
+  border: 1px solid var(--rsvp-forest);
+  background: var(--rsvp-forest);
+  color: #f0e5d1;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 8px;
+  font-weight: 760;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  box-shadow: 0 9px 20px rgba(35,57,39,.13);
+}
+
+.rsvp-wizard__next i {
+  color: #d8b979;
+  font-family: Georgia, serif;
+  font-size: 17px;
+  font-style: normal;
+}
+
+.rsvp-wizard__nav button:focus-visible,
+.rsvp-wizard-ready button[data-rsvp-step]:focus-visible {
+  outline: 2px solid #906b35;
+  outline-offset: 3px;
+}
+
+@keyframes rsvpStepIn {
+  from { opacity: 0; transform: translate3d(16px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes rsvpStepBack {
+  from { opacity: 0; transform: translate3d(-16px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 365px) {
+  .rsvp-section.rsvp-experience-ready {
+    padding-inline: 19px;
+  }
+
+  .rsvp-section.rsvp-experience-ready::before {
+    inset-inline: 10px;
+  }
+
+  .rsvp-form.rsvp-wizard-ready {
+    min-height: 565px;
+  }
+
+  .rsvp-wizard__journey {
+    max-width: 180px;
+  }
+
+  .rsvp-review-row {
+    grid-template-columns: 82px minmax(0, 1fr);
+    gap: 9px;
+  }
+}
+
+@media (max-height: 700px) {
+  .rsvp-section.rsvp-experience-ready {
+    padding-top: 64px;
+  }
+
+  .rsvp-form.rsvp-wizard-ready {
+    min-height: 520px;
+  }
+
+  .rsvp-wizard__topline {
+    margin-bottom: 18px;
+  }
+
+  .rsvp-wizard__chrome {
+    padding-bottom: 18px;
+  }
+
+  .rsvp-wizard__progress {
+    margin-top: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rsvp-wizard__fill,
+  .rsvp-wizard__dots i,
+  .rsvp-wizard-ready > [data-rsvp-step],
+  .rsvp-wizard-ready .status-toggle[data-rsvp-step] button {
+    animation: none !important;
+    transition: none !important;
+  }
+}
