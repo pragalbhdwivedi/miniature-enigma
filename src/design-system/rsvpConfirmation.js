@@ -46,6 +46,10 @@ function text() {
   return COPY[isHindi() ? 'hi' : 'en']
 }
 
+function setText(node, value) {
+  if (node && node.textContent !== value) node.textContent = value
+}
+
 function element(tag, className, value) {
   const node = document.createElement(tag)
   if (className) node.className = className
@@ -108,16 +112,16 @@ function mount(form) {
 
   const applyLanguage = () => {
     const t = text()
-    panel.eyebrow.textContent = t.eyebrow
-    panel.ready.textContent = t.ready
+    setText(panel.eyebrow, t.eyebrow)
+    setText(panel.ready, state.saved ? t.savedButton : t.ready)
     if (state.saved) {
-      panel.title.textContent = t.savedTitle
-      panel.note.textContent = t.savedNote
-      panel.statusText.textContent = t.savedStatus
-      save.textContent = t.savedButton
+      setText(panel.title, t.savedTitle)
+      setText(panel.note, t.savedNote)
+      setText(panel.statusText, t.savedStatus)
+      setText(save, t.savedButton)
     } else {
-      panel.title.textContent = t.title
-      panel.note.textContent = t.note
+      setText(panel.title, t.title)
+      setText(panel.note, t.note)
     }
   }
 
@@ -125,11 +129,11 @@ function mount(form) {
     window.clearTimeout(state.whatsappTimer)
     const t = text()
     whatsapp.classList.add('rsvp-action-ready')
-    whatsapp.textContent = t.whatsappReady
+    setText(whatsapp, t.whatsappReady)
     state.whatsappTimer = window.setTimeout(() => {
       if (!whatsapp.isConnected) return
       whatsapp.classList.remove('rsvp-action-ready')
-      whatsapp.textContent = whatsapp.dataset.rsvpOriginalLabel || t.whatsappReady
+      setText(whatsapp, whatsapp.dataset.rsvpOriginalLabel || t.whatsappReady)
     }, 1800)
   }
 
@@ -137,7 +141,7 @@ function mount(form) {
     const t = text()
     save.classList.remove('rsvp-action-saved')
     save.classList.add('rsvp-action-saving')
-    save.textContent = t.saving
+    setText(save, t.saving)
   }
 
   const showSaved = () => {
@@ -146,12 +150,12 @@ function mount(form) {
     state.saved = true
     save.classList.remove('rsvp-action-saving')
     save.classList.add('rsvp-action-saved')
-    save.textContent = t.savedButton
+    setText(save, t.savedButton)
     panel.root.classList.add('is-saved')
-    panel.ready.textContent = t.savedButton
-    panel.title.textContent = t.savedTitle
-    panel.note.textContent = t.savedNote
-    panel.statusText.textContent = t.savedStatus
+    setText(panel.ready, t.savedButton)
+    setText(panel.title, t.savedTitle)
+    setText(panel.note, t.savedNote)
+    setText(panel.statusText, t.savedStatus)
     navigator.vibrate?.(12)
   }
 
@@ -160,7 +164,7 @@ function mount(form) {
     if (event?.target?.closest?.('.primary-cta.whatsapp, .secondary-cta, .rsvp-wizard__nav')) return
     state.saved = false
     save.classList.remove('rsvp-action-saved', 'rsvp-action-saving')
-    save.textContent = save.dataset.rsvpOriginalLabel || save.textContent
+    setText(save, save.dataset.rsvpOriginalLabel || save.textContent)
     panel.root.classList.remove('is-saved')
     applyLanguage()
   }
@@ -201,8 +205,8 @@ function mount(form) {
     form.removeEventListener('click', onClick)
     whatsapp.classList.remove('rsvp-action-ready')
     save.classList.remove('rsvp-action-saving', 'rsvp-action-saved')
-    if (whatsapp.dataset.rsvpOriginalLabel) whatsapp.textContent = whatsapp.dataset.rsvpOriginalLabel
-    if (save.dataset.rsvpOriginalLabel) save.textContent = save.dataset.rsvpOriginalLabel
+    if (whatsapp.dataset.rsvpOriginalLabel) setText(whatsapp, whatsapp.dataset.rsvpOriginalLabel)
+    if (save.dataset.rsvpOriginalLabel) setText(save, save.dataset.rsvpOriginalLabel)
     panel.root.remove()
     form.classList.remove('rsvp-confirmation-ready')
     mounted.delete(form)
@@ -243,8 +247,16 @@ function patchRsvpAlert() {
   }
 }
 
-const observer = new MutationObserver(() => {
-  if (scanQueued) return
+function mutationMatters(records) {
+  return records.some((record) => [...record.addedNodes, ...record.removedNodes].some((node) => {
+    if (!(node instanceof Element)) return false
+    return node.matches?.('.rsvp-form, .primary-cta.whatsapp, .secondary-cta') ||
+      node.querySelector?.('.rsvp-form, .primary-cta.whatsapp, .secondary-cta')
+  }))
+}
+
+const observer = new MutationObserver((records) => {
+  if (scanQueued || !mutationMatters(records)) return
   scanQueued = true
   queueMicrotask(() => {
     scanQueued = false
