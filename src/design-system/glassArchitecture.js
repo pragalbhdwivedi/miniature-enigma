@@ -65,6 +65,7 @@ function applyProgress(section, progress) {
   const frost = frostIn * frostOut
   const paper = smoothstep(.70, .98, progress)
   const refraction = .12 + split * .42 - paper * .24
+  const goldLine = smoothstep(.12, .78, progress)
 
   section.style.setProperty('--glass-pane-a-x', `${(-18 * split).toFixed(2)}px`)
   section.style.setProperty('--glass-pane-a-y', `${(7 * split).toFixed(2)}px`)
@@ -86,7 +87,7 @@ function applyProgress(section, progress) {
   section.style.setProperty('--glass-copy-opacity', copy.toFixed(3))
   section.style.setProperty('--glass-copy-y', `${((1 - copy) * 16).toFixed(2)}px`)
   section.style.setProperty('--glass-paper-opacity', paper.toFixed(3))
-  section.style.setProperty('--glass-gold-line', smoothstep(.12, .78, progress).toFixed(3))
+  section.style.setProperty('--glass-gold-line-width', `${(goldLine * 100).toFixed(1)}%`)
 }
 
 function paint(now = performance.now()) {
