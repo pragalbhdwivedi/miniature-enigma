@@ -8,10 +8,12 @@ import './sylva-kinetic.css'
 import './production-assets.css'
 import './final-polish.css'
 import './family-details.css'
+import './logo-branding.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
 import './familyDetails.js'
+import './logoBranding.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

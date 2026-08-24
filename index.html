@@ -7,6 +7,8 @@
     <meta name="description" content="Kritica Dwivedi & Ashish Pandey — The Corbett Wedding, 24–26 November 2026." />
     <meta property="og:title" content="Kritica & Ashish — The Corbett Wedding" />
     <meta property="og:description" content="A destination wedding journey in Jim Corbett, 24–26 November 2026." />
+    <link rel="icon" type="image/x-icon" href="./src/images/logo.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="./src/images/logo.ico" />
     <title>Kritica & Ashish — The Corbett Wedding</title>
     <style>
       html, body, #root { min-height: 100%; margin: 0; background: #050806; }
@@ -21,7 +23,7 @@
         var root = document.getElementById('root');
         if (root && !root.childElementCount) root.innerHTML = '<div class="boot-note">OPENING THE CORBETT WEDDING…</div>';
 
-        ['./src/styles.css', './src/audit-hardening.css', './src/precision-opening.css', './src/sylva-kinetic.css', './src/production-assets.css', './src/final-polish.css', './src/family-details.css'].forEach(function (href) {
+        ['./src/styles.css', './src/audit-hardening.css', './src/precision-opening.css', './src/sylva-kinetic.css', './src/production-assets.css', './src/final-polish.css', './src/family-details.css', './src/logo-branding.css'].forEach(function (href) {
           if (document.querySelector('link[data-fallback-style="' + href + '"]')) return;
           var link = document.createElement('link');
           link.rel = 'stylesheet';
@@ -30,7 +32,7 @@
           document.head.appendChild(link);
         });
 
-        ['./src/cinematicEnhancements.js', './src/sylvaKinetic.js', './src/rsvpScrollGuard.js', './src/familyDetails.js'].forEach(function (src) {
+        ['./src/cinematicEnhancements.js', './src/sylvaKinetic.js', './src/rsvpScrollGuard.js', './src/familyDetails.js', './src/logoBranding.js'].forEach(function (src) {
           var motion = document.createElement('script');
           motion.type = 'module';
           motion.src = src;

@@ -1,0 +1,97 @@
+/* Approved K/A monogram asset. Loaded last so legacy text-monogram rules cannot leak through. */
+
+/* Immediate paint: hide the old text monogram and paint the uploaded icon before JS enhancement runs. */
+.monogram {
+  font-size: 0 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-shadow: none !important;
+  color: transparent !important;
+  background: url('./images/logo.ico') center / contain no-repeat;
+  width: clamp(62px, 18vw, 86px);
+  min-height: 86px;
+}
+
+.monogram::before,
+.monogram::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Once the runtime swaps in the real image element, remove the temporary CSS background. */
+.monogram.monogram--image {
+  background: none !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.monogram.monogram--image img[data-ka-logo] {
+  display: block;
+  width: clamp(62px, 18vw, 86px);
+  height: auto;
+  max-height: 92px;
+  object-fit: contain;
+  filter:
+    brightness(0)
+    saturate(100%)
+    invert(78%)
+    sepia(36%)
+    saturate(760%)
+    hue-rotate(357deg)
+    brightness(94%)
+    contrast(88%)
+    drop-shadow(0 8px 24px rgba(0,0,0,.32));
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* First screen: retain the requested strong first focus, about 20% of viewport height. */
+.selection-screen:not(.language-screen) .monogram {
+  min-height: 20svh !important;
+  width: 100%;
+  margin: 0 auto !important;
+  background-size: auto min(17svh, 150px);
+}
+
+.selection-screen:not(.language-screen) .monogram.monogram--image img[data-ka-logo] {
+  width: auto;
+  height: min(17svh, 150px);
+  max-width: 72vw;
+  max-height: 150px;
+}
+
+.language-screen .monogram,
+.intro-screen .monogram,
+.passport-stage .monogram {
+  width: clamp(58px, 16vw, 78px);
+  min-height: 84px;
+}
+
+.language-screen .monogram.monogram--image img[data-ka-logo],
+.intro-screen .monogram.monogram--image img[data-ka-logo],
+.passport-stage .monogram.monogram--image img[data-ka-logo] {
+  width: clamp(58px, 16vw, 78px);
+  max-height: 84px;
+}
+
+.editorial-hero .monogram {
+  width: clamp(54px, 15vw, 72px);
+  min-height: 78px;
+}
+
+.editorial-hero .monogram.monogram--image img[data-ka-logo] {
+  width: clamp(54px, 15vw, 72px);
+  max-height: 78px;
+}
+
+@media (max-width: 365px) {
+  .selection-screen:not(.language-screen) .monogram {
+    background-size: auto min(15.5svh, 128px);
+  }
+
+  .selection-screen:not(.language-screen) .monogram.monogram--image img[data-ka-logo] {
+    height: min(15.5svh, 128px);
+  }
+}
