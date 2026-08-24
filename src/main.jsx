@@ -35,6 +35,7 @@ import './design-system/rsvp-experience.css'
 import './design-system/rsvp-confirmation.css'
 import './design-system/closing-wedding-screen.css'
 import './design-system/opening-corrections.css'
+import './design-system/global-motion.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
@@ -65,6 +66,7 @@ import './design-system/rsvp-experience.js'
 import './design-system/rsvpConfirmation.js'
 import './design-system/closing-wedding-screen.js'
 import './design-system/openingCorrections.js'
+import './design-system/globalMotion.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
