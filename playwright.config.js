@@ -12,11 +12,12 @@ const widths = [
 export default defineConfig({
   testDir: './tests/e2e',
   outputDir: 'test-results',
-  timeout: 45_000,
-  expect: { timeout: 8_000 },
+  timeout: 30_000,
+  expect: { timeout: 6_000 },
   fullyParallel: false,
   workers: 1,
-  retries: process.env.CI ? 1 : 0,
+  retries: 0,
+  maxFailures: 1,
   reporter: [
     ['line'],
     ['html', { outputFolder: 'playwright-report', open: 'never' }],
@@ -24,11 +25,11 @@ export default defineConfig({
   use: {
     baseURL: 'http://127.0.0.1:4173',
     browserName: 'webkit',
-    actionTimeout: 8_000,
-    navigationTimeout: 15_000,
+    actionTimeout: 6_000,
+    navigationTimeout: 12_000,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    video: 'off',
   },
   projects: widths.map(([name, width, height]) => ({
     name,
