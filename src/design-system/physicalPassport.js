@@ -1,105 +1,52 @@
 // Module 06 — Physical Passport Experience
-// The passport remains a tactile cover, but opening it no longer inserts or waits on
-// an intermediate ivory editorial page. The visible cover itself is also an accessible
-// activation target so short Mobile Safari viewports cannot strand the guest.
+// Presentation only. React owns React navigation and the raw fallback owns fallback
+// navigation. This module must never intercept, synthesize, lock, or disable the
+// Open Invitation action.
 
-const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
 const mountedHosts = new Set()
-const handlersByHost = new WeakMap()
-let handoffCleanupTimer = 0
-
-function beginHandoff(duration = 620) {
-  document.body.classList.add('passport-handoff-active')
-  window.clearTimeout(handoffCleanupTimer)
-  handoffCleanupTimer = window.setTimeout(() => {
-    document.body.classList.remove('passport-handoff-active')
-  }, duration)
-}
-
-function activateButton(button) {
-  if (!button || button.disabled) return
-  button.click()
-}
+const contentByHost = new WeakMap()
 
 function mount(host) {
   if (mountedHosts.has(host)) return
   const content = host.querySelector('.passport-stage-content')
-  const cover = host.querySelector('.passport-cover')
-  const button = host.querySelector('.primary-cta')
-  if (!content || !cover || !button) return
+  if (!content) return
 
   mountedHosts.add(host)
+  contentByHost.set(host, content)
   host.classList.add('passport-physical-ready')
   host.dataset.passportPhase = '1'
 
   // The retired 3D page-flip left perspective on both ancestors. In Mobile Safari,
-  // a perspective ancestor establishes a containing block for fixed descendants,
-  // which can pull the viewport-fixed Open Invitation CTA below the visible screen.
+  // a perspective ancestor can establish a containing block for fixed descendants.
   // The page-flip no longer exists, so remove that containment while this stage lives.
   host.style.perspective = 'none'
   content.style.perspective = 'none'
 
-  // Remove any stale Module 06 interior left by a hot reload or source fallback.
+  // Remove any stale Module 06 interior left by hot reload or source fallback.
   host.querySelector(':scope > .passport-cinematic-world')?.remove()
 
-  const buttonHandler = () => {
-    if (host.classList.contains('passport-is-opening')) return
-    host.classList.add('passport-is-opening')
-    button.dataset.opening = 'true'
-    button.setAttribute('aria-busy', 'true')
-    beginHandoff(reducedMotion ? 180 : 620)
-
-    // Deliberately do not preventDefault / stopPropagation here. React and the
-    // dependency-free fallback remain authoritative and receive this same click
-    // synchronously, moving straight to the real invitation.
+  // Defensive cleanup from older builds. The visual module never owns interaction.
+  host.classList.remove('passport-is-opening')
+  const button = host.querySelector('.primary-cta')
+  if (button) {
+    button.removeAttribute('aria-busy')
+    delete button.dataset.opening
   }
 
-  const coverClickHandler = (event) => {
-    // The cover is decorative content with no nested controls today. Keep this guard
-    // future-safe so a later real link/button inside the cover keeps its own action.
-    if (event.target instanceof Element && event.target.closest('button, a, input, select, textarea')) return
-    activateButton(button)
+  const cover = host.querySelector('.passport-cover')
+  if (cover) {
+    cover.removeAttribute('role')
+    cover.removeAttribute('tabindex')
+    cover.removeAttribute('aria-label')
+    delete cover.dataset.passportTapTarget
   }
-
-  const coverKeyHandler = (event) => {
-    if (event.key !== 'Enter' && event.key !== ' ') return
-    event.preventDefault()
-    activateButton(button)
-  }
-
-  const label = (button.textContent || 'Open invitation').replace(/\s+/g, ' ').trim()
-  cover.setAttribute('role', 'button')
-  cover.setAttribute('tabindex', '0')
-  cover.setAttribute('aria-label', label)
-  cover.dataset.passportTapTarget = 'true'
-
-  button.addEventListener('click', buttonHandler)
-  cover.addEventListener('click', coverClickHandler)
-  cover.addEventListener('keydown', coverKeyHandler)
-  handlersByHost.set(host, {
-    content,
-    button,
-    cover,
-    buttonHandler,
-    coverClickHandler,
-    coverKeyHandler,
-  })
 }
 
 function unmount(host) {
-  const bound = handlersByHost.get(host)
-  if (bound) {
-    bound.button.removeEventListener('click', bound.buttonHandler)
-    bound.cover.removeEventListener('click', bound.coverClickHandler)
-    bound.cover.removeEventListener('keydown', bound.coverKeyHandler)
-    bound.cover.removeAttribute('role')
-    bound.cover.removeAttribute('tabindex')
-    bound.cover.removeAttribute('aria-label')
-    delete bound.cover.dataset.passportTapTarget
-    bound.content.style.removeProperty('perspective')
-  }
+  const content = contentByHost.get(host)
+  content?.style.removeProperty('perspective')
   host.style.removeProperty('perspective')
-  handlersByHost.delete(host)
+  contentByHost.delete(host)
   host.querySelector(':scope > .passport-cinematic-world')?.remove()
   host.classList.remove('passport-physical-ready', 'passport-is-opening')
   delete host.dataset.passportPhase
