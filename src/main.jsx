@@ -31,6 +31,7 @@ import './design-system/stay-travel-transport.css'
 import './design-system/transport-details-modal.css'
 import './design-system/wedding-gallery.css'
 import './design-system/bottom-navigation.css'
+import './design-system/rsvp-experience.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
@@ -57,6 +58,7 @@ import './design-system/stayTravelTransport.js'
 import './design-system/transport-details-modal.js'
 import './design-system/weddingGallery.js'
 import './design-system/bottomNavigation.js'
+import './design-system/rsvp-experience.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
