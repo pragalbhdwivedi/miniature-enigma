@@ -5,10 +5,9 @@
 .event-card.mood-stars.written-stars-ready,
 .event-card.event-card--constellation.written-stars-ready {
   --stars-rotation: 0deg;
+  --stars-constellation-rotation: 0deg;
   --stars-depth-y: 0px;
   --stars-copy-y: 0px;
-  --stars-line-progress: 0;
-  --stars-glow: .15;
   min-height: 90svh !important;
   background-position: center calc(50% + var(--event-photo-y, 0px)) !important;
 }
@@ -57,7 +56,7 @@
   border: 1px solid rgba(222,188,125,.11);
   box-shadow:
     0 0 0 18px rgba(222,188,125,.018),
-    0 0 72px rgba(222,188,125,calc(var(--stars-glow) * .30));
+    0 0 72px rgba(222,188,125,.045);
   opacity: 0;
   transition: opacity 1.1s ease 220ms, transform 1.8s cubic-bezier(.18,.76,.18,1) 180ms;
 }
@@ -107,7 +106,7 @@
   top: 16%;
   width: min(71vw, 300px);
   aspect-ratio: 1;
-  transform: translate3d(-50%, var(--stars-depth-y), 0) rotate(calc(var(--stars-rotation) * -.45));
+  transform: translate3d(-50%, var(--stars-depth-y), 0) rotate(var(--stars-constellation-rotation));
   overflow: visible;
   filter: drop-shadow(0 0 9px rgba(229,199,139,.12));
   will-change: transform;
@@ -166,6 +165,8 @@
 .written-stars-ready.is-written-stars-active .written-stars-constellation__point:nth-of-type(7) { animation-delay: 1.52s; }
 .written-stars-ready.is-written-stars-active .written-stars-constellation__point:nth-of-type(8) { animation-delay: 1.72s; }
 
+/* The existing rendered Pheras date/time is physically moved into this ceremonial
+   marker. It remains the same source data, merely art-directed into the star field. */
 .written-stars-midnight-mark {
   position: absolute;
   z-index: 5;
@@ -183,31 +184,49 @@
   content: '';
   display: block;
   width: 1px;
-  height: 40px;
+  height: 38px;
   margin: 0 auto 14px;
   background: linear-gradient(180deg, transparent, rgba(222,188,125,.70));
 }
 
-.written-stars-midnight-mark span {
-  display: block;
-  color: rgba(232,203,150,.82);
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 9px;
-  font-weight: 600;
-  line-height: 1.4;
-  letter-spacing: .28em;
-  text-transform: uppercase;
+.written-stars-midnight-mark::after {
+  content: '✦';
+  position: absolute;
+  left: 50%;
+  top: 30px;
+  transform: translateX(-50%);
+  color: #e1bd79;
+  font-size: 10px;
+  text-shadow: 0 0 12px rgba(225,189,121,.52);
 }
 
-.written-stars-midnight-mark strong {
-  display: block;
-  margin-top: 8px;
+.event-section.event-chapters-ready .written-stars-ready .written-stars-midnight-mark .event-chapter-datetime {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 13px;
+  width: 100%;
+  margin: 0;
+  padding: 14px 0 0;
+  border-top: 1px solid rgba(224,191,128,.30);
   color: #efd49a;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(24px, 7vw, 32px);
+  text-align: center;
+  opacity: .18;
+  transform: translateY(9px);
+  transition: opacity 720ms ease 1.92s, transform 860ms cubic-bezier(.2,.76,.18,1) 1.86s;
+}
+
+.written-stars-midnight-mark .event-chapter-datetime__date {
+  font-size: 10px;
+  letter-spacing: .24em;
+}
+
+.written-stars-midnight-mark .event-chapter-datetime__time {
+  color: #f1d59c;
+  font-size: clamp(20px, 5.7vw, 27px);
   font-weight: 500;
-  line-height: 1;
-  letter-spacing: .04em;
+  letter-spacing: .08em;
   text-shadow: 0 0 22px rgba(222,188,125,.18);
 }
 
@@ -216,8 +235,12 @@
   opacity: 1;
 }
 
-/* Keep the Pheras editorial copy above the celestial field and let the existing
-   date/time line become the final gold resolution rather than duplicating data. */
+.event-section.event-chapters-ready .written-stars-ready.is-written-stars-active .written-stars-midnight-mark .event-chapter-datetime {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Keep the Pheras editorial copy above the celestial field. */
 .event-section.event-chapters-ready .written-stars-ready > div:nth-child(2) {
   z-index: 8;
   transform: translate3d(0, calc(var(--event-copy-y, 0px) + var(--stars-copy-y)), 0);
@@ -232,22 +255,6 @@
 .event-section.event-chapters-ready .written-stars-ready h3 {
   color: #f4ead5;
   text-shadow: 0 10px 34px rgba(0,0,0,.62), 0 0 28px rgba(197,177,223,.08);
-}
-
-.event-section.event-chapters-ready .written-stars-ready .event-chapter-datetime {
-  width: fit-content;
-  margin-top: 20px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(224,191,128,.30);
-  color: #efd49a;
-  opacity: .18;
-  transform: translateY(9px);
-  transition: opacity 720ms ease 1.92s, transform 860ms cubic-bezier(.2,.76,.18,1) 1.86s;
-}
-
-.event-section.event-chapters-ready .written-stars-ready.is-written-stars-active .event-chapter-datetime {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .event-section.event-chapters-ready .written-stars-ready .event-chapter-datetime__time::before {
@@ -299,6 +306,7 @@
   .written-stars-constellation { top: 18%; width: min(74vw, 280px); }
   .written-stars-midnight-mark { top: 50%; width: 78%; }
   .written-stars-midnight-mark::before { height: 30px; }
+  .written-stars-midnight-mark::after { top: 22px; }
 }
 
 @media (max-height: 700px) {
