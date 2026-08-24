@@ -25,7 +25,7 @@
         var root = document.getElementById('root');
         if (root && !root.childElementCount) root.innerHTML = '<div class="boot-note">OPENING THE CORBETT WEDDING…</div>';
 
-        ['./src/styles.css', './src/audit-hardening.css', './src/precision-opening.css', './src/sylva-kinetic.css', './src/production-assets.css', './src/final-polish.css', './src/family-details.css', './src/logo-branding.css', './src/designer-credit.css', './src/typography.css', './src/design-system/opening-side.css', './src/design-system/language-selection.css', './src/design-system/forest-cinematic.css'].forEach(function (href) {
+        ['./src/styles.css', './src/audit-hardening.css', './src/precision-opening.css', './src/sylva-kinetic.css', './src/production-assets.css', './src/final-polish.css', './src/family-details.css', './src/logo-branding.css', './src/designer-credit.css', './src/typography.css', './src/design-system/opening-side.css', './src/design-system/language-selection.css', './src/design-system/forest-cinematic.css', './src/design-system/tiger-reveal.css'].forEach(function (href) {
           if (document.querySelector('link[data-fallback-style="' + href + '"]')) return;
           var link = document.createElement('link');
           link.rel = 'stylesheet';
@@ -34,7 +34,7 @@
           document.head.appendChild(link);
         });
 
-        ['./src/cinematicEnhancements.js', './src/sylvaKinetic.js', './src/rsvpScrollGuard.js', './src/familyDetails.js', './src/logoBranding.js', './src/designerCredit.js', './src/design-system/openingSide.js', './src/design-system/languageSelection.js', './src/design-system/forestCinematic.js'].forEach(function (src) {
+        ['./src/cinematicEnhancements.js', './src/sylvaKinetic.js', './src/rsvpScrollGuard.js', './src/familyDetails.js', './src/logoBranding.js', './src/designerCredit.js', './src/design-system/openingSide.js', './src/design-system/languageSelection.js', './src/design-system/forestCinematic.js', './src/design-system/tigerReveal.js'].forEach(function (src) {
           var motion = document.createElement('script');
           motion.type = 'module';
           motion.src = src;
