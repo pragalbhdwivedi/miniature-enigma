@@ -74,7 +74,9 @@ function mountCard(card, index, total) {
 
   splitDateTime(card)
 
-  if (!card.querySelector(':scope > .event-chapter-atmosphere')) card.prepend(createAtmosphere())
+  // Append decorative layers so inherited selectors that rely on the original
+  // event-index/content child order remain valid in both React and fallback.
+  if (!card.querySelector(':scope > .event-chapter-atmosphere')) card.appendChild(createAtmosphere())
   if (!card.querySelector(':scope > .event-chapter-folio')) card.appendChild(createFolio(index, total))
   if (!card.querySelector(':scope > .event-chapter-rail')) card.appendChild(createRail())
 
