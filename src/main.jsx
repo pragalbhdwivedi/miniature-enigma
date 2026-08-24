@@ -25,6 +25,7 @@ import './design-system/itinerary-navigator.css'
 import './design-system/celebration-chapters.css'
 import './design-system/event-photography.css'
 import './design-system/written-in-stars.css'
+import './design-system/wyndham-venue.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
@@ -45,6 +46,7 @@ import './design-system/itineraryNavigator.js'
 import './design-system/celebrationChapters.js'
 import './design-system/eventPhotography.js'
 import './design-system/writtenInStars.js'
+import './design-system/wyndhamVenue.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
