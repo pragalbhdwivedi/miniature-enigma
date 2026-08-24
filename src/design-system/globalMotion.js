@@ -20,6 +20,7 @@ const SECTION_SELECTOR = [
   '.closing-section',
 ].join(',')
 
+const NAV_TARGETS = ['home', 'events', 'stay', 'travel', 'rsvp']
 const observedSections = new Set()
 let scanQueued = false
 
@@ -33,6 +34,25 @@ function applyPointerProfile() {
 
 function applyPageVisibility() {
   root.dataset.motionPage = document.hidden ? 'hidden' : 'visible'
+}
+
+function handleReducedNavigation(event) {
+  if (!reducedMotionQuery?.matches) return
+  const button = event.target instanceof Element ? event.target.closest('.bottom-nav > button') : null
+  if (!button) return
+
+  const nav = button.closest('.bottom-nav')
+  if (!nav) return
+  const buttons = [...nav.querySelectorAll(':scope > button')].slice(0, NAV_TARGETS.length)
+  const index = buttons.indexOf(button)
+  if (index < 0) return
+
+  const target = document.getElementById(NAV_TARGETS[index])
+  if (!target) return
+
+  event.preventDefault()
+  event.stopPropagation()
+  target.scrollIntoView({ behavior: 'auto', block: 'start' })
 }
 
 const sectionObserver = typeof IntersectionObserver === 'function'
@@ -97,6 +117,7 @@ function start() {
   reducedMotionQuery?.addEventListener?.('change', applyMotionPreference)
   coarsePointerQuery?.addEventListener?.('change', applyPointerProfile)
   document.addEventListener('visibilitychange', applyPageVisibility, { passive: true })
+  document.addEventListener('click', handleReducedNavigation, true)
 
   mutationObserver.observe(document.body, { childList: true, subtree: true })
   scan()
