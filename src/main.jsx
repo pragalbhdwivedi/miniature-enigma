@@ -24,6 +24,7 @@ import './design-system/corbett-destination.css'
 import './design-system/itinerary-navigator.css'
 import './design-system/celebration-chapters.css'
 import './design-system/event-photography.css'
+import './design-system/written-in-stars.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
@@ -43,6 +44,7 @@ import './design-system/corbettDestination.js'
 import './design-system/itineraryNavigator.js'
 import './design-system/celebrationChapters.js'
 import './design-system/eventPhotography.js'
+import './design-system/writtenInStars.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
