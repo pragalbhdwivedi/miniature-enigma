@@ -14,17 +14,9 @@ const STEP_COPY = {
     2: ['PARTY', 'How many are coming?', 'Include everyone travelling with your invitation.'],
     3: ['CELEBRATIONS', 'Choose your celebrations', 'Select the functions you expect to attend.'],
     4: ['CONFIRM', 'Review your RSVP', 'Check the details, then save or send on WhatsApp.'],
-    next: 'CONTINUE',
-    back: 'BACK',
-    journey: 'RSVP · PRIVATE GUEST JOURNEY',
-    attending: 'Attending',
-    unable: 'Unable to attend',
-    guest: 'Guest / family',
-    contact: 'Contact',
-    guests: 'Guests',
-    events: 'Celebrations',
-    none: 'None selected',
-    code: 'Guest code',
+    next: 'CONTINUE', back: 'BACK', journey: 'RSVP · PRIVATE GUEST JOURNEY',
+    attending: 'Attending', unable: 'Unable to attend', guest: 'Guest / family', contact: 'Contact',
+    guests: 'Guests', events: 'Celebrations', none: 'None selected', code: 'Guest code',
   },
   hi: {
     0: ['पहचान', 'आपकी जानकारी', 'कृपया बताएं कि RSVP कौन भेज रहा है।'],
@@ -32,28 +24,14 @@ const STEP_COPY = {
     2: ['अतिथि', 'कितने अतिथि आएँगे?', 'अपने निमंत्रण के साथ आने वाले सभी अतिथियों को शामिल करें।'],
     3: ['उत्सव', 'कार्यक्रम चुनें', 'जिन कार्यक्रमों में आने की संभावना है उन्हें चुनें।'],
     4: ['पुष्टि', 'अपना RSVP जाँचें', 'विवरण जाँचकर सेव करें या WhatsApp पर भेजें।'],
-    next: 'आगे',
-    back: 'पीछे',
-    journey: 'RSVP · निजी अतिथि यात्रा',
-    attending: 'उपस्थित रहेंगे',
-    unable: 'उपस्थित नहीं हो पाएँगे',
-    guest: 'अतिथि / परिवार',
-    contact: 'संपर्क',
-    guests: 'अतिथि',
-    events: 'कार्यक्रम',
-    none: 'कोई कार्यक्रम चयनित नहीं',
-    code: 'अतिथि कोड',
+    next: 'आगे', back: 'पीछे', journey: 'RSVP · निजी अतिथि यात्रा',
+    attending: 'उपस्थित रहेंगे', unable: 'उपस्थित नहीं हो पाएँगे', guest: 'अतिथि / परिवार', contact: 'संपर्क',
+    guests: 'अतिथि', events: 'कार्यक्रम', none: 'कोई कार्यक्रम चयनित नहीं', code: 'अतिथि कोड',
   },
 }
 
-function isHindi() {
-  return document.documentElement.lang === 'hi'
-}
-
-function text() {
-  return STEP_COPY[isHindi() ? 'hi' : 'en']
-}
-
+function isHindi() { return document.documentElement.lang === 'hi' }
+function text() { return STEP_COPY[isHindi() ? 'hi' : 'en'] }
 function element(tag, className, value) {
   const node = document.createElement(tag)
   if (className) node.className = className
@@ -72,10 +50,7 @@ function attendance(form) {
   return 'yes'
 }
 
-function sequence(form) {
-  return attendance(form) === 'no' ? [0, 1, 4] : [0, 1, 2, 3, 4]
-}
-
+function sequence(form) { return attendance(form) === 'no' ? [0, 1, 4] : [0, 1, 2, 3, 4] }
 function inputs(form) {
   return {
     name: form.querySelector('#rsvp-name, #fallback-name'),
@@ -98,40 +73,26 @@ function createSummary() {
   const summary = element('section', 'rsvp-wizard__summary')
   summary.dataset.rsvpStep = '4'
   summary.setAttribute('aria-label', 'RSVP summary')
-
-  const rows = [
-    ['guest', ''],
-    ['contact', ''],
-    ['status', ''],
-    ['guests', ''],
-    ['events', ''],
-    ['code', ''],
-  ]
-
-  rows.forEach(([key]) => {
+  ;['guest', 'contact', 'status', 'guests', 'events', 'code'].forEach((key) => {
     const row = element('div', `rsvp-review-row rsvp-review-row--${key}`)
     row.dataset.reviewRow = key
     row.append(element('small', ''), element('strong', ''))
     summary.appendChild(row)
   })
-
   return summary
 }
 
 function createChrome() {
-  const chrome = element('div', 'rsvp-wizard__chrome')
-  chrome.setAttribute('aria-live', 'polite')
-
+  const root = element('div', 'rsvp-wizard__chrome')
+  root.setAttribute('aria-live', 'polite')
   const top = element('div', 'rsvp-wizard__topline')
   const journey = element('span', 'rsvp-wizard__journey')
   const count = element('span', 'rsvp-wizard__count')
   top.append(journey, count)
-
   const kicker = element('p', 'rsvp-wizard__kicker')
   const title = element('h3', 'rsvp-wizard__title')
   title.tabIndex = -1
   const note = element('p', 'rsvp-wizard__note')
-
   const progress = element('div', 'rsvp-wizard__progress')
   progress.setAttribute('aria-hidden', 'true')
   const track = element('span', 'rsvp-wizard__track')
@@ -139,50 +100,35 @@ function createChrome() {
   track.appendChild(fill)
   const dots = element('div', 'rsvp-wizard__dots')
   progress.append(track, dots)
-
-  chrome.append(top, kicker, title, note, progress)
-  return { root: chrome, journey, count, kicker, title, note, fill, dots }
+  root.append(top, kicker, title, note, progress)
+  return { root, journey, count, kicker, title, note, fill, dots }
 }
 
 function createNav() {
-  const nav = element('div', 'rsvp-wizard__nav')
+  const root = element('div', 'rsvp-wizard__nav')
   const back = element('button', 'rsvp-wizard__back')
   const next = element('button', 'rsvp-wizard__next')
-  back.type = 'button'
-  next.type = 'button'
+  back.type = 'button'; next.type = 'button'
   next.append(element('span', 'rsvp-wizard__next-label'), element('i', '', '→'))
-  nav.append(back, next)
-  return { root: nav, back, next, nextLabel: next.querySelector('.rsvp-wizard__next-label') }
+  root.append(back, next)
+  return { root, back, next, nextLabel: next.querySelector('.rsvp-wizard__next-label') }
 }
 
 function mount(form) {
   if (mounted.has(form)) return mounted.get(form)
-
   form.classList.add('rsvp-wizard-ready')
   const chrome = createChrome()
   const summary = createSummary()
   const nav = createNav()
   form.prepend(chrome.root)
   form.append(summary, nav.root)
-
   const section = form.closest('.rsvp-section')
   section?.classList.add('rsvp-experience-ready')
 
-  const state = {
-    form,
-    section,
-    chrome,
-    summary,
-    nav,
-    currentStep: persistentStep,
-    direction: 1,
-    controls: null,
-  }
+  const state = { form, section, chrome, summary, nav, currentStep: persistentStep, direction: 1 }
 
   const refreshReview = () => {
-    const t = text()
-    const controls = inputs(form)
-    const going = attendance(form) === 'yes'
+    const t = text(), controls = inputs(form), going = attendance(form) === 'yes'
     const events = selectedEvents(form)
     const guestCode = new URLSearchParams(window.location.search).get('g') || ''
     const rows = Object.fromEntries([...summary.querySelectorAll('[data-review-row]')].map((row) => [row.dataset.reviewRow, row]))
@@ -193,7 +139,6 @@ function mount(form) {
       row.querySelector('small').textContent = label
       row.querySelector('strong').textContent = value
     }
-
     set('guest', t.guest, controls.name?.value?.trim() || '—')
     set('contact', t.contact, controls.contact?.value?.trim() || '—')
     set('status', isHindi() ? 'स्थिति' : 'Status', going ? t.attending : t.unable)
@@ -204,8 +149,6 @@ function mount(form) {
 
   const classify = () => {
     const controls = inputs(form)
-    state.controls = controls
-
     const nameLabel = controls.name?.closest('label')
     const contactLabel = controls.contact?.closest('label')
     const guestLabel = controls.guests?.closest('label')
@@ -221,40 +164,30 @@ function mount(form) {
   const paint = (focusTitle = false) => {
     classify()
     const seq = sequence(form)
-    if (!seq.includes(state.currentStep)) state.currentStep = seq[Math.min(seq.length - 1, Math.max(0, seq.indexOf(1)))] ?? seq[0]
+    if (!seq.includes(state.currentStep)) state.currentStep = seq.includes(1) ? 1 : seq[0]
     persistentStep = state.currentStep
-
-    const t = text()
-    const position = Math.max(0, seq.indexOf(state.currentStep))
-    const copy = t[state.currentStep]
+    const t = text(), position = Math.max(0, seq.indexOf(state.currentStep)), copy = t[state.currentStep]
     chrome.journey.textContent = t.journey
     chrome.count.textContent = `${String(position + 1).padStart(2, '0')} / ${String(seq.length).padStart(2, '0')}`
-    chrome.kicker.textContent = copy[0]
-    chrome.title.textContent = copy[1]
-    chrome.note.textContent = copy[2]
+    chrome.kicker.textContent = copy[0]; chrome.title.textContent = copy[1]; chrome.note.textContent = copy[2]
     chrome.fill.style.setProperty('--rsvp-progress', seq.length <= 1 ? '1' : String(position / (seq.length - 1)))
-
     chrome.dots.replaceChildren(...seq.map((step, index) => {
       const dot = element('i', index <= position ? 'is-passed' : '')
       if (step === state.currentStep) dot.classList.add('is-current')
       return dot
     }))
-
     form.querySelectorAll('[data-rsvp-step]').forEach((node) => {
       const active = Number(node.dataset.rsvpStep) === state.currentStep
       node.hidden = !active
       node.setAttribute('aria-hidden', active ? 'false' : 'true')
     })
-
     nav.back.hidden = position === 0
     nav.next.hidden = position === seq.length - 1
     nav.back.textContent = t.back
     nav.nextLabel.textContent = t.next
-
     form.dataset.rsvpCurrentStep = String(state.currentStep)
     form.dataset.rsvpDirection = state.direction > 0 ? 'forward' : 'back'
     refreshReview()
-
     if (focusTitle) chrome.title.focus({ preventScroll: true })
   }
 
@@ -262,15 +195,10 @@ function mount(form) {
     if (nextStep == null || nextStep === state.currentStep) return
     const y = window.scrollY
     state.direction = direction
-    form.classList.remove('rsvp-step-enter')
     state.currentStep = nextStep
     persistentStep = nextStep
     paint(true)
-    requestAnimationFrame(() => {
-      form.classList.add('rsvp-step-enter')
-      window.scrollTo(0, y)
-    })
-    window.setTimeout(() => form.classList.remove('rsvp-step-enter'), reducedMotion ? 0 : 420)
+    requestAnimationFrame(() => window.scrollTo(0, y))
   }
 
   const move = (delta) => {
@@ -284,11 +212,10 @@ function mount(form) {
   const onInteraction = (event) => {
     if (event.target.closest('.status-toggle button, .event-checks button')) {
       window.setTimeout(() => paint(false), 0)
-      window.setTimeout(() => paint(false), 80)
+      window.setTimeout(() => paint(false), 90)
     }
   }
   const onInput = () => refreshReview()
-
   nav.back.addEventListener('click', onBack)
   nav.next.addEventListener('click', onNext)
   form.addEventListener('click', onInteraction)
@@ -296,25 +223,6 @@ function mount(form) {
   form.addEventListener('change', onInput)
 
   state.refresh = () => paint(false)
-  state.destroy = () => {
-    nav.back.removeEventListener('click', onBack)
-    nav.next.removeEventListener('click', onNext)
-    form.removeEventListener('click', onInteraction)
-    form.removeEventListener('input', onInput)
-    form.removeEventListener('change', onInput)
-    chrome.root.remove()
-    summary.remove()
-    nav.root.remove()
-    form.querySelectorAll('[data-rsvp-step]').forEach((node) => {
-      delete node.dataset.rsvpStep
-      node.hidden = false
-      node.removeAttribute('aria-hidden')
-    })
-    form.classList.remove('rsvp-wizard-ready')
-    section?.classList.remove('rsvp-experience-ready')
-    mounted.delete(form)
-  }
-
   mounted.set(form, state)
   paint(false)
   return state
@@ -327,13 +235,18 @@ function scan() {
   })
 }
 
-const observer = new MutationObserver(() => {
-  if (scanQueued) return
+function mutationMatters(records) {
+  return records.some((record) => [...record.addedNodes, ...record.removedNodes].some((node) => {
+    if (!(node instanceof Element)) return false
+    return node.matches?.('.rsvp-form, .contact-number-field, .status-toggle, .event-checks') ||
+      node.querySelector?.('.rsvp-form, .contact-number-field, .status-toggle, .event-checks')
+  }))
+}
+
+const observer = new MutationObserver((records) => {
+  if (!mutationMatters(records) || scanQueued) return
   scanQueued = true
-  queueMicrotask(() => {
-    scanQueued = false
-    scan()
-  })
+  queueMicrotask(() => { scanQueued = false; scan() })
 })
 
 function start() {
