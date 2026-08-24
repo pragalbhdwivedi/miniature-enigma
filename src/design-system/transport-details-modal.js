@@ -178,7 +178,32 @@ function mount(panel) {
   })
 }
 
+function ensureTravelAnchorAndConnection() {
+  const disclosure = document.querySelector('.logistics-disclosure--travel')
+  const panel = disclosure?.querySelector('.logistics-panel--travel')
+  if (!disclosure || !panel) return
+
+  // Keep bottom-nav Travel usable even if the disclosure is later collapsed.
+  if (panel.id === 'travel') panel.removeAttribute('id')
+  disclosure.id = 'travel'
+
+  const summary = panel.querySelector('.travel-summary')
+  if (!summary || panel.querySelector('.rail-connection-note')) return
+
+  const note = createElement('aside', 'rail-connection-note')
+  note.append(
+    createElement('p', 'logistics-kicker', copy('MORADABAD → RAMNAGAR', 'मुरादाबाद → रामनगर')),
+    createElement('strong', '', copy('Daily onward rail links', 'दैनिक आगे की रेल सेवाएँ')),
+    createElement('p', '', copy(
+      'Ranikhet Express 15013 · 01:50 → 04:15  |  Uttarakhand Sampark Kranti 15035 · 19:40 → 21:00. Recheck your exact date on IRCTC before booking.',
+      'रानीखेत एक्सप्रेस 15013 · 01:50 → 04:15  |  उत्तराखंड संपर्क क्रांति 15035 · 19:40 → 21:00। बुकिंग से पहले अपनी तिथि IRCTC पर पुनः जाँचें।',
+    )),
+  )
+  summary.insertAdjacentElement('afterend', note)
+}
+
 function scan() {
+  ensureTravelAnchorAndConnection()
   document.querySelectorAll('.logistics-panel--transport').forEach(mount)
 }
 
