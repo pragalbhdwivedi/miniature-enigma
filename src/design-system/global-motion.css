@@ -1,0 +1,189 @@
+/* Module 24 — Global Motion Design System
+   A single motion vocabulary for the invitation. Existing module choreography stays
+   intact; this layer standardises timing/easing, pauses offscreen decorative work and
+   provides a final reduced-motion safety net. */
+
+:root {
+  /* Four timing tiers. */
+  --motion-micro: 160ms;
+  --motion-ui: 320ms;
+  --motion-editorial: 680ms;
+  --motion-cinematic: 1800ms;
+
+  /* Three easing families. */
+  --motion-ease-micro: cubic-bezier(.22, .72, .20, 1);
+  --motion-ease-ui: cubic-bezier(.20, .74, .18, 1);
+  --motion-ease-editorial: cubic-bezier(.18, .76, .18, 1);
+
+  /* Shared travel distances for future/current modules that consume the system. */
+  --motion-distance-micro: 4px;
+  --motion-distance-ui: 10px;
+  --motion-distance-editorial: 18px;
+  --motion-distance-cinematic: 28px;
+}
+
+html.motion-system-ready {
+  scroll-behavior: smooth;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Micro interactions                                                         */
+/* -------------------------------------------------------------------------- */
+.bottom-nav.nav-system-ready button {
+  transition:
+    color var(--motion-micro) var(--motion-ease-micro),
+    transform var(--motion-micro) var(--motion-ease-micro),
+    opacity var(--motion-micro) var(--motion-ease-micro) !important;
+}
+
+.bottom-nav.nav-system-ready button > span {
+  transition:
+    color var(--motion-micro) var(--motion-ease-micro),
+    opacity var(--motion-micro) var(--motion-ease-micro) !important;
+}
+
+.wedding-gallery-slide {
+  transition:
+    opacity var(--motion-micro) var(--motion-ease-micro),
+    box-shadow var(--motion-ui) var(--motion-ease-ui) !important;
+}
+
+.rsvp-wizard-ready .status-toggle[data-rsvp-step] button {
+  transition:
+    transform var(--motion-micro) var(--motion-ease-micro),
+    background var(--motion-ui) var(--motion-ease-ui),
+    border-color var(--motion-ui) var(--motion-ease-ui),
+    color var(--motion-ui) var(--motion-ease-ui) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* UI surfaces                                                                */
+/* -------------------------------------------------------------------------- */
+.bottom-nav.nav-system-ready {
+  transition:
+    opacity var(--motion-micro) var(--motion-ease-micro),
+    transform var(--motion-ui) var(--motion-ease-ui),
+    border-color var(--motion-micro) var(--motion-ease-micro) !important;
+}
+
+.bottom-nav__pill {
+  transition:
+    transform var(--motion-ui) var(--motion-ease-ui),
+    width var(--motion-ui) var(--motion-ease-ui) !important;
+}
+
+.transport-modal {
+  transition:
+    opacity var(--motion-ui) var(--motion-ease-ui),
+    visibility var(--motion-ui) step-end !important;
+}
+
+.transport-modal.is-open {
+  transition:
+    opacity var(--motion-ui) var(--motion-ease-ui),
+    visibility 0ms step-start !important;
+}
+
+.transport-modal__dialog {
+  transition:
+    transform var(--motion-ui) var(--motion-ease-ui),
+    opacity var(--motion-ui) var(--motion-ease-ui) !important;
+}
+
+.wedding-gallery-lightbox {
+  transition:
+    opacity var(--motion-ui) var(--motion-ease-ui),
+    visibility var(--motion-ui) step-end !important;
+}
+
+.wedding-gallery-lightbox.is-open {
+  transition:
+    opacity var(--motion-ui) var(--motion-ease-ui),
+    visibility 0ms step-start !important;
+}
+
+.wedding-gallery-lightbox__dialog {
+  transition:
+    transform var(--motion-ui) var(--motion-ease-ui),
+    opacity var(--motion-ui) var(--motion-ease-ui) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Editorial motion                                                           */
+/* -------------------------------------------------------------------------- */
+.wedding-gallery-slide__image {
+  transition:
+    transform var(--motion-editorial) var(--motion-ease-editorial),
+    filter var(--motion-ui) var(--motion-ease-ui) !important;
+}
+
+.wedding-gallery-rail span {
+  transition: width var(--motion-ui) var(--motion-ease-ui) !important;
+}
+
+.rsvp-wizard__fill {
+  transition: transform var(--motion-editorial) var(--motion-ease-editorial) !important;
+}
+
+.rsvp-wizard__dots i {
+  transition:
+    transform var(--motion-ui) var(--motion-ease-ui),
+    background var(--motion-ui) var(--motion-ease-ui),
+    border-color var(--motion-ui) var(--motion-ease-ui) !important;
+}
+
+.rsvp-wizard-ready > [data-rsvp-step] {
+  animation-duration: var(--motion-editorial) !important;
+  animation-timing-function: var(--motion-ease-editorial) !important;
+}
+
+.venue-section.venue-editorial-ready .venue-photo {
+  transition:
+    transform var(--motion-editorial) var(--motion-ease-editorial),
+    opacity var(--motion-editorial) var(--motion-ease-editorial),
+    filter var(--motion-editorial) var(--motion-ease-editorial) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Motion budget                                                              */
+/* -------------------------------------------------------------------------- */
+/* Sections are tagged by globalMotion.js. Pausing their CSS keyframes while
+   offscreen prevents decorative loops from consuming work the guest cannot see. */
+html.motion-system-ready [data-motion-visibility='idle'] *,
+html.motion-system-ready [data-motion-visibility='idle'] *::before,
+html.motion-system-ready [data-motion-visibility='idle'] *::after {
+  animation-play-state: paused !important;
+}
+
+/* A hidden browser tab should not keep decorative CSS motion alive. */
+html.motion-system-ready[data-motion-page='hidden'] *,
+html.motion-system-ready[data-motion-page='hidden'] *::before,
+html.motion-system-ready[data-motion-page='hidden'] *::after {
+  animation-play-state: paused !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Reduced motion                                                             */
+/* -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html.motion-system-ready {
+    scroll-behavior: auto !important;
+  }
+
+  html.motion-system-ready *,
+  html.motion-system-ready *::before,
+  html.motion-system-ready *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html.motion-system-ready [data-motion-visibility='idle'] *,
+  html.motion-system-ready [data-motion-visibility='idle'] *::before,
+  html.motion-system-ready [data-motion-visibility='idle'] *::after {
+    animation-play-state: running !important;
+  }
+}
