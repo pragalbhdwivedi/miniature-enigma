@@ -23,7 +23,7 @@
   --glass-copy-opacity: 0;
   --glass-copy-y: 16px;
   --glass-paper-opacity: 0;
-  --glass-gold-line: 0;
+  --glass-gold-line-width: 0%;
   position: relative;
   z-index: 1;
   height: 142svh;
@@ -205,7 +205,7 @@
   content: '';
   width: 42px;
   height: 1px;
-  background: linear-gradient(90deg, rgba(222,188,122,.72) calc(var(--glass-gold-line) * 100%), rgba(222,188,122,.14) 0);
+  background: linear-gradient(90deg, rgba(222,188,122,.72) var(--glass-gold-line-width), rgba(222,188,122,.14) 0);
 }
 
 .glass-architecture-kicker {
