@@ -1,0 +1,264 @@
+/* Module 21 — RSVP confirmation / micro-interactions */
+
+.rsvp-form.rsvp-confirmation-ready {
+  --rsvp-confirm-ink: #2c3529;
+  --rsvp-confirm-gold: #9b7a43;
+  --rsvp-confirm-gold-soft: rgba(155, 122, 67, .16);
+  --rsvp-confirm-green: #2f4a35;
+}
+
+.rsvp-confirmation {
+  position: relative;
+  overflow: hidden;
+  margin: 4px 0 12px;
+  padding: 17px 16px 16px;
+  border: 1px solid rgba(116, 88, 45, .25);
+  border-radius: 17px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.23), rgba(255,255,255,.08)),
+    rgba(225, 211, 181, .12);
+  color: var(--rsvp-confirm-ink);
+  isolation: isolate;
+}
+
+.rsvp-confirmation[hidden] { display: none !important; }
+
+.rsvp-confirmation::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .3;
+  background:
+    radial-gradient(circle at 86% 15%, rgba(166,129,67,.18), transparent 32%),
+    repeating-linear-gradient(0deg, transparent 0 7px, rgba(93,68,33,.025) 7px 8px);
+  z-index: -1;
+}
+
+.rsvp-confirmation__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rsvp-confirmation__eyebrow {
+  margin: 0;
+  font: 600 9px/1.25 system-ui, sans-serif;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(66, 52, 33, .62);
+}
+
+.rsvp-confirmation__ready {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 9px;
+  border: 1px solid rgba(104, 76, 36, .26);
+  border-radius: 999px;
+  color: #68532f;
+  background: rgba(255,255,255,.18);
+  font: 700 8px/1 system-ui, sans-serif;
+  letter-spacing: .16em;
+  white-space: nowrap;
+}
+
+.rsvp-confirmation__body {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.rsvp-confirmation__seal {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(125, 94, 44, .42);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--rsvp-confirm-gold);
+  background: rgba(255,255,255,.14);
+}
+
+.rsvp-confirmation__seal::before,
+.rsvp-confirmation__seal::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: .22;
+}
+
+.rsvp-confirmation__seal::before { inset: 4px; }
+.rsvp-confirmation__seal::after { inset: 8px; }
+
+.rsvp-confirmation__check {
+  position: relative;
+  z-index: 2;
+  width: 14px;
+  height: 8px;
+  border-left: 1.8px solid currentColor;
+  border-bottom: 1.8px solid currentColor;
+  transform: rotate(-45deg) scale(.72);
+  opacity: .62;
+}
+
+.rsvp-confirmation__copy strong {
+  display: block;
+  margin: 0;
+  font: 600 clamp(18px, 5vw, 22px)/1.05 Georgia, 'Times New Roman', serif;
+  letter-spacing: -.02em;
+  color: #302a21;
+}
+
+.rsvp-confirmation__copy span {
+  display: block;
+  margin-top: 5px;
+  color: rgba(56, 48, 37, .64);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.rsvp-confirmation__status {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  margin-top: 13px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(91, 67, 34, .15);
+  color: var(--rsvp-confirm-green);
+  font: 700 9px/1.3 system-ui, sans-serif;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.rsvp-confirmation__status i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 4px rgba(47,74,53,.09);
+}
+
+.rsvp-confirmation.is-saved {
+  border-color: rgba(47, 74, 53, .34);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.25), rgba(255,255,255,.08)),
+    rgba(189, 207, 186, .15);
+}
+
+.rsvp-confirmation.is-saved .rsvp-confirmation__ready {
+  color: var(--rsvp-confirm-green);
+  border-color: rgba(47,74,53,.25);
+}
+
+.rsvp-confirmation.is-saved .rsvp-confirmation__seal {
+  color: var(--rsvp-confirm-green);
+  border-color: rgba(47,74,53,.42);
+}
+
+.rsvp-confirmation.is-saved .rsvp-confirmation__check {
+  opacity: 1;
+  transform: rotate(-45deg) scale(1);
+}
+
+.rsvp-confirmation.is-saved .rsvp-confirmation__status { display: flex; }
+
+.rsvp-form.rsvp-confirmation-ready .primary-cta.whatsapp,
+.rsvp-form.rsvp-confirmation-ready .secondary-cta {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 160ms ease,
+    background-color 260ms ease,
+    border-color 260ms ease,
+    color 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.rsvp-form.rsvp-confirmation-ready .primary-cta.whatsapp::after,
+.rsvp-form.rsvp-confirmation-ready .secondary-cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 25%, rgba(255,255,255,.2) 48%, transparent 72%);
+  transform: translateX(-130%);
+}
+
+.rsvp-form.rsvp-confirmation-ready .primary-cta.whatsapp.rsvp-action-ready {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(22, 47, 29, .18);
+}
+
+.rsvp-form.rsvp-confirmation-ready .primary-cta.whatsapp.rsvp-action-ready::after {
+  animation: rsvpActionSweep 520ms cubic-bezier(.2,.7,.2,1) both;
+}
+
+.rsvp-form.rsvp-confirmation-ready .secondary-cta.rsvp-action-saving {
+  color: #6c5a3b;
+  border-color: rgba(116,88,45,.38);
+  background: rgba(198,176,132,.15);
+}
+
+.rsvp-form.rsvp-confirmation-ready .secondary-cta.rsvp-action-saved {
+  color: #f1eadc;
+  border-color: var(--rsvp-confirm-green);
+  background: var(--rsvp-confirm-green);
+  box-shadow: 0 8px 20px rgba(33,58,39,.16);
+}
+
+.rsvp-form.rsvp-confirmation-ready .secondary-cta.rsvp-action-saved::after {
+  animation: rsvpActionSweep 620ms cubic-bezier(.2,.7,.2,1) both;
+}
+
+.rsvp-confirmation.is-saved .rsvp-confirmation__seal {
+  animation: rsvpSealResolve 620ms cubic-bezier(.2,.8,.2,1) both;
+}
+
+.rsvp-confirmation.is-saved .rsvp-confirmation__status {
+  animation: rsvpStatusRise 380ms 120ms ease both;
+}
+
+@keyframes rsvpActionSweep {
+  from { transform: translateX(-130%); }
+  to { transform: translateX(130%); }
+}
+
+@keyframes rsvpSealResolve {
+  0% { transform: scale(.82) rotate(-5deg); opacity: .55; }
+  60% { transform: scale(1.05) rotate(1deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+@keyframes rsvpStatusRise {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 365px) {
+  .rsvp-confirmation { padding: 15px 14px; }
+  .rsvp-confirmation__body { grid-template-columns: 36px minmax(0, 1fr); gap: 10px; }
+  .rsvp-confirmation__seal { width: 36px; height: 36px; }
+  .rsvp-confirmation__copy strong { font-size: 17px; }
+}
+
+@media (max-height: 720px) {
+  .rsvp-confirmation { margin-bottom: 9px; padding-block: 13px; }
+  .rsvp-confirmation__body { margin-top: 10px; }
+  .rsvp-confirmation__copy span { margin-top: 3px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rsvp-confirmation,
+  .rsvp-confirmation *,
+  .rsvp-form.rsvp-confirmation-ready .primary-cta.whatsapp,
+  .rsvp-form.rsvp-confirmation-ready .secondary-cta {
+    animation: none !important;
+    transition: none !important;
+  }
+}
