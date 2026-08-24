@@ -44,6 +44,10 @@ function selectVisually(button) {
   const value = button.classList.contains('groom') ? 'groom' : 'bride'
   grid.dataset.selected = value
 
+  /* Module 2 reads this transient document state so the chosen family visibly
+     carries into Language Selection. It is intentionally not persisted. */
+  document.documentElement.dataset.weddingSide = value
+
   grid.querySelectorAll('.passport-choice').forEach((card) => {
     const selected = card === button
     card.classList.toggle('is-selected', selected)
