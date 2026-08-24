@@ -1,8 +1,7 @@
 // Module 06 — Physical Passport Experience
-// Corrective pass: the passport remains a tactile cover, but opening it no longer
-// inserts or waits on an intermediate ivory editorial page. The original React /
-// raw-fallback click is allowed to continue immediately, so the passport can never
-// become a blocking state between the cover and the real invitation.
+// The passport remains a tactile cover, but opening it no longer inserts or waits on
+// an intermediate ivory editorial page. The visible cover itself is also an accessible
+// activation target so short Mobile Safari viewports cannot strand the guest.
 
 const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
 const mountedHosts = new Set()
@@ -15,6 +14,11 @@ function beginHandoff(duration = 620) {
   handoffCleanupTimer = window.setTimeout(() => {
     document.body.classList.remove('passport-handoff-active')
   }, duration)
+}
+
+function activateButton(button) {
+  if (!button || button.disabled) return
+  button.click()
 }
 
 function mount(host) {
@@ -30,7 +34,7 @@ function mount(host) {
   // Remove any stale Module 06 interior left by a hot reload or source fallback.
   host.querySelector(':scope > .passport-cinematic-world')?.remove()
 
-  const handler = () => {
+  const buttonHandler = () => {
     if (host.classList.contains('passport-is-opening')) return
     host.classList.add('passport-is-opening')
     button.dataset.opening = 'true'
@@ -42,13 +46,48 @@ function mount(host) {
     // synchronously, moving straight to the real invitation.
   }
 
-  button.addEventListener('click', handler)
-  handlersByHost.set(host, { button, handler })
+  const coverClickHandler = (event) => {
+    // The cover is decorative content with no nested controls today. Keep this guard
+    // future-safe so a later real link/button inside the cover keeps its own action.
+    if (event.target instanceof Element && event.target.closest('button, a, input, select, textarea')) return
+    activateButton(button)
+  }
+
+  const coverKeyHandler = (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return
+    event.preventDefault()
+    activateButton(button)
+  }
+
+  const label = (button.textContent || 'Open invitation').replace(/\s+/g, ' ').trim()
+  cover.setAttribute('role', 'button')
+  cover.setAttribute('tabindex', '0')
+  cover.setAttribute('aria-label', label)
+  cover.dataset.passportTapTarget = 'true'
+
+  button.addEventListener('click', buttonHandler)
+  cover.addEventListener('click', coverClickHandler)
+  cover.addEventListener('keydown', coverKeyHandler)
+  handlersByHost.set(host, {
+    button,
+    cover,
+    buttonHandler,
+    coverClickHandler,
+    coverKeyHandler,
+  })
 }
 
 function unmount(host) {
   const bound = handlersByHost.get(host)
-  if (bound) bound.button.removeEventListener('click', bound.handler)
+  if (bound) {
+    bound.button.removeEventListener('click', bound.buttonHandler)
+    bound.cover.removeEventListener('click', bound.coverClickHandler)
+    bound.cover.removeEventListener('keydown', bound.coverKeyHandler)
+    bound.cover.removeAttribute('role')
+    bound.cover.removeAttribute('tabindex')
+    bound.cover.removeAttribute('aria-label')
+    delete bound.cover.dataset.passportTapTarget
+  }
   handlersByHost.delete(host)
   host.querySelector(':scope > .passport-cinematic-world')?.remove()
   host.classList.remove('passport-physical-ready', 'passport-is-opening')
