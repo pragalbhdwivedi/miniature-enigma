@@ -92,7 +92,6 @@ function findDateTime(card) {
 function createStage(card) {
   const stage = document.createElement('div')
   stage.className = 'written-stars-stage'
-  stage.setAttribute('aria-hidden', 'true')
 
   const orbit = createOrbit()
   const constellation = createConstellation()
