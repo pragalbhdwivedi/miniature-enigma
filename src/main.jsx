@@ -13,6 +13,7 @@ import './designer-credit.css'
 import './typography.css'
 import './design-system/opening-side.css'
 import './design-system/language-selection.css'
+import './design-system/forest-cinematic.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
@@ -21,6 +22,7 @@ import './logoBranding.js'
 import './designerCredit.js'
 import './design-system/openingSide.js'
 import './design-system/languageSelection.js'
+import './design-system/forestCinematic.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
