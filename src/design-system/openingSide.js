@@ -44,9 +44,12 @@ function selectVisually(button) {
   const value = button.classList.contains('groom') ? 'groom' : 'bride'
   grid.dataset.selected = value
 
-  /* Module 2 reads this transient document state so the chosen family visibly
-     carries into Language Selection. It is intentionally not persisted. */
+  /* Module 2 reads this transient state so the chosen family visibly carries into
+     Language Selection. Keep both a DOM hook and an in-memory hook because React can
+     replace the side-screen subtree before MutationObservers process the language
+     screen. Neither value survives a full page refresh. */
   document.documentElement.dataset.weddingSide = value
+  window.__weddingOpeningSide = value
 
   grid.querySelectorAll('.passport-choice').forEach((card) => {
     const selected = card === button
