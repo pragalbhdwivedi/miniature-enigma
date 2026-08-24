@@ -1,0 +1,574 @@
+/*
+  Wedding design system · Language Selection
+
+  Module 2 continues the side-selector visual grammar rather than presenting a new,
+  unrelated screen. The selected family becomes a compact origin panel, language cards
+  share one moving gold focus state, and the whole screen confirms the selection before
+  advancing into the cinematic introduction.
+
+  Design references are adapted, not imported:
+  - React Bits-inspired masked / staggered editorial entrances
+  - Motion Primitives-inspired shared selected background and confirmation beat
+  - Cult UI-inspired tactile leather, paper grain and edge depth
+*/
+
+:root {
+  --ka-language-gold: var(--ka-open-gold, #d7b26f);
+  --ka-language-gold-bright: var(--ka-open-gold-bright, #f0d295);
+  --ka-language-ivory: var(--ka-open-ivory, #f1e4c8);
+  --ka-language-ease-editorial: var(--ka-open-ease-editorial, cubic-bezier(.22, 1, .36, 1));
+  --ka-language-ease-ui: var(--ka-open-ease-ui, cubic-bezier(.2, .75, .25, 1));
+}
+
+.language-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Carry the chosen family colour into this page as a very soft environmental wash. */
+.language-screen .selection-content {
+  position: relative;
+  z-index: 4;
+  box-sizing: border-box;
+  width: min(100%, 470px);
+  min-height: 100svh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding:
+    max(18px, env(safe-area-inset-top, 0px))
+    clamp(18px, 4.8vw, 24px)
+    calc(28px + env(safe-area-inset-bottom, 0px)) !important;
+  justify-content: flex-start !important;
+}
+
+.language-screen .selection-content::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  opacity: .9;
+  background:
+    linear-gradient(180deg, rgba(3, 8, 5, .08), rgba(3, 8, 5, .36) 52%, rgba(3, 8, 5, .58)),
+    radial-gradient(circle at 18% 17%, rgba(62, 103, 68, .16), transparent 31%);
+}
+
+.language-screen[data-origin-side='groom'] .selection-content::before {
+  background:
+    linear-gradient(180deg, rgba(8, 3, 4, .08), rgba(8, 3, 4, .36) 52%, rgba(8, 3, 4, .60)),
+    radial-gradient(circle at 82% 17%, rgba(125, 48, 61, .15), transparent 31%);
+}
+
+/* Back stays useful but deliberately quiet. */
+.language-screen .back-button {
+  position: fixed !important;
+  z-index: 20 !important;
+  top: calc(14px + env(safe-area-inset-top, 0px)) !important;
+  left: max(14px, env(safe-area-inset-left, 0px)) !important;
+  width: 44px !important;
+  height: 44px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid rgba(230, 193, 125, .35) !important;
+  border-radius: 999px !important;
+  background: rgba(3, 10, 6, .48) !important;
+  color: var(--ka-language-gold-bright) !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+  backdrop-filter: blur(10px) saturate(1.05);
+  -webkit-backdrop-filter: blur(10px) saturate(1.05);
+  box-shadow: 0 9px 24px rgba(0,0,0,.25);
+}
+
+.language-screen .back-button:focus-visible {
+  outline: 2px solid var(--ka-language-gold-bright);
+  outline-offset: 3px;
+}
+
+/* The KA mark has already had its hero moment on Module 1. */
+.language-screen .monogram {
+  flex: 0 0 auto;
+  width: 100% !important;
+  min-height: 78px !important;
+  margin: 0 auto !important;
+  opacity: 0;
+  transform: translateY(-8px) scale(.96);
+  animation: kaLanguageBrandIn 620ms var(--ka-language-ease-editorial) 40ms forwards;
+}
+
+.language-screen .monogram.monogram--image img[data-ka-logo] {
+  width: auto !important;
+  height: clamp(62px, 15vw, 78px) !important;
+  max-height: 78px !important;
+}
+
+/* The selected side visually survives the transition as a compressed leather strip.
+   Its animation grows from the side the user picked, creating the morph illusion. */
+.language-origin {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  width: min(100%, 416px);
+  min-height: 74px;
+  margin: 8px auto 0;
+  padding: 10px 14px 10px 11px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid rgba(228, 189, 120, .54);
+  border-radius: 17px;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.016) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(91deg, rgba(0,0,0,.09) 0 1px, transparent 1px 6px),
+    linear-gradient(145deg, #172a1e, #08140d 78%);
+  box-shadow:
+    inset 0 0 0 4px rgba(0,0,0,.13),
+    inset 0 1px 0 rgba(255,255,255,.035),
+    0 16px 34px rgba(0,0,0,.32);
+  opacity: 0;
+  transform-origin: 22% 50%;
+  transform: translateY(12px) scaleX(.76) scaleY(.94);
+  animation: kaLanguageOriginMorph 680ms var(--ka-language-ease-editorial) 140ms forwards;
+}
+
+.language-origin[data-side='groom'] {
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.014) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(91deg, rgba(0,0,0,.10) 0 1px, transparent 1px 6px),
+    linear-gradient(145deg, #5b2630, #2c1016 78%);
+  transform-origin: 78% 50%;
+}
+
+.language-origin::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(237, 199, 130, .16);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.language-origin__medallion {
+  position: relative;
+  z-index: 2;
+  width: 52px;
+  aspect-ratio: 1;
+  background: var(--asset-tiger-bride) center / contain no-repeat;
+  filter: drop-shadow(0 7px 12px rgba(0,0,0,.38));
+}
+
+.language-origin[data-side='groom'] .language-origin__medallion {
+  background-image: var(--asset-tiger-groom);
+}
+
+.language-origin__copy {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  text-align: left;
+}
+
+.language-origin__copy small {
+  display: block;
+  margin: 0 0 3px;
+  color: rgba(226, 191, 126, .72);
+  font-family: var(--font-editorial-en, 'Cormorant Garamond', serif);
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: .21em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.language-origin__copy strong {
+  display: block;
+  overflow: hidden;
+  color: var(--ka-language-gold-bright);
+  font-family: var(--font-editorial-en, 'Cormorant Garamond', serif);
+  font-size: clamp(18px, 5.2vw, 23px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: .055em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.language-origin__copy span {
+  display: block;
+  margin-top: 4px;
+  color: rgba(244,235,214,.72);
+  font-family: var(--font-reading-hi, serif);
+  font-size: 10.5px;
+  line-height: 1.3;
+}
+
+/* Editorial heading sequence. */
+.language-screen h1 {
+  margin: 24px 0 0 !important;
+  color: var(--ka-language-ivory) !important;
+  font-size: clamp(38px, 10.5vw, 52px) !important;
+  font-weight: 400 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.01em;
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(18px);
+  animation: kaLanguageMaskIn 720ms var(--ka-language-ease-editorial) 360ms forwards;
+}
+
+.language-screen .english-sub {
+  margin: 8px 0 0 !important;
+  color: var(--ka-language-gold-bright) !important;
+  font-size: 10.5px !important;
+  font-weight: 600;
+  letter-spacing: .235em !important;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: kaLanguageSoftIn 560ms var(--ka-language-ease-editorial) 500ms forwards;
+}
+
+.language-screen .selection-note {
+  max-width: 326px !important;
+  margin: 13px auto 0 !important;
+  color: rgba(239,226,199,.72) !important;
+  font-size: clamp(12px, 3.3vw, 14px) !important;
+  line-height: 1.45 !important;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: kaLanguageSoftIn 560ms var(--ka-language-ease-editorial) 610ms forwards;
+}
+
+.language-screen .selection-note::before {
+  width: 88px !important;
+  margin: 0 auto 13px !important;
+  border-color: rgba(220,181,112,.28) !important;
+}
+
+/* One shared focus surface slides between Hindi and English. */
+.language-screen .language-grid {
+  --ka-language-gap: clamp(12px, 3.5vw, 18px);
+  position: relative !important;
+  z-index: 4;
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr) !important;
+  gap: var(--ka-language-gap) !important;
+  width: min(100%, 424px) !important;
+  margin: 19px auto 0 !important;
+  isolation: isolate;
+}
+
+.language-screen .language-grid::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -5px;
+  bottom: -5px;
+  left: -5px;
+  width: calc((100% - var(--ka-language-gap)) / 2 + 10px);
+  border: 1px solid transparent;
+  border-radius: 22px;
+  background: radial-gradient(circle at 50% 24%, rgba(239, 201, 132, .13), transparent 56%);
+  opacity: 0;
+  transform: translateX(0) scale(.975);
+  transition:
+    transform 360ms var(--ka-language-ease-ui),
+    opacity 220ms ease,
+    border-color 220ms ease,
+    box-shadow 360ms var(--ka-language-ease-ui);
+  pointer-events: none;
+}
+
+.language-screen .language-grid[data-selected='hi']::before,
+.language-screen .language-grid[data-selected='en']::before {
+  opacity: 1;
+  border-color: rgba(241, 205, 137, .72);
+  box-shadow: 0 18px 42px rgba(0,0,0,.42), 0 0 34px rgba(218,177,106,.10);
+  transform: translateX(0) scale(1);
+}
+
+.language-screen .language-grid[data-selected='en']::before {
+  transform: translateX(calc(100% + var(--ka-language-gap) - 10px)) scale(1);
+}
+
+.language-screen .language-card {
+  position: relative !important;
+  z-index: 2;
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: clamp(276px, 38svh, 336px) !important;
+  padding: 27px 10px 142px !important;
+  justify-content: flex-start !important;
+  overflow: hidden;
+  border: 1px solid rgba(221,181,111,.56) !important;
+  border-radius: 18px !important;
+  background:
+    radial-gradient(circle at 26% 8%, rgba(239,205,140,.09), transparent 30%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.017) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(92deg, rgba(0,0,0,.09) 0 1px, transparent 1px 6px),
+    linear-gradient(150deg, #17291d 0%, #08150e 76%) !important;
+  box-shadow:
+    inset 0 0 0 5px rgba(0,0,0,.17),
+    inset 0 1px 0 rgba(255,255,255,.03),
+    0 15px 32px rgba(0,0,0,.34) !important;
+  opacity: 0;
+  transform: translateY(24px) scale(.965);
+  transition:
+    transform 340ms var(--ka-language-ease-ui),
+    opacity 260ms ease,
+    filter 260ms ease,
+    border-color 260ms ease,
+    box-shadow 340ms var(--ka-language-ease-ui) !important;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+.language-screen .language-card:first-child {
+  animation: kaLanguageCardIn 680ms var(--ka-language-ease-editorial) 690ms forwards;
+}
+
+.language-screen .language-card.wine {
+  background:
+    radial-gradient(circle at 26% 8%, rgba(239,205,140,.09), transparent 30%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.014) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(92deg, rgba(0,0,0,.10) 0 1px, transparent 1px 6px),
+    linear-gradient(150deg, #5a242e 0%, #2c1016 76%) !important;
+  animation: kaLanguageCardIn 680ms var(--ka-language-ease-editorial) 785ms forwards;
+}
+
+.language-screen .language-card::after {
+  inset: 7px !important;
+  border-radius: 13px !important;
+  border-color: rgba(236,198,128,.22) !important;
+  background:
+    linear-gradient(115deg, rgba(255,255,255,.03), transparent 30%, transparent 70%, rgba(255,255,255,.016)),
+    repeating-linear-gradient(35deg, rgba(237,210,156,.022) 0 1px, transparent 1px 7px);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.20), inset 0 -28px 44px rgba(0,0,0,.12);
+}
+
+.language-screen .language-card strong {
+  position: relative;
+  z-index: 3;
+  margin: 0 !important;
+  color: var(--ka-language-gold-bright) !important;
+  font-size: clamp(29px, 8vw, 38px) !important;
+  line-height: 1.05 !important;
+}
+
+.language-screen .language-card > span {
+  position: relative;
+  z-index: 3;
+  margin-top: 7px !important;
+  color: rgba(225,189,124,.88) !important;
+  font-size: 10.5px !important;
+  font-family: var(--font-editorial-en, serif);
+  font-weight: 600;
+  letter-spacing: .20em !important;
+}
+
+/* The uploaded front medallion is deliberately lower and quieter than the text. */
+.language-screen .language-card::before {
+  left: 50% !important;
+  bottom: 20px !important;
+  width: min(27vw, 112px) !important;
+  height: min(27vw, 112px) !important;
+  transform: translateX(-50%) scale(.95) !important;
+  border: 0 !important;
+  opacity: .88 !important;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.40)) !important;
+  transition: transform 360ms var(--ka-language-ease-ui), opacity 260ms ease !important;
+}
+
+.language-screen .language-card.is-selected {
+  transform: translateY(-6px) scale(1.018) !important;
+  border-color: rgba(245,211,145,.94) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(245,211,145,.10),
+    inset 0 0 40px rgba(235,198,128,.045),
+    0 22px 48px rgba(0,0,0,.48),
+    0 0 27px rgba(224,181,110,.10) !important;
+}
+
+.language-screen .language-card.is-selected::before {
+  transform: translateX(-50%) scale(1.04) !important;
+  opacity: 1 !important;
+}
+
+.language-screen .language-card.is-dimmed {
+  opacity: .38 !important;
+  filter: saturate(.65) brightness(.76);
+  transform: translateY(2px) scale(.982) !important;
+}
+
+.language-screen .language-card:focus-visible {
+  outline: 2px solid var(--ka-language-gold-bright);
+  outline-offset: 4px;
+}
+
+/* Keep the canopy tiger genuinely peripheral. Existing production asset binding stays intact. */
+.language-screen::after {
+  top: calc(64px + env(safe-area-inset-top, 0px)) !important;
+  right: -13px !important;
+  width: clamp(76px, 21vw, 96px) !important;
+  height: clamp(94px, 26vw, 122px) !important;
+  opacity: .58 !important;
+  background-size: contain !important;
+  background-position: center !important;
+  filter: drop-shadow(0 12px 20px rgba(0,0,0,.30)) !important;
+  pointer-events: none;
+}
+
+/* Sound is a utility control, not a third choice. */
+.language-screen .sound-pill {
+  position: relative !important;
+  z-index: 6;
+  width: auto !important;
+  min-width: 154px;
+  min-height: 42px;
+  margin: 20px auto 0 !important;
+  padding: 10px 16px !important;
+  border: 1px solid rgba(222,185,116,.32) !important;
+  border-radius: 999px !important;
+  background: rgba(4,11,7,.46) !important;
+  color: rgba(235,212,169,.78) !important;
+  font-family: var(--font-editorial-en, serif) !important;
+  font-size: 9px !important;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: .14em !important;
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  opacity: 0;
+  transform: translateY(8px);
+  animation: kaLanguageSoftIn 540ms var(--ka-language-ease-editorial) 920ms forwards;
+}
+
+.language-screen .sound-pill:focus-visible {
+  outline: 2px solid var(--ka-language-gold-bright);
+  outline-offset: 3px;
+}
+
+/* Confirmation subtly closes the composition before the intro begins. */
+.language-screen.is-language-confirming .language-origin,
+.language-screen.is-language-confirming h1,
+.language-screen.is-language-confirming .english-sub,
+.language-screen.is-language-confirming .selection-note,
+.language-screen.is-language-confirming .sound-pill {
+  opacity: .48 !important;
+  transition: opacity 260ms ease;
+}
+
+.language-screen.is-language-confirming .language-grid {
+  transform: scale(1.012);
+  transition: transform 340ms var(--ka-language-ease-ui);
+}
+
+@keyframes kaLanguageBrandIn {
+  from { opacity: 0; transform: translateY(-8px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes kaLanguageOriginMorph {
+  0% { opacity: 0; transform: translateY(14px) scaleX(.72) scaleY(.91); filter: blur(3px); }
+  48% { opacity: .82; }
+  100% { opacity: 1; transform: translateY(0) scaleX(1) scaleY(1); filter: blur(0); }
+}
+
+@keyframes kaLanguageMaskIn {
+  from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(18px); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
+}
+
+@keyframes kaLanguageSoftIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes kaLanguageCardIn {
+  from { opacity: 0; transform: translateY(24px) scale(.965); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Short phones get the same hierarchy with less vertical ceremony. */
+@media (max-height: 760px) {
+  .language-screen .selection-content {
+    padding-top: max(10px, env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .language-screen .monogram {
+    min-height: 58px !important;
+  }
+
+  .language-screen .monogram.monogram--image img[data-ka-logo] {
+    height: 56px !important;
+  }
+
+  .language-origin {
+    min-height: 62px;
+    margin-top: 3px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  .language-origin__medallion { width: 44px; }
+  .language-origin { grid-template-columns: 48px minmax(0,1fr); gap: 11px; }
+  .language-screen h1 { margin-top: 15px !important; font-size: clamp(32px, 9.2vw, 44px) !important; }
+  .language-screen .selection-note { margin-top: 7px !important; }
+  .language-screen .selection-note::before { margin-bottom: 8px !important; }
+  .language-screen .language-grid { margin-top: 12px !important; }
+  .language-screen .language-card { min-height: 238px !important; padding-top: 21px !important; padding-bottom: 117px !important; }
+  .language-screen .language-card::before { width: 91px !important; height: 91px !important; bottom: 15px !important; }
+  .language-screen .sound-pill { min-height: 38px; margin-top: 12px !important; padding: 8px 14px !important; }
+}
+
+@media (max-width: 365px) {
+  .language-screen .selection-content {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .language-origin {
+    grid-template-columns: 49px minmax(0,1fr);
+    gap: 10px;
+    padding-left: 9px;
+    padding-right: 11px;
+  }
+
+  .language-origin__medallion { width: 46px; }
+  .language-origin__copy small { font-size: 7.5px; letter-spacing: .16em; }
+  .language-origin__copy span { font-size: 9.5px; }
+  .language-screen .language-grid { --ka-language-gap: 10px; }
+  .language-screen .language-card { padding-left: 7px !important; padding-right: 7px !important; }
+  .language-screen .language-card strong { font-size: clamp(27px, 8.6vw, 34px) !important; }
+  .language-screen::after { width: 78px !important; height: 98px !important; right: -14px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .language-screen .monogram,
+  .language-origin,
+  .language-screen h1,
+  .language-screen .english-sub,
+  .language-screen .selection-note,
+  .language-screen .language-card,
+  .language-screen .sound-pill {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    filter: none !important;
+  }
+
+  .language-screen .language-grid::before,
+  .language-screen .language-card,
+  .language-screen .language-card::before,
+  .language-screen .language-grid {
+    transition-duration: 1ms !important;
+  }
+}
