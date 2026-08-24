@@ -3,13 +3,13 @@
 
 export const assets = {
   tiger: {
-    brideMedallion: new URL('./images/tiger/tiger-medallion-bride.PNG', import.meta.url).href,
-    groomMedallion: new URL('./images/tiger/tiger-medallion-groom.PNG', import.meta.url).href,
-    frontMedallion: new URL('./images/tiger/tiger-medallion-front.PNG', import.meta.url).href,
-    forestPeek: new URL('./images/tiger/tiger-forest-peek.PNG', import.meta.url).href,
-    riverProfile: new URL('./images/tiger/tiger-river-profile.PNG', import.meta.url).href,
-    revealFront: new URL('./images/tiger/tiger-reveal-front.PNG', import.meta.url).href,
-    transitionEngraved: new URL('./images/tiger/tiger-transition-engraved.PNG', import.meta.url).href,
+    brideMedallion: new URL('./images/tiger/tiger-medallion-bride.webp', import.meta.url).href,
+    groomMedallion: new URL('./images/tiger/tiger-medallion-groom.webp', import.meta.url).href,
+    frontMedallion: new URL('./images/tiger/tiger-medallion-front.webp', import.meta.url).href,
+    forestPeek: new URL('./images/tiger/tiger-forest-peek.webp', import.meta.url).href,
+    riverProfile: new URL('./images/tiger/tiger-river-profile.webp', import.meta.url).href,
+    revealFront: new URL('./images/tiger/tiger-reveal-front.webp', import.meta.url).href,
+    transitionEngraved: new URL('./images/tiger/tiger-transition-engraved.webp', import.meta.url).href,
   },
   bride: {
     portraitMain: new URL('./images/bride/bride-portrait-main.webp', import.meta.url).href,
