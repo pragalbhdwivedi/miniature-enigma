@@ -11,12 +11,14 @@ import './family-details.css'
 import './logo-branding.css'
 import './designer-credit.css'
 import './typography.css'
+import './design-system/opening-side.css'
 import './cinematicEnhancements.js'
 import './sylvaKinetic.js'
 import './rsvpScrollGuard.js'
 import './familyDetails.js'
 import './logoBranding.js'
 import './designerCredit.js'
+import './design-system/openingSide.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
