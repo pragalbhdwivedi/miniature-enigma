@@ -1,0 +1,308 @@
+/* Opening system stabilization — final authority for Modules 1–6.
+   This layer resolves legacy cascade conflicts without changing React/fallback state,
+   locked wedding content, or the single-photoreal-tiger rule. */
+
+/* 1–2 · Side and language medallions */
+.selection-screen:not(.language-screen) .passport-choice::before {
+  content: '' !important;
+  position: absolute !important;
+  z-index: 2 !important;
+  top: 31px !important;
+  left: 50% !important;
+  width: min(29vw, 120px) !important;
+  height: min(29vw, 120px) !important;
+  transform: translateX(-50%) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,.34)) !important;
+  mix-blend-mode: normal !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  pointer-events: none !important;
+}
+
+.selection-screen:not(.language-screen) .passport-choice.bride::before {
+  background-image: url('../images/tiger/tiger-medallion-bride.webp') !important;
+}
+
+.selection-screen:not(.language-screen) .passport-choice.groom::before {
+  background-image: url('../images/tiger/tiger-medallion-groom.webp') !important;
+}
+
+.language-origin__medallion {
+  background: url('../images/tiger/tiger-medallion-bride.webp') center / contain no-repeat !important;
+  width: 48px !important;
+  opacity: 1 !important;
+}
+
+.language-origin[data-side='groom'] .language-origin__medallion {
+  background-image: url('../images/tiger/tiger-medallion-groom.webp') !important;
+}
+
+.language-origin {
+  min-height: 68px !important;
+  padding-block: 8px !important;
+}
+
+.language-screen .language-card {
+  min-height: clamp(278px, 34svh, 314px) !important;
+  padding: 25px 10px 126px !important;
+}
+
+.language-screen .language-card::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  z-index: 2 !important;
+  left: 50% !important;
+  bottom: 18px !important;
+  width: min(28vw, 116px) !important;
+  height: min(28vw, 116px) !important;
+  transform: translateX(-50%) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: url('../images/tiger/tiger-medallion-front.webp') center / contain no-repeat !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 10px 19px rgba(0,0,0,.36)) !important;
+  mix-blend-mode: normal !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  pointer-events: none !important;
+}
+
+/* 3 · Forest opening: remove the oversized procedural blobs. */
+.forest-cinematic-world__foliage,
+.tiger-cinematic-world__canopy {
+  display: none !important;
+}
+
+.intro-screen.intro-0 .intro-content {
+  padding-left: clamp(22px, 6vw, 30px) !important;
+  padding-right: clamp(22px, 6vw, 30px) !important;
+  padding-bottom: calc(126px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.intro-screen.intro-0 .intro-content > h1 {
+  width: min(94%, 390px) !important;
+  font-size: clamp(35px, 9.6vw, 48px) !important;
+  line-height: 1.07 !important;
+}
+
+/* 4 · One Wild Moment: photography leads, copy supports. */
+.intro-screen.intro-1 .intro-media {
+  background-image:
+    linear-gradient(180deg, rgba(1,4,2,.18), rgba(0,0,0,.01) 46%, rgba(0,0,0,.78) 100%),
+    url('../images/tiger/tiger-reveal-front.webp') !important;
+  background-size: cover, auto 94dvh !important;
+  background-repeat: no-repeat !important;
+  background-position: center, 50% 43% !important;
+}
+
+.intro-screen.intro-1 .intro-content > h1 {
+  position: absolute !important;
+  z-index: 7 !important;
+  left: 34px !important;
+  right: 34px !important;
+  bottom: calc(168px + env(safe-area-inset-bottom, 0px)) !important;
+  width: auto !important;
+  max-width: 360px !important;
+  margin-inline: auto !important;
+  color: rgba(244,234,214,.90) !important;
+  font-size: clamp(17px, 4.7vw, 22px) !important;
+  font-weight: 400 !important;
+  line-height: 1.34 !important;
+  text-align: center !important;
+  text-shadow: 0 4px 24px rgba(0,0,0,.94) !important;
+}
+
+.intro-screen.intro-1 .tiger-reveal-label {
+  position: absolute !important;
+  z-index: 7 !important;
+  left: 24px !important;
+  right: 24px !important;
+  bottom: calc(208px + env(safe-area-inset-bottom, 0px)) !important;
+  margin: 0 !important;
+  color: #efd095 !important;
+  font-size: clamp(10px, 2.8vw, 12px) !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  letter-spacing: .20em !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+}
+
+html[lang='hi'] .intro-screen.intro-1 .tiger-reveal-label {
+  font-size: 12px !important;
+  letter-spacing: .08em !important;
+}
+
+/* 5 · Tiger → engraved crest: direct WebP bindings and no blank phase. */
+.crest-transition-world__photo {
+  background:
+    linear-gradient(180deg, rgba(1,4,2,.12), transparent 38%, rgba(0,0,0,.24)),
+    url('../images/tiger/tiger-reveal-front.webp') center 44% / contain no-repeat !important;
+}
+
+.crest-transition-world__engraved {
+  display: block !important;
+  background: url('../images/tiger/tiger-transition-engraved.webp') center 44% / contain no-repeat !important;
+}
+
+.intro-screen.intro-2 .crest-transform::before {
+  content: '' !important;
+  position: absolute !important;
+  z-index: 1 !important;
+  inset: -3% !important;
+  background: url('../images/tiger/tiger-transition-engraved.webp') center / contain no-repeat !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 25px rgba(211,173,112,.18)) !important;
+  pointer-events: none !important;
+}
+
+.intro-screen.intro-2 .crest-transform::after { z-index: 2 !important; }
+
+.intro-screen.intro-2.crest-transition-ready[data-crest-phase='0'] .crest-transform {
+  opacity: .14 !important;
+  transform: translate3d(0,0,0) scale(.93) !important;
+}
+
+.intro-screen.intro-2.crest-transition-ready[data-crest-phase='1'] .crest-transform {
+  opacity: .30 !important;
+  transform: translate3d(0,0,0) scale(.95) !important;
+}
+
+.intro-screen.intro-2.crest-transition-ready[data-crest-phase='2'] .crest-transform {
+  opacity: .68 !important;
+  transform: translate3d(0,0,0) scale(.98) !important;
+}
+
+.intro-screen.intro-2.crest-transition-ready[data-crest-phase='3'] .crest-transform {
+  opacity: 1 !important;
+  transform: translate3d(0,0,0) scale(1) !important;
+}
+
+.intro-screen.intro-2.crest-transition-ready[data-crest-phase='3'] .crest-transition-world__art {
+  opacity: 0 !important;
+}
+
+/* 6 · Passport: normal flow, scrollable on short phones, no CTA overlap. */
+.passport-stage {
+  height: auto !important;
+  min-height: 100vh !important;
+  min-height: 100svh !important;
+  max-height: none !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  perspective: none !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.passport-stage .passport-stage-content {
+  height: auto !important;
+  min-height: 100vh !important;
+  min-height: 100svh !important;
+  max-height: none !important;
+  overflow: visible !important;
+  perspective: none !important;
+  transform-style: flat !important;
+  justify-content: flex-start !important;
+  padding:
+    max(22px, env(safe-area-inset-top, 0px))
+    22px
+    calc(24px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.passport-stage .journey-copy {
+  margin: 14px auto 16px !important;
+  font-size: clamp(19px, 5.4vw, 24px) !important;
+}
+
+.passport-stage .passport-cover {
+  width: min(82vw, 350px) !important;
+  min-height: clamp(430px, 58svh, 520px) !important;
+  margin: 0 auto !important;
+  transform: none !important;
+  transform-style: flat !important;
+  backface-visibility: visible !important;
+}
+
+.passport-stage .cover-crest {
+  position: relative !important;
+  width: min(35vw, 145px) !important;
+  height: min(31vw, 128px) !important;
+  margin: 10px auto 4px !important;
+}
+
+.passport-stage .cover-crest::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: url('../images/tiger/tiger-medallion-front.webp') center / contain no-repeat !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.28)) !important;
+  mix-blend-mode: normal !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  pointer-events: none !important;
+}
+
+.passport-stage .primary-cta {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: auto !important;
+  flex: 0 0 auto !important;
+  width: min(calc(100% - 20px), 360px) !important;
+  min-height: 62px !important;
+  margin: 20px auto 0 !important;
+  transform: none !important;
+  z-index: 12 !important;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+}
+
+.passport-stage.passport-physical-ready[data-passport-phase='1'] .primary-cta {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+@media (max-width: 365px) {
+  .language-screen .language-card {
+    min-height: 270px !important;
+    padding-bottom: 118px !important;
+  }
+  .language-screen .language-card::before { width: 102px !important; height: 102px !important; }
+  .intro-screen.intro-0 .intro-content > h1 { font-size: clamp(32px, 9.2vw, 41px) !important; }
+  .passport-stage .passport-cover { width: min(84vw, 332px) !important; }
+}
+
+@media (max-height: 720px) {
+  .language-screen .selection-content { padding-top: max(10px, env(safe-area-inset-top, 0px)) !important; }
+  .language-origin { min-height: 60px !important; }
+  .language-screen h1 { margin-top: 14px !important; font-size: clamp(34px, 9.6vw, 44px) !important; }
+  .language-screen .language-grid { margin-top: 12px !important; }
+  .language-screen .language-card { min-height: 254px !important; padding-bottom: 108px !important; }
+  .language-screen .language-card::before { width: 92px !important; height: 92px !important; bottom: 14px !important; }
+  .intro-screen.intro-1 .intro-content > h1 { bottom: calc(158px + env(safe-area-inset-bottom, 0px)) !important; font-size: 17px !important; }
+  .intro-screen.intro-1 .tiger-reveal-label { bottom: calc(195px + env(safe-area-inset-bottom, 0px)) !important; }
+  .passport-stage .passport-cover { min-height: 410px !important; padding-top: 36px !important; padding-bottom: 26px !important; }
+  .passport-stage .passport-cover h1 { font-size: 42px !important; }
+  .passport-stage .cover-crest { width: 110px !important; height: 98px !important; }
+  .passport-stage .primary-cta { min-height: 58px !important; margin-top: 16px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-screen.intro-2 .crest-transform,
+  .crest-transition-world__art,
+  .passport-stage .passport-cover,
+  .passport-stage .primary-cta {
+    transition: none !important;
+    animation: none !important;
+  }
+}
