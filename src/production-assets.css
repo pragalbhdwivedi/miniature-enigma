@@ -2,13 +2,13 @@
    These overrides replace remote/placeholding imagery with the uploaded wedding assets. */
 
 :root {
-  --asset-tiger-bride: url('./images/tiger/tiger-medallion-bride.PNG');
-  --asset-tiger-groom: url('./images/tiger/tiger-medallion-groom.PNG');
-  --asset-tiger-front: url('./images/tiger/tiger-medallion-front.PNG');
-  --asset-tiger-peek: url('./images/tiger/tiger-forest-peek.PNG');
-  --asset-tiger-river: url('./images/tiger/tiger-river-profile.PNG');
-  --asset-tiger-reveal: url('./images/tiger/tiger-reveal-front.PNG');
-  --asset-tiger-engraved: url('./images/tiger/tiger-transition-engraved.PNG');
+  --asset-tiger-bride: url('./images/tiger/tiger-medallion-bride.webp');
+  --asset-tiger-groom: url('./images/tiger/tiger-medallion-groom.webp');
+  --asset-tiger-front: url('./images/tiger/tiger-medallion-front.webp');
+  --asset-tiger-peek: url('./images/tiger/tiger-forest-peek.webp');
+  --asset-tiger-river: url('./images/tiger/tiger-river-profile.webp');
+  --asset-tiger-reveal: url('./images/tiger/tiger-reveal-front.webp');
+  --asset-tiger-engraved: url('./images/tiger/tiger-transition-engraved.webp');
 }
 
 /* Opening tiger system: every role now uses the exact dedicated upload. */
