@@ -471,8 +471,11 @@ async function mount(section) {
   pending.add(section)
 
   const fallback = fallbackImages(section)
-  const uploaded = await discoverUploadedImages()
-  const images = uploaded.length ? uploaded : fallback
+  let images = fallback
+  if (!images.length) {
+    const uploaded = await discoverUploadedImages()
+    images = uploaded
+  }
 
   pending.delete(section)
   if (!section.isConnected || mounted.has(section) || !images.length) return

@@ -868,6 +868,31 @@ html[lang='hi'] .logistics-fact__body small {
   }
 }
 
+@media (min-width: 1100px) {
+  .utility-section.logistics-ready {
+    padding-inline: 72px;
+  }
+
+  .logistics-shell {
+    width: min(100%, 1120px);
+    display: grid;
+    grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+  }
+
+  .logistics-header {
+    position: sticky;
+    top: 96px;
+    padding-right: 16px;
+    border-bottom: 0;
+  }
+
+  .logistics-disclosures {
+    border-top: 1px solid rgba(78,58,31,.20);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .logistics-shell,
   .logistics-panel,
