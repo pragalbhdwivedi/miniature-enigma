@@ -4,12 +4,6 @@
 */
 
 const LANGUAGE_SELECTOR = '.language-screen .language-card'
-const LANGUAGE_TRANSITION_MS = 410
-let allowSyntheticLanguageClick = false
-let languageTransitionLocked = false
-let languageReleaseTimer = null
-
-const prefersReducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
 function inferLanguage(button) {
   if (button.dataset.value === 'hi' || button.dataset.value === 'en') return button.dataset.value
@@ -17,6 +11,8 @@ function inferLanguage(button) {
 }
 
 function currentSide() {
+  const memorySide = window.__weddingOpeningSide
+  if (memorySide === 'groom' || memorySide === 'bride') return memorySide
   const side = document.documentElement.dataset.weddingSide
   return side === 'groom' ? 'groom' : side === 'bride' ? 'bride' : null
 }
@@ -87,7 +83,6 @@ function enhanceLanguageScreen(screen) {
 
   const grid = screen.querySelector('.language-grid')
   if (grid && !grid.getAttribute('role')) grid.setAttribute('role', 'group')
-  resetLanguageState(screen)
 }
 
 function selectLanguageVisually(button) {
@@ -105,7 +100,6 @@ function selectLanguageVisually(button) {
     card.classList.toggle('is-selected', selected)
     card.classList.toggle('is-dimmed', !selected)
     card.setAttribute('aria-pressed', selected ? 'true' : 'false')
-    card.setAttribute('aria-disabled', 'true')
   })
 
   return language
@@ -115,80 +109,42 @@ function handleLanguageSelection(event) {
   const button = event.target.closest?.(LANGUAGE_SELECTOR)
   if (!button) return
 
-  if (allowSyntheticLanguageClick) {
-    allowSyntheticLanguageClick = false
-    return
-  }
-
-  event.preventDefault()
-  event.stopPropagation()
-  event.stopImmediatePropagation?.()
-
-  if (languageTransitionLocked) return
-  languageTransitionLocked = true
+  /* Presentation only. The guest's original click must continue to the actual
+     React/fallback state machine. Never prevent, delay, or synthesize navigation. */
   selectLanguageVisually(button)
-
-  const delay = prefersReducedMotion() ? 35 : LANGUAGE_TRANSITION_MS
-  window.clearTimeout(languageReleaseTimer)
-  languageReleaseTimer = window.setTimeout(() => {
-    allowSyntheticLanguageClick = true
-    languageTransitionLocked = false
-    button.click()
-  }, delay)
 }
 
-/* Capture phase ensures the visual confirmation occurs before React/fallback changes stage. */
 document.addEventListener('click', handleLanguageSelection, true)
 
-const languageObserver = new MutationObserver((records) => {
-  let languageScreen = null
-  let sideScreenReturned = false
-  let introAdded = false
+let scanQueued = false
+function scheduleEnhancementScan() {
+  if (scanQueued) return
+  scanQueued = true
+  queueMicrotask(() => {
+    scanQueued = false
 
-  for (const record of records) {
-    for (const node of record.addedNodes) {
-      if (!(node instanceof Element)) continue
-
-      if (!languageScreen) {
-        if (node.matches?.('.language-screen')) languageScreen = node
-        else languageScreen = node.querySelector?.('.language-screen') || null
-      }
-
-      if (node.matches?.('.selection-screen:not(.language-screen)') || node.querySelector?.('.selection-screen:not(.language-screen)')) {
-        sideScreenReturned = true
-      }
-
-      if (node.matches?.('.intro-screen') || node.querySelector?.('.intro-screen')) {
-        introAdded = true
-      }
+    const languageScreen = document.querySelector('.language-screen')
+    if (languageScreen) {
+      enhanceLanguageScreen(languageScreen)
+      return
     }
-  }
 
-  if (languageScreen) {
-    languageTransitionLocked = false
-    allowSyntheticLanguageClick = false
-    window.clearTimeout(languageReleaseTimer)
-    enhanceLanguageScreen(languageScreen)
-  }
+    const sideScreen = document.querySelector('.selection-screen:not(.language-screen)')
+    if (sideScreen) {
+      delete document.documentElement.dataset.weddingLanguage
+      resetLanguageState(document.querySelector('.language-screen'))
+    }
+  })
+}
 
-  if (sideScreenReturned) {
-    delete document.documentElement.dataset.weddingLanguage
-    languageTransitionLocked = false
-    allowSyntheticLanguageClick = false
-    window.clearTimeout(languageReleaseTimer)
-  }
-
-  if (introAdded) {
-    languageTransitionLocked = false
-    allowSyntheticLanguageClick = false
-    window.clearTimeout(languageReleaseTimer)
-  }
-})
-
+/* React is allowed to reuse the same <main> between opening stages. Therefore we
+   intentionally inspect the current DOM after any subtree mutation instead of
+   assuming a new .language-screen element was added. */
+const languageObserver = new MutationObserver(scheduleEnhancementScan)
 languageObserver.observe(document.documentElement, { childList: true, subtree: true })
+
 enhanceLanguageScreen(document.querySelector('.language-screen'))
 
 window.addEventListener('pagehide', () => {
-  window.clearTimeout(languageReleaseTimer)
   languageObserver.disconnect()
 }, { once: true })

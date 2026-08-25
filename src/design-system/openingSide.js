@@ -1,16 +1,11 @@
 /*
-  Opening side-selector interaction choreography.
-  Keeps the existing React and raw-source fallback state machines, but adds one
-  professional selection beat before navigation so the chosen family is visibly confirmed.
+  Opening side-selector presentation helper.
+  React and the raw fallback own navigation. This module may decorate the selected
+  card and expose transient side context, but it must never delay, cancel, synthesize,
+  or lock the guest's real tap.
 */
 
 const SIDE_SELECTOR = '.selection-screen:not(.language-screen) .passport-choice'
-const TRANSITION_MS = 430
-let allowSyntheticClick = false
-let transitionLocked = false
-let releaseTimer = null
-
-const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
 function syncOpeningCopy(root = document) {
   const bride = root.querySelector?.('.selection-screen:not(.language-screen) .passport-choice.bride small')
@@ -38,54 +33,30 @@ function clearSelectionState(grid) {
   })
 }
 
-function selectVisually(button) {
+function rememberSide(button) {
   const grid = button.closest('.side-grid')
   if (!grid) return
+
   const value = button.classList.contains('groom') ? 'groom' : 'bride'
   grid.dataset.selected = value
-
-  /* Module 2 reads this transient document state so the chosen family visibly
-     carries into Language Selection. It is intentionally not persisted. */
   document.documentElement.dataset.weddingSide = value
+  window.__weddingOpeningSide = value
 
   grid.querySelectorAll('.passport-choice').forEach((card) => {
     const selected = card === button
     card.classList.toggle('is-selected', selected)
     card.classList.toggle('is-dimmed', !selected)
     card.setAttribute('aria-pressed', selected ? 'true' : 'false')
-    card.setAttribute('aria-disabled', 'true')
   })
 }
 
-function handleSideSelection(event) {
+/* Capture records the selected side before React/fallback replaces the screen, but
+   deliberately does not preventDefault or stop propagation. The original click is
+   the only navigation event. */
+document.addEventListener('click', (event) => {
   const button = event.target.closest?.(SIDE_SELECTOR)
-  if (!button) return
-
-  if (allowSyntheticClick) {
-    allowSyntheticClick = false
-    return
-  }
-
-  event.preventDefault()
-  event.stopPropagation()
-  event.stopImmediatePropagation?.()
-
-  if (transitionLocked) return
-  transitionLocked = true
-  selectVisually(button)
-
-  const delay = reducedMotion() ? 40 : TRANSITION_MS
-  window.clearTimeout(releaseTimer)
-  releaseTimer = window.setTimeout(() => {
-    allowSyntheticClick = true
-    transitionLocked = false
-    button.click()
-  }, delay)
-}
-
-/* Capture phase is deliberate. It lets the visual confirmation run before either
-   React's delegated onClick or the raw fallback root handler advances the stage. */
-document.addEventListener('click', handleSideSelection, true)
+  if (button) rememberSide(button)
+}, true)
 
 const observer = new MutationObserver((records) => {
   let sideScreenAdded = false
@@ -101,9 +72,6 @@ const observer = new MutationObserver((records) => {
   }
 
   if (sideScreenAdded) {
-    transitionLocked = false
-    allowSyntheticClick = false
-    window.clearTimeout(releaseTimer)
     const grid = document.querySelector('.selection-screen:not(.language-screen) .side-grid')
     clearSelectionState(grid)
     syncOpeningCopy(document)
@@ -113,7 +81,4 @@ const observer = new MutationObserver((records) => {
 observer.observe(document.documentElement, { childList: true, subtree: true })
 syncOpeningCopy(document)
 
-window.addEventListener('pagehide', () => {
-  window.clearTimeout(releaseTimer)
-  observer.disconnect()
-}, { once: true })
+window.addEventListener('pagehide', () => observer.disconnect(), { once: true })
