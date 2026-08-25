@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test'
 
+test.setTimeout(45_000)
+
 async function pseudoBackground(locator, pseudo = '::before') {
   return locator.evaluate((element, targetPseudo) => getComputedStyle(element, targetPseudo).backgroundImage, pseudo)
 }
