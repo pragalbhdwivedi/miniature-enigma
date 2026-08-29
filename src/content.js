@@ -79,7 +79,7 @@ Mother — Mrs. Archana Dwivedi
 Bhaiya and Bhabhi — Pragalbh Dwivedi and Nisha Dwivedi
 Bade Bhaiya and Bhabhi — Pankaj Shukla and Neeta Shukla
 Nephew — Aadidev Dwivedi`,
-    groomFamily: `Father — Mr. Shushil Pandey
+    groomFamily: `Father — Mr. Sushil Kumar Pandey
 Mother — Mrs. Rajwanti Pandey
 Sister — Anjali Pandey
 Didi and Jija — Sushma Pandey and Manish Mishra
@@ -123,7 +123,7 @@ Niece — Samridhi Mishra`,
 भैया और भाभी — Pragalbh Dwivedi और Nisha Dwivedi
 बड़े भैया और भाभी — Pankaj Shukla और Neeta Shukla
 भतीजा — Aadidev Dwivedi`,
-    groomFamily: `पिता — Mr. Shushil Pandey
+    groomFamily: `पिता — Mr. Sushil Kumar Pandey
 माता — Mrs. Rajwanti Pandey
 बहन — Anjali Pandey
 दीदी और जीजा — Sushma Pandey और Manish Mishra
