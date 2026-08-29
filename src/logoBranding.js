@@ -12,6 +12,11 @@ function applyLogoBranding() {
     img.alt = ''
     img.setAttribute('aria-hidden', 'true')
     img.setAttribute('data-ka-logo', 'true')
+    // The approved ICO is intrinsically square (256×256). Publishing that geometry
+    // before decode prevents Mobile Safari/WebKit from shifting the opening cards when
+    // the image element replaces the immediate CSS-background placeholder.
+    img.width = 256
+    img.height = 256
     img.decoding = 'async'
     img.draggable = false
 
