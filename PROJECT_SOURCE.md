@@ -68,7 +68,7 @@ Do not rely on the literal word PASSPORT; the object should communicate the refe
 
 ## Hashtag
 
-**#KritiFoundHerHash**
+**#KritiFoundHerऐश**
 
 ## Locked events
 
