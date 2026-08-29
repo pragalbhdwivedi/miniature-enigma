@@ -13,7 +13,7 @@ const FAMILY_DATA = {
     groom: {
       title: 'Groom Family',
       entries: [
-        ['Father', 'Mr. Shushil Pandey'],
+        ['Father', 'Mr. Sushil Kumar Pandey'],
         ['Mother', 'Mrs. Rajwanti Pandey'],
         ['Sister', 'Anjali Pandey'],
         ['Didi and Jija', 'Sushma Pandey and Manish Mishra'],
@@ -35,7 +35,7 @@ const FAMILY_DATA = {
     groom: {
       title: 'वर पक्ष का परिवार',
       entries: [
-        ['पिता', 'Mr. Shushil Pandey'],
+        ['पिता', 'Mr. Sushil Kumar Pandey'],
         ['माता', 'Mrs. Rajwanti Pandey'],
         ['बहन', 'Anjali Pandey'],
         ['दीदी और जीजा', 'Sushma Pandey और Manish Mishra'],
@@ -72,7 +72,7 @@ function cardHtml(block, index, side) {
 function inferExistingOrder(grid) {
   if (grid.dataset.familyOrder) return grid.dataset.familyOrder.split(',')
   const firstText = grid.querySelector('article')?.textContent || ''
-  const groomFirst = /Shushil|Rajwanti|वर पक्ष|Groom Family/i.test(firstText)
+  const groomFirst = /Sushil Kumar|Rajwanti|वर पक्ष|Groom Family/i.test(firstText)
   const order = groomFirst ? ['groom', 'bride'] : ['bride', 'groom']
   grid.dataset.familyOrder = order.join(',')
   return order
