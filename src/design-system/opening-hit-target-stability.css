@@ -1,0 +1,49 @@
+/* Mobile opening hit-target stability.
+   Keep decorative choreography around the selector, but never animate the geometry of
+   the actual Bride/Groom buttons Playwright and real thumbs must hit. The KA mark is
+   given an exact reserved box so its async image decode cannot push the card grid. */
+
+@media (max-width: 520px) {
+  .selection-screen:not(.language-screen) .monogram {
+    --opening-logo-size: clamp(88px, 15.5svh, 128px);
+    box-sizing: border-box !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 var(--opening-logo-size) !important;
+    width: 100% !important;
+    height: var(--opening-logo-size) !important;
+    min-height: var(--opening-logo-size) !important;
+    max-height: var(--opening-logo-size) !important;
+    margin: 0 auto !important;
+    background-size: auto var(--opening-logo-size) !important;
+  }
+
+  .selection-screen:not(.language-screen) .monogram.monogram--image img[data-ka-logo] {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    width: var(--opening-logo-size) !important;
+    height: var(--opening-logo-size) !important;
+    max-width: var(--opening-logo-size) !important;
+    max-height: var(--opening-logo-size) !important;
+    object-fit: contain !important;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  .selection-screen:not(.language-screen) .side-grid,
+  .selection-screen:not(.language-screen) .passport-choice {
+    will-change: auto !important;
+  }
+
+  .selection-screen:not(.language-screen) .passport-choice,
+  .selection-screen:not(.language-screen) .passport-choice.bride,
+  .selection-screen:not(.language-screen) .passport-choice.groom {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
