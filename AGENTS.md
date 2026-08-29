@@ -13,7 +13,7 @@ Before changing this repository, read `PROJECT_SOURCE.md` completely.
 7. Respect `prefers-reduced-motion` and keep a visible sound toggle.
 8. Side selection changes the full invitation perspective, not only name order.
 9. Language selection is shown again on every full refresh.
-10. Branded event titles and `#KritiFoundHerHash` remain unchanged in both language modes.
+10. Branded event titles and `#KritiFoundHerऐश` remain unchanged in both language modes.
 11. Never embed the private guest database in the public React bundle.
 12. Generic imagery is temporary. Do not pretend it is final Wyndham Garden or couple photography.
 
