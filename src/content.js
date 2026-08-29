@@ -4,7 +4,7 @@ export const couple = {
   dates: '24–26 November 2026',
   venue: 'Wyndham Garden, Ramnagar',
   destination: 'Jim Corbett National Park',
-  hashtag: '#KritiFoundHerHash',
+  hashtag: '#KritiFoundHerऐश',
 }
 
 export const events = [
