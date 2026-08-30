@@ -85,6 +85,8 @@ Pheras are the midnight immediately following the 25 November evening celebratio
 
 ## Itinerary structure
 
+All three days must remain visible in the normal vertical page flow. Guests should naturally scroll from 24 November to 25 November to 26 November. Do not hide 25 or 26 November behind tabs, swipe gestures, carousels or a day selector.
+
 ### 24 November
 - Arrival / check-in
 - Welcome lunch
@@ -110,6 +112,10 @@ Pheras are the midnight immediately following the 25 November evening celebratio
 - 11 AM checkout
 
 Only locked ceremony times and checkout are fixed. Other meal timings remain TBD.
+
+## Typography roles
+
+For basic Hindi utility/detail copy such as Travel, Stay, Transport, RSVP, itinerary activity rows, filters and navigation labels, use a **Mangal-first system font stack** with `Nirmala UI` / `Noto Sans Devanagari` or equivalent fallbacks where Mangal is unavailable. Ceremonial/display Hindi may retain the established Devanagari serif/display treatment.
 
 ## Single-page content order
 
@@ -152,7 +158,13 @@ RSVP must support:
 - Per-event attendance
 - Guest-specific opaque code support
 
+Each RSVP event choice must show the branded event title together with the plain ceremony name in brackets and the event date/time as a subordinate line, for example **Pind Green Flag (Mehendi)** with **24 Nov · 3:00 PM**.
+
 Do not ship private guest data inside the public React bundle.
+
+## Travel information
+
+Travel guidance should support both **travel to Corbett** and **return travel after the wedding**, with clear filters for useful origin/destination groups. Railway schedules are planning guidance only and must tell guests to reconfirm the exact service, running day, timing and seat availability on IRCTC before booking. Return options that conflict with the locked 26 November 11:00 AM checkout must be labelled clearly as early-departure options rather than presented as normal checkout-day recommendations.
 
 ## Performance
 
@@ -165,7 +177,7 @@ Use CSS-first transforms, opacity, masks, clip-path, gradients, layered textures
 Do not fabricate:
 
 - exact final colour hex codes beyond current design tokens
-- final font decision
+- final font decision beyond explicitly approved role-based font rules above
 - final monogram/logo
 - final translated copy approval
 - family names/details
