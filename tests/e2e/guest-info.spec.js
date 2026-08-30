@@ -43,13 +43,16 @@ test('guest information stays discoverable and detailed', async ({ page }, testI
   await directionButtons.nth(1).click()
   const returnPanel = travel.locator('.travel-direction-panel--return')
   await expect(returnPanel).toBeVisible()
-  await expect(returnPanel.locator('.rail-option')).toHaveCount(6)
+  await expect(returnPanel.locator('.rail-option')).toHaveCount(8)
 
   await returnPanel.locator('[data-return-filter="kunda"]').click()
   await expect(returnPanel.locator('.rail-option:visible')).toHaveCount(1)
   await expect(returnPanel.locator('.rail-option:visible')).toContainText('14242')
 
   await returnPanel.locator('[data-return-filter="prayagraj"]').click()
+  await expect(returnPanel.locator('.rail-option:visible')).toHaveCount(2)
+
+  await returnPanel.locator('[data-return-filter="amroha"]').click()
   await expect(returnPanel.locator('.rail-option:visible')).toHaveCount(2)
 
   const hindiUtilityStack = await page.locator('html').evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--font-utility-hi'))
