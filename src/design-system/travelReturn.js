@@ -24,7 +24,7 @@ const RETURN_TRAINS = [
     group: 'kunda', number: '14242', name: 'NAUCHANDI EXP',
     from: 'MB · Moradabad', to: 'KHNM · Kunda Harnamganj', depart: '23:00', arrive: '07:51', duration: '8h 51m', days: 'DAILY',
     tagEn: 'KUNDA RETURN', tagHi: 'कुंडा वापसी',
-    noteEn: 'Daily overnight return from Moradabad. Reach Moradabad by your coordinated transfer or another suitable connection after checkout.',
+    noteEn: 'Daily overnight return from Moradabad. Reach Moradabad by coordinated transfer or another suitable connection after checkout.',
     noteHi: 'मुरादाबाद से दैनिक रात्रि वापसी। चेकआउट के बाद समन्वित ट्रांसफर या उपयुक्त कनेक्शन से मुरादाबाद पहुँचें।',
   },
   {
@@ -40,6 +40,20 @@ const RETURN_TRAINS = [
     tagEn: 'PRAYAGRAJ AREA', tagHi: 'प्रयागराज क्षेत्र',
     noteEn: 'Daily alternative to Subedarganj. This requires reaching Moradabad in time after the 11:00 AM checkout.',
     noteHi: 'सूबेदारगंज के लिए दैनिक विकल्प। 11:00 बजे चेकआउट के बाद समय से मुरादाबाद पहुँचना आवश्यक है।',
+  },
+  {
+    group: 'amroha', number: '14242', name: 'NAUCHANDI EXP',
+    from: 'AMRO · Amroha', to: 'KHNM · Kunda Harnamganj', depart: '22:16', arrive: '07:51', duration: '9h 35m', days: 'DAILY',
+    tagEn: 'AMROHA → KUNDA', tagHi: 'अमरोहा → कुंडा',
+    noteEn: 'Backup boarding point for the same Nauchandi service. Moradabad remains the preferred interchange from Ramnagar.',
+    noteHi: 'उसी नौचंडी सेवा का बैकअप बोर्डिंग स्थान। रामनगर से मुरादाबाद प्राथमिक इंटरचेंज रहेगा।',
+  },
+  {
+    group: 'amroha', number: '14242', name: 'NAUCHANDI EXP',
+    from: 'AMRO · Amroha', to: 'PYGS · Prayagraj Sangam', depart: '22:16', arrive: '09:20', duration: '11h 04m', days: 'DAILY',
+    tagEn: 'AMROHA → PRAYAGRAJ', tagHi: 'अमरोहा → प्रयागराज',
+    noteEn: 'Backup Amroha boarding option for Prayagraj. Prefer Moradabad unless the Amroha transfer is specifically more convenient.',
+    noteHi: 'प्रयागराज के लिए अमरोहा से बैकअप बोर्डिंग विकल्प। विशेष सुविधा न हो तो मुरादाबाद को प्राथमिकता दें।',
   },
   {
     group: 'delhi', number: '25036', name: 'RMR DLI LINK EX',
@@ -58,14 +72,8 @@ const RETURN_TRAINS = [
 ]
 
 let scanQueued = false
-
-function isHindi() {
-  return document.documentElement.lang === 'hi'
-}
-
-function copy(en, hi) {
-  return isHindi() ? hi : en
-}
+const isHindi = () => document.documentElement.lang === 'hi'
+const copy = (en, hi) => isHindi() ? hi : en
 
 function element(tag, className, text) {
   const node = document.createElement(tag)
@@ -86,13 +94,8 @@ function externalLink(label, href, className = 'logistics-link') {
 function createTrainCard(train, index) {
   const card = element('article', `rail-option rail-option--${train.group}`)
   card.dataset.returnTrain = train.number
-
   const top = element('div', 'rail-option__top')
-  top.append(
-    element('span', 'rail-option__number', train.number),
-    element('span', 'rail-option__tag', isHindi() ? train.tagHi : train.tagEn),
-  )
-
+  top.append(element('span', 'rail-option__number', train.number), element('span', 'rail-option__tag', isHindi() ? train.tagHi : train.tagEn))
   const route = element('div', 'rail-option__route')
   const from = element('div', 'rail-option__station')
   from.append(element('small', '', copy('FROM', 'प्रस्थान')), element('strong', '', train.from), element('time', '', train.depart))
@@ -101,17 +104,9 @@ function createTrainCard(train, index) {
   const to = element('div', 'rail-option__station rail-option__station--to')
   to.append(element('small', '', copy('TO', 'आगमन')), element('strong', '', train.to), element('time', '', train.arrive))
   route.append(from, line, to)
-
   const meta = element('div', 'rail-option__meta')
   meta.append(element('span', '', train.days), element('span', '', `${String(index + 1).padStart(2, '0')} / ${String(RETURN_TRAINS.length).padStart(2, '0')}`))
-
-  card.append(
-    top,
-    element('strong', 'rail-option__name', train.name),
-    route,
-    meta,
-    element('p', 'rail-option__note', isHindi() ? train.noteHi : train.noteEn),
-  )
+  card.append(top, element('strong', 'rail-option__name', train.name), route, meta, element('p', 'rail-option__note', isHindi() ? train.noteHi : train.noteEn))
   return card
 }
 
@@ -119,16 +114,12 @@ function createReturnPanel() {
   const panel = element('div', 'travel-direction-panel travel-direction-panel--return')
   panel.dataset.travelDirection = 'return'
   panel.hidden = true
-
   const intro = element('div', 'rail-guide__intro')
   const introCopy = element('div')
   introCopy.append(
-    element('p', 'logistics-kicker', copy('RETURN FIELD GUIDE · 26 NOV', 'वापसी फील्ड गाइड · 26 नवम्बर')),
+    element('p', 'logistics-kicker', copy('RETURN FIELD GUIDE · 8 OPTIONS · 26 NOV', 'वापसी फील्ड गाइड · 8 विकल्प · 26 नवम्बर')),
     element('h3', '', copy('Plan the journey home.', 'वापसी की यात्रा की योजना।')),
-    element('p', '', copy(
-      'Checkout is locked at 11:00 AM on 26 Nov. Use the filters below for Kunda, Prayagraj and Delhi return planning; early trains are marked clearly.',
-      '26 नवम्बर को चेकआउट 11:00 बजे निर्धारित है। कुंडा, प्रयागराज और दिल्ली वापसी के विकल्प नीचे फ़िल्टर करें; जल्दी निकलने वाली ट्रेनें स्पष्ट रूप से चिन्हित हैं।',
-    )),
+    element('p', '', copy('Checkout is locked at 11:00 AM on 26 Nov. Filter Kunda, Prayagraj, Amroha, Moradabad and Delhi return planning below; early trains are marked clearly.', '26 नवम्बर को चेकआउट 11:00 बजे निर्धारित है। कुंडा, प्रयागराज, अमरोहा, मुरादाबाद और दिल्ली वापसी के विकल्प नीचे फ़िल्टर करें; जल्दी निकलने वाली ट्रेनें स्पष्ट रूप से चिन्हित हैं।')),
   )
   intro.append(introCopy, externalLink('IRCTC', IRCTC_URL, 'logistics-link logistics-link--irctc'))
 
@@ -136,13 +127,13 @@ function createReturnPanel() {
   filters.setAttribute('role', 'group')
   filters.setAttribute('aria-label', copy('Filter return train options', 'वापसी ट्रेन विकल्प फ़िल्टर करें'))
   const labels = [
-    ['all', copy('ALL 6', 'सभी 6')],
+    ['all', copy('ALL 8', 'सभी 8')],
     ['kunda', copy('KUNDA', 'कुंडा')],
     ['prayagraj', copy('PRAYAGRAJ', 'प्रयागराज')],
+    ['amroha', copy('AMROHA', 'अमरोहा')],
     ['moradabad', copy('MORADABAD', 'मुरादाबाद')],
     ['delhi', copy('DELHI', 'दिल्ली')],
   ]
-
   const grid = element('div', 'rail-options rail-options--return')
   RETURN_TRAINS.forEach((train, index) => grid.appendChild(createTrainCard(train, index)))
 
@@ -169,38 +160,22 @@ function createReturnPanel() {
   const warning = element('div', 'rail-warning')
   warning.append(
     element('strong', '', copy('RETURN SCHEDULE CHECK', 'वापसी समय-सारणी जाँच')),
-    element('p', '', copy(
-      'Return schedules checked 30 Aug 2026 for planning. Reconfirm the exact 26 Nov service, running day, timing and seat availability on IRCTC before booking.',
-      'वापसी समय-सारणी योजना हेतु 30 अगस्त 2026 को जाँची गई। बुकिंग से पहले 26 नवम्बर की सटीक सेवा, चलने का दिन, समय और सीट उपलब्धता IRCTC पर पुनः जाँचें।',
-    )),
+    element('p', '', copy('Return schedules checked 30 Aug 2026 for planning. Reconfirm the exact 26 Nov service, running day, timing and seat availability on IRCTC before booking.', 'वापसी समय-सारणी योजना हेतु 30 अगस्त 2026 को जाँची गई। बुकिंग से पहले 26 नवम्बर की सटीक सेवा, चलने का दिन, समय और सीट उपलब्धता IRCTC पर पुनः जाँचें।')),
   )
-
-  const roadAir = element('div', 'road-air-grid')
-  const road = element('article', 'road-air-card')
-  road.append(
-    element('span', 'road-air-card__number', '01'),
-    element('p', 'logistics-kicker', copy('RETURN BY ROAD', 'सड़क मार्ग से वापसी')),
-    element('h4', '', copy('Ramnagar → Delhi', 'रामनगर → दिल्ली')),
-    element('p', '', copy('Ramnagar · Kashipur · Moradabad · Gajraula · Hapur · Delhi', 'रामनगर · काशीपुर · मुरादाबाद · गजरौला · हापुड़ · दिल्ली')),
-    externalLink(copy('OPEN RETURN ROAD ROUTE', 'वापसी सड़क मार्ग खोलें'), RETURN_DIRECTIONS.delhi),
-  )
-  const air = element('article', 'road-air-card')
-  air.append(
-    element('span', 'road-air-card__number', '02'),
-    element('p', 'logistics-kicker', copy('RETURN BY AIR', 'हवाई मार्ग से वापसी')),
-    element('h4', '', copy('Resort → Pantnagar', 'रिसॉर्ट → पंतनगर')),
-    element('p', '', copy('Pantnagar is the nearest airport. Flight availability depends on your onward city and travel date.', 'पंतनगर निकटतम एयरपोर्ट है। उड़ान उपलब्धता आपके आगे के शहर और यात्रा तिथि पर निर्भर करेगी।')),
-    externalLink(copy('RESORT → AIRPORT', 'रिसॉर्ट → एयरपोर्ट'), RETURN_DIRECTIONS.airport),
-  )
-  roadAir.append(road, air)
 
   const transfer = element('div', 'return-transfer-note')
   transfer.append(
     element('strong', '', copy('MORADABAD CONNECTION', 'मुरादाबाद कनेक्शन')),
-    element('p', '', copy('For the evening Nauchandi / Subedarganj return trains, a post-checkout road transfer to Moradabad may be more practical than the 09:50 rail connection. Final vehicle coordination follows RSVP.', 'शाम की नौचंडी / सूबेदारगंज वापसी ट्रेनों के लिए 09:50 रेल कनेक्शन की तुलना में चेकआउट के बाद मुरादाबाद तक सड़क ट्रांसफर अधिक व्यावहारिक हो सकता है। अंतिम वाहन समन्वय RSVP के बाद होगा।')),
+    element('p', '', copy('For evening Nauchandi / Subedarganj returns, a post-checkout road transfer to Moradabad may be more practical than the 09:50 rail connection. Amroha remains a backup boarding point. Final vehicle coordination follows RSVP.', 'शाम की नौचंडी / सूबेदारगंज वापसी के लिए 09:50 रेल कनेक्शन की तुलना में चेकआउट के बाद मुरादाबाद तक सड़क ट्रांसफर अधिक व्यावहारिक हो सकता है। अमरोहा बैकअप बोर्डिंग स्थान है। अंतिम वाहन समन्वय RSVP के बाद होगा।')),
     externalLink(copy('RESORT → MORADABAD', 'रिसॉर्ट → मुरादाबाद'), RETURN_DIRECTIONS.moradabad),
   )
 
+  const roadAir = element('div', 'road-air-grid')
+  const road = element('article', 'road-air-card')
+  road.append(element('span', 'road-air-card__number', '01'), element('p', 'logistics-kicker', copy('RETURN BY ROAD', 'सड़क मार्ग से वापसी')), element('h4', '', copy('Ramnagar → Delhi', 'रामनगर → दिल्ली')), element('p', '', copy('Ramnagar · Kashipur · Moradabad · Gajraula · Hapur · Delhi', 'रामनगर · काशीपुर · मुरादाबाद · गजरौला · हापुड़ · दिल्ली')), externalLink(copy('OPEN RETURN ROAD ROUTE', 'वापसी सड़क मार्ग खोलें'), RETURN_DIRECTIONS.delhi))
+  const air = element('article', 'road-air-card')
+  air.append(element('span', 'road-air-card__number', '02'), element('p', 'logistics-kicker', copy('RETURN BY AIR', 'हवाई मार्ग से वापसी')), element('h4', '', copy('Resort → Pantnagar', 'रिसॉर्ट → पंतनगर')), element('p', '', copy('Pantnagar is the nearest airport. Flight availability depends on your onward city and travel date.', 'पंतनगर निकटतम एयरपोर्ट है। उड़ान उपलब्धता आपके आगे के शहर और यात्रा तिथि पर निर्भर करेगी।')), externalLink(copy('RESORT → AIRPORT', 'रिसॉर्ट → एयरपोर्ट'), RETURN_DIRECTIONS.airport))
+  roadAir.append(road, air)
   panel.append(intro, filters, grid, warning, transfer, roadAir)
   return panel
 }
@@ -210,13 +185,11 @@ function mount(panel) {
   const summary = panel.querySelector(':scope > .travel-summary')
   const firstGuide = panel.querySelector(':scope > .rail-guide__intro')
   if (!summary || !firstGuide) return
-
   panel.dataset.returnTravelReady = 'true'
 
   const switcher = element('div', 'travel-direction-switch')
   switcher.setAttribute('role', 'group')
   switcher.setAttribute('aria-label', copy('Choose travel direction', 'यात्रा दिशा चुनें'))
-
   const outboundButton = element('button', 'travel-direction-button is-active', copy('TO CORBETT', 'कॉर्बेट के लिए'))
   const returnButton = element('button', 'travel-direction-button', copy('RETURN · 26 NOV', 'वापसी · 26 नवम्बर'))
   outboundButton.type = 'button'; returnButton.type = 'button'
@@ -226,9 +199,7 @@ function mount(panel) {
 
   const outboundPanel = element('div', 'travel-direction-panel travel-direction-panel--outbound')
   outboundPanel.dataset.travelDirection = 'outbound'
-  const nodesToMove = [...panel.children].filter((node) => node !== summary)
-  nodesToMove.forEach((node) => outboundPanel.appendChild(node))
-
+  ;[...panel.children].filter((node) => node !== summary).forEach((node) => outboundPanel.appendChild(node))
   const returnPanel = createReturnPanel()
   panel.append(switcher, outboundPanel, returnPanel)
   summary.insertAdjacentElement('afterend', switcher)
@@ -244,7 +215,6 @@ function mount(panel) {
     panel.dataset.activeTravelDirection = direction
     if (scroll && !reducedMotion) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
   }
-
   outboundButton.addEventListener('click', () => setDirection('outbound'))
   returnButton.addEventListener('click', () => setDirection('return'))
   setDirection('outbound', { scroll: false })
