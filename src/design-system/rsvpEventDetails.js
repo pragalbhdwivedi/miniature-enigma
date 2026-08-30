@@ -1,6 +1,6 @@
 // RSVP event-detail enhancer.
-// Keeps React / fallback event buttons authoritative and adds only stable data attributes
-// used by CSS for the plain ceremony name and date/time subheading.
+// Keeps React / fallback event buttons authoritative and adds stable metadata plus
+// fallback accessibility state used by CSS/tests for the event choices.
 
 import { events } from '../content.js'
 
@@ -14,6 +14,13 @@ function findEvent(button) {
 function decorate(button) {
   const event = findEvent(button)
   if (!event) return
+
+  // React already owns aria-pressed. The raw fallback historically exposed only
+  // the selected class, so mirror that state when ARIA is otherwise absent.
+  if (!button.hasAttribute('aria-pressed')) {
+    button.setAttribute('aria-pressed', button.classList.contains('selected') ? 'true' : 'false')
+  }
+
   const signature = `${event.id}|${event.type}|${event.date}|${event.time}`
   if (button.dataset.rsvpEventSignature === signature) return
 
