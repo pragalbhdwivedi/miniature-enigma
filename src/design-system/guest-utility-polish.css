@@ -1,11 +1,23 @@
 /* Guest utility polish
    - outbound / return travel direction
    - richer RSVP event metadata
+   - all itinerary days visible in normal scroll
    - Mangal-first Hindi utility typography
 */
 
 :root {
   --font-utility-hi: Mangal, 'Nirmala UI', 'Noto Sans Devanagari', system-ui, -apple-system, sans-serif;
+}
+
+/* Three-day itinerary: visible list -------------------------------------- */
+.itinerary-section .itinerary-stack {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 18px !important;
+}
+
+.itinerary-section .itinerary-day {
+  width: 100%;
 }
 
 /* Travel direction ------------------------------------------------------- */
