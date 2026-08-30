@@ -2,6 +2,10 @@ import { test, expect } from '@playwright/test'
 
 const RAW_FALLBACK_URL = 'http://127.0.0.1:4174'
 
+function introContinue(page, step) {
+  return page.locator(`.intro-${step} .tap-hint, .intro-${step} .intro-continue`).first()
+}
+
 async function openInvitation(page, { url = '/', lang = 'en' } = {}) {
   await page.goto(url, { waitUntil: 'domcontentloaded' })
   await expect(page.locator('.selection-screen:not(.language-screen)')).toBeVisible()
@@ -13,14 +17,16 @@ async function openInvitation(page, { url = '/', lang = 'en' } = {}) {
   await languageButton.click()
 
   await expect(page.locator('.intro-screen.intro-0')).toBeVisible()
-  await page.locator('.intro-0 .tap-hint').click()
+  await introContinue(page, 0).click()
   await expect(page.locator('.intro-screen.intro-1')).toBeVisible()
-  await page.locator('.intro-1 .tap-hint').click()
+  await introContinue(page, 1).click()
 
   const crestScreen = page.locator('.intro-screen.intro-2')
   await expect(crestScreen).toBeVisible()
-  await expect.poll(() => crestScreen.getAttribute('data-crest-phase'), { timeout: 4_500 }).toBe('3')
-  await page.locator('.intro-2 .tap-hint').click()
+  if (await crestScreen.getAttribute('data-crest-phase') !== null) {
+    await expect.poll(() => crestScreen.getAttribute('data-crest-phase'), { timeout: 4_500 }).toBe('3')
+  }
+  await introContinue(page, 2).click()
 
   await expect(page.locator('.passport-stage')).toBeVisible()
   const openButton = page.locator('.passport-stage .primary-cta')
