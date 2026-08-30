@@ -233,7 +233,7 @@ function mount(panel) {
   panel.append(switcher, outboundPanel, returnPanel)
   summary.insertAdjacentElement('afterend', switcher)
 
-  const setDirection = (direction) => {
+  const setDirection = (direction, { scroll = true } = {}) => {
     const returning = direction === 'return'
     outboundPanel.hidden = returning
     returnPanel.hidden = !returning
@@ -242,12 +242,12 @@ function mount(panel) {
     outboundButton.setAttribute('aria-pressed', String(!returning))
     returnButton.setAttribute('aria-pressed', String(returning))
     panel.dataset.activeTravelDirection = direction
-    if (!reducedMotion) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    if (scroll && !reducedMotion) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
   }
 
   outboundButton.addEventListener('click', () => setDirection('outbound'))
   returnButton.addEventListener('click', () => setDirection('return'))
-  setDirection('outbound')
+  setDirection('outbound', { scroll: false })
 }
 
 function scan() {
