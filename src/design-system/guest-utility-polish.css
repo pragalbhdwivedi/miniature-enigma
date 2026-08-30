@@ -1,0 +1,198 @@
+/* Guest utility polish
+   - outbound / return travel direction
+   - richer RSVP event metadata
+   - Mangal-first Hindi utility typography
+*/
+
+:root {
+  --font-utility-hi: Mangal, 'Nirmala UI', 'Noto Sans Devanagari', system-ui, -apple-system, sans-serif;
+}
+
+/* Travel direction ------------------------------------------------------- */
+.travel-direction-switch {
+  position: sticky;
+  top: 8px;
+  z-index: 5;
+  margin: 22px 0 26px;
+  padding: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  border: 1px solid rgba(84,62,34,.24);
+  border-radius: 999px;
+  background: rgba(239,229,210,.92);
+  box-shadow: 0 10px 30px rgba(57,41,22,.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.travel-direction-button {
+  appearance: none;
+  -webkit-appearance: none;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #6e5737;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 8px;
+  font-weight: 760;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.travel-direction-button.is-active,
+.travel-direction-button[aria-pressed='true'] {
+  background: #293e2e;
+  color: #f0e5d1;
+  box-shadow: 0 7px 18px rgba(41,62,46,.16);
+}
+
+.travel-direction-button:focus-visible {
+  outline: 2px solid #9a763e;
+  outline-offset: 2px;
+}
+
+.travel-direction-panel[hidden] {
+  display: none !important;
+}
+
+.travel-direction-panel--return:not([hidden]) {
+  animation: returnTravelIn 360ms cubic-bezier(.2,.74,.18,1) both;
+}
+
+.return-transfer-note {
+  margin: 22px 0;
+  padding: 20px 18px;
+  border: 1px solid rgba(88,66,36,.2);
+  border-radius: 17px;
+  background: rgba(255,255,255,.13);
+}
+
+.return-transfer-note > strong {
+  display: block;
+  color: #755a34;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 8px;
+  font-weight: 760;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.return-transfer-note > p {
+  margin: 10px 0 15px;
+  color: rgba(53,46,36,.66);
+  font-size: 11px;
+  line-height: 1.58;
+}
+
+@keyframes returnTravelIn {
+  from { opacity: 0; transform: translate3d(0, 8px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+/* RSVP event names + time ------------------------------------------------ */
+.rsvp-wizard-ready .event-checks[data-rsvp-step] button[data-rsvp-event-signature] {
+  min-height: 76px;
+  display: grid;
+  grid-template-columns: 29px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 11px;
+  row-gap: 4px;
+  align-items: center;
+  justify-content: stretch;
+  padding: 11px 13px;
+  text-align: left;
+}
+
+.rsvp-wizard-ready .event-checks[data-rsvp-step] button[data-rsvp-event-signature] > span:first-child {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  align-self: center;
+  margin: 0;
+}
+
+.rsvp-wizard-ready .event-checks[data-rsvp-step] button[data-rsvp-event-signature]::after {
+  content: attr(data-rsvp-event-type) '\A' attr(data-rsvp-event-when);
+  grid-column: 2;
+  grid-row: 2;
+  display: block;
+  white-space: pre-line;
+  color: rgba(73,61,45,.62);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 9px;
+  font-weight: 650;
+  line-height: 1.45;
+  letter-spacing: .055em;
+}
+
+.rsvp-wizard-ready .event-checks[data-rsvp-step] button[data-rsvp-event-signature][aria-pressed='true']::after,
+.rsvp-wizard-ready .event-checks[data-rsvp-step] button[data-rsvp-event-signature].selected::after {
+  color: rgba(38,57,42,.72);
+}
+
+/* Hindi utility typography ---------------------------------------------- */
+html[lang='hi'] .logistics-shell p,
+html[lang='hi'] .logistics-shell small,
+html[lang='hi'] .logistics-shell button,
+html[lang='hi'] .logistics-shell a,
+html[lang='hi'] .logistics-shell time,
+html[lang='hi'] .logistics-shell .rail-option__tag,
+html[lang='hi'] .logistics-shell .rail-option__meta,
+html[lang='hi'] .logistics-shell .rail-option__note,
+html[lang='hi'] .logistics-shell .rail-option__station strong,
+html[lang='hi'] .logistics-shell .logistics-fact__body strong,
+html[lang='hi'] .return-transfer-note,
+.lang-hi .rsvp-form label,
+.lang-hi .rsvp-form input,
+.lang-hi .rsvp-wizard__note,
+.lang-hi .rsvp-wizard__journey,
+.lang-hi .rsvp-wizard__kicker,
+.lang-hi .status-toggle button,
+.lang-hi .rsvp-review-row small,
+.lang-hi .rsvp-review-row strong,
+.lang-hi .rsvp-wizard__nav button,
+.lang-hi .rsvp-form .primary-cta,
+.lang-hi .rsvp-form .secondary-cta,
+.lang-hi .itinerary-section .timeline-item span,
+.lang-hi .itinerary-section .timeline-item time,
+.lang-hi .bottom-nav span {
+  font-family: var(--font-utility-hi) !important;
+  font-feature-settings: normal;
+}
+
+html[lang='hi'] .rsvp-wizard-ready .event-checks[data-rsvp-step] button[data-rsvp-event-signature]::after {
+  font-family: var(--font-utility-hi);
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+
+html[lang='hi'] .travel-direction-button {
+  font-family: var(--font-utility-hi);
+  letter-spacing: .02em;
+  text-transform: none;
+}
+
+@media (max-width: 365px) {
+  .travel-direction-switch {
+    margin-left: -2px;
+    margin-right: -2px;
+  }
+
+  .travel-direction-button {
+    padding-inline: 8px;
+    font-size: 7.5px;
+  }
+
+  .rsvp-wizard-ready .event-checks[data-rsvp-step] button[data-rsvp-event-signature] {
+    min-height: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .travel-direction-panel--return:not([hidden]) {
+    animation: none !important;
+  }
+}
