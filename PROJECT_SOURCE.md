@@ -46,11 +46,25 @@ After language selection the entire interface follows that language, while brand
 - Tiger snort
 - Brief tiger presence
 - One photorealistic tiger reveal only
-- Tiger transforms into engraved tiger crest
+- Language-aware ceremonial shloka interlude with no tiger/crest artwork
 - Bespoke Corbett wedding passport appears
 - Guest opens invitation
 
 Tiger hierarchy: **Couple → Wedding → Destination → Forest → Tiger**. No repeated photorealistic tiger imagery, no mascot/cartoon treatment.
+
+### Pre-passport ceremonial shloka
+
+Immediately after the single tiger reveal and before the passport, show a quiet text-only ceremonial interlude. Do not show a tiger, lion, crest or wildlife artwork on this screen.
+
+Hindi:
+
+**मंगलं भगवान विष्णुः मंगलं गरुडध्वजः।**  
+**मंगलं पुण्डरीकाक्षः मंगलाय तनो हरिः॥**
+
+English transliteration:
+
+**Maṅgalaṁ bhagavān viṣṇuḥ maṅgalaṁ garuḍadhvajaḥ |**  
+**Maṅgalaṁ puṇḍarīkākṣaḥ maṅgalāya tano hariḥ ||**
 
 ## Sound
 
@@ -202,4 +216,4 @@ Current generic imagery in the first build is deliberately temporary and must be
 
 ## Master creative statement
 
-The guest should feel that a private destination-wedding journey has begun before arriving in Jim Corbett. The forest establishes place, the tiger creates one memorable cinematic moment, the tiger becomes an engraved emblem, the passport opens into an editorial wedding story, each event becomes a chapter, logistics stay easy to find, and RSVP stays simple.
+The guest should feel that a private destination-wedding journey has begun before arriving in Jim Corbett. The forest establishes place, the tiger creates one memorable cinematic moment, a ceremonial shloka creates a quiet pause, the passport opens into an editorial wedding story, each event becomes a chapter, logistics stay easy to find, and RSVP stays simple.

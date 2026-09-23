@@ -6,7 +6,6 @@ const FAMILY_DATA = {
         ['Father', 'Dr. Vinay Kumar Dwivedi'],
         ['Mother', 'Mrs. Archana Dwivedi'],
         ['Bhaiya and Bhabhi', 'Pragalbh Dwivedi and Nisha Dwivedi'],
-        ['Bade Bhaiya and Bhabhi', 'Pankaj Shukla and Neeta Shukla'],
         ['Nephew', 'Aadidev Dwivedi'],
       ],
     },
@@ -28,7 +27,6 @@ const FAMILY_DATA = {
         ['पिता', 'Dr. Vinay Kumar Dwivedi'],
         ['माता', 'Mrs. Archana Dwivedi'],
         ['भैया और भाभी', 'Pragalbh Dwivedi और Nisha Dwivedi'],
-        ['बड़े भैया और भाभी', 'Pankaj Shukla और Neeta Shukla'],
         ['भतीजा', 'Aadidev Dwivedi'],
       ],
     },
@@ -86,7 +84,7 @@ function renderApprovedFamilies() {
   const lang = document.documentElement.lang === 'hi' ? 'hi' : 'en'
   const copy = FAMILY_DATA[lang]
   const order = inferExistingOrder(grid)
-  const signature = `${lang}:${order.join('-')}:approved-v3`
+  const signature = `${lang}:${order.join('-')}:approved-v4`
   if (grid.dataset.familySignature === signature) return
 
   grid.innerHTML = order.map((side, index) => cardHtml(copy[side], index, side)).join('')

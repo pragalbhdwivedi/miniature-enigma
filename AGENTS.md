@@ -18,6 +18,7 @@ Before changing this repository, read `PROJECT_SOURCE.md` completely.
 12. Generic imagery is temporary. Do not pretend it is final Wyndham Garden or couple photography.
 13. Keep all three itinerary days (24, 25 and 26 November) visible in normal vertical scroll. Do not hide later days behind tabs, swipe gestures or a day selector.
 14. For basic Hindi utility/details such as Travel, Stay, Transport, RSVP and itinerary detail rows, use a Mangal-first system stack with suitable Devanagari fallbacks. Ceremonial/display Hindi may retain the established display/serif treatment.
+15. The intro screen immediately before the passport is a language-aware ceremonial shloka only. Do not render tiger, lion, crest or wildlife artwork on that interlude.
 
 ## Before opening a PR
 

@@ -70,6 +70,7 @@ export const copy = {
     intro2: 'Listen closely. The journey has already begun.',
     intro3: 'A moment you will never forget.',
     intro4: 'Your invitation awaits.',
+    prePassportShloka: 'Maṅgalaṁ bhagavān viṣṇuḥ maṅgalaṁ garuḍadhvajaḥ |\nMaṅgalaṁ puṇḍarīkākṣaḥ maṅgalāya tano hariḥ ||',
     openInvitation: 'Open Invitation',
     welcomeJourney: 'Welcome to our journey',
     formalInvite: 'With the blessings of our families, we invite you to join us for three unforgettable days in the wild heart of Corbett.',
@@ -77,7 +78,6 @@ export const copy = {
     brideFamily: `Father — Dr. Vinay Kumar Dwivedi
 Mother — Mrs. Archana Dwivedi
 Bhaiya and Bhabhi — Pragalbh Dwivedi and Nisha Dwivedi
-Bade Bhaiya and Bhabhi — Pankaj Shukla and Neeta Shukla
 Nephew — Aadidev Dwivedi`,
     groomFamily: `Father — Mr. Sushil Kumar Pandey
 Mother — Mrs. Rajwanti Pandey
@@ -114,6 +114,7 @@ Niece — Samridhi Mishra`,
     intro2: 'ध्यान से सुनिए। सफ़र शुरू हो चुका है।',
     intro3: 'एक क्षण जो आप कभी नहीं भूल पाएँगे।',
     intro4: 'आपका निमंत्रण आपका इंतज़ार कर रहा है।',
+    prePassportShloka: 'मंगलं भगवान विष्णुः मंगलं गरुडध्वजः।\nमंगलं पुण्डरीकाक्षः मंगलाय तनो हरिः॥',
     openInvitation: 'निमंत्रण खोलें',
     welcomeJourney: 'हमारी यात्रा में आपका स्वागत है',
     formalInvite: 'हमारे परिवारों के आशीर्वाद के साथ, हम आपको कॉर्बेट की वादियों में हमारे तीन यादगार दिनों का हिस्सा बनने के लिए सादर आमंत्रित करते हैं।',
@@ -121,7 +122,6 @@ Niece — Samridhi Mishra`,
     brideFamily: `पिता — Dr. Vinay Kumar Dwivedi
 माता — Mrs. Archana Dwivedi
 भैया और भाभी — Pragalbh Dwivedi और Nisha Dwivedi
-बड़े भैया और भाभी — Pankaj Shukla और Neeta Shukla
 भतीजा — Aadidev Dwivedi`,
     groomFamily: `पिता — Mr. Sushil Kumar Pandey
 माता — Mrs. Rajwanti Pandey

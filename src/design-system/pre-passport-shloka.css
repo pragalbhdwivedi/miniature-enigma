@@ -1,0 +1,173 @@
+/* Pre-passport ceremonial shloka
+   Approved sequence: Forest → Tiger Reveal → Shloka → Passport.
+   Loaded after all legacy opening layers so the interlude stays quiet and tiger-free. */
+
+.intro-screen.intro-2.intro-shloka {
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 48%, rgba(39,61,35,.34) 0%, rgba(5,10,6,.88) 54%, #020403 100%);
+}
+
+.intro-screen.intro-2.intro-shloka .intro-media {
+  opacity: .34 !important;
+  filter: brightness(.48) saturate(.72) contrast(1.04) !important;
+  transform: scale(1.025) !important;
+}
+
+.intro-screen.intro-2.intro-shloka .intro-shade {
+  background:
+    radial-gradient(ellipse at 50% 47%, rgba(0,0,0,.08) 0%, rgba(0,0,0,.24) 46%, rgba(0,0,0,.72) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.48), rgba(0,0,0,.10) 34%, rgba(0,0,0,.34) 72%, rgba(0,0,0,.82)) !important;
+}
+
+.intro-screen.intro-2.intro-shloka .intro-content {
+  z-index: 8;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  min-height: 100%;
+  padding:
+    max(28px, env(safe-area-inset-top))
+    clamp(20px, 5vw, 30px)
+    calc(28px + env(safe-area-inset-bottom)) !important;
+  text-align: center;
+}
+
+.intro-screen.intro-2.intro-shloka .intro-content > .monogram {
+  position: absolute !important;
+  top: max(28px, env(safe-area-inset-top)) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  opacity: .86 !important;
+}
+
+.intro-screen.intro-2.intro-shloka .eyebrow {
+  position: absolute;
+  top: calc(max(28px, env(safe-area-inset-top)) + 82px);
+  left: 50%;
+  width: min(88vw, 390px);
+  margin: 0;
+  transform: translateX(-50%);
+  color: rgba(221,187,120,.72);
+  font-size: 10px;
+  letter-spacing: .24em;
+  text-align: center;
+}
+
+.intro-screen.intro-2.intro-shloka .pre-passport-shloka {
+  position: relative;
+  width: min(90vw, 430px);
+  margin: auto auto clamp(28px, 6vh, 54px);
+  padding: clamp(24px, 5.6vw, 34px) clamp(10px, 3vw, 20px);
+  border: 0;
+  color: #f1e4c8;
+  text-align: center;
+  text-wrap: balance;
+  text-shadow: 0 4px 24px rgba(0,0,0,.72);
+}
+
+.intro-screen.intro-2.intro-shloka .pre-passport-shloka::before,
+.intro-screen.intro-2.intro-shloka .pre-passport-shloka::after {
+  content: '';
+  display: block;
+  width: min(46vw, 170px);
+  height: 1px;
+  margin-inline: auto;
+  background: linear-gradient(90deg, transparent, rgba(223,189,122,.74), transparent);
+}
+
+.intro-screen.intro-2.intro-shloka .pre-passport-shloka::before {
+  margin-bottom: clamp(22px, 4vh, 34px);
+}
+
+.intro-screen.intro-2.intro-shloka .pre-passport-shloka::after {
+  margin-top: clamp(22px, 4vh, 34px);
+}
+
+.intro-screen.intro-2.intro-shloka .pre-passport-shloka span {
+  display: block;
+}
+
+html[lang='hi'] .intro-screen.intro-shloka .pre-passport-shloka {
+  font-family: var(--font-display-hi, 'Rozha One', 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif) !important;
+  font-size: clamp(23px, 6.2vw, 34px);
+  font-weight: 400;
+  line-height: 1.62;
+  letter-spacing: 0;
+}
+
+html[lang='hi'] .intro-screen.intro-shloka .pre-passport-shloka span + span {
+  margin-top: .36em;
+}
+
+html[lang='en'] .intro-screen.intro-shloka .pre-passport-shloka {
+  font-family: var(--font-editorial-en, 'Cormorant Garamond', Georgia, serif) !important;
+  font-size: clamp(20px, 5.2vw, 28px);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.52;
+  letter-spacing: .012em;
+}
+
+html[lang='en'] .intro-screen.intro-shloka .pre-passport-shloka span + span {
+  margin-top: .44em;
+}
+
+.intro-screen.intro-2.intro-shloka .tap-hint,
+.intro-screen.intro-2.intro-shloka .intro-continue {
+  position: relative !important;
+  inset: auto !important;
+  flex: 0 0 auto;
+  margin: 0 auto !important;
+}
+
+.intro-screen.intro-2.intro-shloka .progress-dots {
+  position: relative !important;
+  inset: auto !important;
+  margin: 13px auto 0 !important;
+}
+
+@media (max-width: 365px) {
+  html[lang='hi'] .intro-screen.intro-shloka .pre-passport-shloka {
+    font-size: clamp(21px, 6vw, 27px);
+    line-height: 1.58;
+  }
+
+  html[lang='en'] .intro-screen.intro-shloka .pre-passport-shloka {
+    font-size: clamp(18px, 5.2vw, 23px);
+    line-height: 1.48;
+  }
+
+  .intro-screen.intro-2.intro-shloka .pre-passport-shloka {
+    width: 94vw;
+    padding-inline: 4px;
+    margin-bottom: 22px;
+  }
+}
+
+@media (max-height: 690px) {
+  .intro-screen.intro-2.intro-shloka .eyebrow {
+    display: none;
+  }
+
+  .intro-screen.intro-2.intro-shloka .pre-passport-shloka {
+    margin-bottom: 18px;
+    padding-block: 18px;
+  }
+
+  .intro-screen.intro-2.intro-shloka .pre-passport-shloka::before {
+    margin-bottom: 16px;
+  }
+
+  .intro-screen.intro-2.intro-shloka .pre-passport-shloka::after {
+    margin-top: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-screen.intro-2.intro-shloka .intro-media {
+    transform: none !important;
+  }
+}

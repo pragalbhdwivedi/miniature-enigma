@@ -66,13 +66,16 @@ async function assertGuestInformation(page) {
   await expect(returnPanel.locator('.rail-option:visible')).toHaveCount(2)
 
   await page.locator('#rsvp').scrollIntoViewIfNeeded()
+  const form = page.locator('.rsvp-form')
   const next = page.locator('.rsvp-wizard__next')
   await expect(next).toBeVisible()
-  await next.click()
-  await next.click()
-  await next.click()
+  for (const step of ['1', '2', '3']) {
+    await next.click()
+    await expect(form).toHaveAttribute('data-rsvp-current-step', step)
+  }
 
   const eventButtons = page.locator('.rsvp-form .event-checks button')
+  await expect(eventButtons.first()).toBeVisible()
   await expect(eventButtons).toHaveCount(6)
   const mehendi = eventButtons.first()
   await expect(mehendi).toHaveAttribute('data-rsvp-event-type', '(Mehendi)')
