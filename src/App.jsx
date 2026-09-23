@@ -253,17 +253,21 @@ function App() {
     const continueLabel = lang === 'hi' ? 'आगे बढ़ने के लिए टैप करें' : 'Tap to continue'
 
     return (
-      <main className={`screen intro-screen intro-${introStep}`} onClick={advanceIntro}>
+      <main className={`screen intro-screen intro-${introStep}${introStep === 2 ? ' intro-shloka' : ''}`} onClick={advanceIntro}>
         <div className="intro-media" style={{ backgroundImage: `url(${introStep === 1 ? media.tiger : media.forest})` }} />
         <div className="intro-shade" />
         <button type="button" className="sound-float" onClick={(event) => { event.stopPropagation(); toggleSound() }} aria-pressed={soundOn} aria-label={soundLabel}>{soundOn ? '♪' : '×'}</button>
         <div className="intro-content">
           <Monogram />
           <p className="eyebrow">RAMNAGAR · JIM CORBETT</p>
-          <h1>{introText}</h1>
+          {introStep !== 2 && <h1>{introText}</h1>}
           {introStep === 0 && <p>{t.intro2}</p>}
           {introStep === 1 && <div className="tiger-reveal-label">{lang === 'hi' ? 'एक अनोखा पल' : 'ONE WILD MOMENT'}</div>}
-          {introStep === 2 && <div className="crest-transform"><TigerCrest /></div>}
+          {introStep === 2 && (
+            <blockquote className={`pre-passport-shloka ${lang === 'hi' ? 'devanagari-display' : 'editorial-english'}`} lang={lang === 'hi' ? 'hi' : 'en'}>
+              {t.prePassportShloka.split('\n').map((line) => <span key={line}>{line}</span>)}
+            </blockquote>
+          )}
           <button type="button" className="tap-hint" onClick={(event) => { event.stopPropagation(); advanceIntro() }} aria-label={continueLabel}>⌁<span>{continueLabel}</span></button>
           <div className="progress-dots" aria-label={`${introStep + 1} of 3`}>{[0, 1, 2].map((n) => <i key={n} className={n === introStep ? 'active' : ''} />)}</div>
         </div>
