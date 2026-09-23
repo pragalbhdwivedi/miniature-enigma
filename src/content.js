@@ -78,7 +78,6 @@ export const copy = {
     brideFamily: `Father — Dr. Vinay Kumar Dwivedi
 Mother — Mrs. Archana Dwivedi
 Bhaiya and Bhabhi — Pragalbh Dwivedi and Nisha Dwivedi
-Bade Bhaiya and Bhabhi — Pankaj Shukla and Neeta Shukla
 Nephew — Aadidev Dwivedi`,
     groomFamily: `Father — Mr. Sushil Kumar Pandey
 Mother — Mrs. Rajwanti Pandey
@@ -123,7 +122,6 @@ Niece — Samridhi Mishra`,
     brideFamily: `पिता — Dr. Vinay Kumar Dwivedi
 माता — Mrs. Archana Dwivedi
 भैया और भाभी — Pragalbh Dwivedi और Nisha Dwivedi
-बड़े भैया और भाभी — Pankaj Shukla और Neeta Shukla
 भतीजा — Aadidev Dwivedi`,
     groomFamily: `पिता — Mr. Sushil Kumar Pandey
 माता — Mrs. Rajwanti Pandey
