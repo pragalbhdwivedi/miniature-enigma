@@ -38,6 +38,7 @@ function setPhase(host, phase) {
 }
 
 function mount(host) {
+  if (!host.querySelector('.crest-transform')) return
   if (mountedHosts.has(host)) return
   mountedHosts.add(host)
   host.classList.add('crest-transition-ready')
@@ -74,7 +75,10 @@ function scan() {
   for (const host of [...mountedHosts]) {
     if (!host.isConnected || !host.matches('.intro-screen.intro-2')) unmount(host)
   }
-  document.querySelectorAll('.intro-screen.intro-2').forEach(mount)
+  document.querySelectorAll('.intro-screen.intro-2').forEach((host) => {
+    if (host.querySelector('.crest-transform')) mount(host)
+    else if (mountedHosts.has(host)) unmount(host)
+  })
 }
 
 let queued = false
