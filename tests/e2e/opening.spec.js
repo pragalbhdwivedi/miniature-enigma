@@ -71,31 +71,24 @@ async function runOpening(page, testInfo, { side = 'bride', lang = 'en' } = {}) 
   await capture(page, testInfo, '04-tiger')
   await tigerContinue.click()
 
-  const crestScreen = page.locator('.intro-screen.intro-2')
-  await expect(crestScreen).toBeVisible()
-  const crest = page.locator('.intro-2 .crest-transform')
-  await expect(crest).toBeVisible()
-  await expectPseudoAsset(crest, 'tiger-transition-engraved')
-  const crestBox = await crest.boundingBox()
-  expect(crestBox).not.toBeNull()
-  expect(crestBox.width).toBeGreaterThan(120)
-  expect(crestBox.height).toBeGreaterThan(120)
+  const shlokaScreen = page.locator('.intro-screen.intro-2.intro-shloka')
+  await expect(shlokaScreen).toBeVisible()
+  const shloka = page.locator('.intro-2 .pre-passport-shloka')
+  await expect(shloka).toBeVisible()
+  await expect(page.locator('.intro-2 .crest-transform')).toHaveCount(0)
+  await expect(page.locator('.intro-2 .crest-transition-world')).toHaveCount(0)
+  if (lang === 'hi') {
+    await expect(shloka).toContainText('मंगलं भगवान विष्णुः')
+    await expect(shloka).toContainText('मंगलं पुण्डरीकाक्षः मंगलाय तनो हरिः॥')
+  } else {
+    await expect(shloka).toContainText('Maṅgalaṁ bhagavān viṣṇuḥ')
+    await expect(shloka).toContainText('Maṅgalaṁ puṇḍarīkākṣaḥ maṅgalāya tano hariḥ ||')
+  }
 
-  /* Module 05 deliberately spends ~2.2 s transforming photography into the
-     engraved crest. Verify the final phase, not an arbitrary mid-animation frame. */
-  await expect.poll(() => crestScreen.getAttribute('data-crest-phase'), {
-    timeout: 4_500,
-    message: 'Tiger-to-crest choreography should reach its settled phase',
-  }).toBe('3')
-  await expect.poll(() => crest.evaluate((element) => Number.parseFloat(getComputedStyle(element).opacity)), {
-    timeout: 2_000,
-    message: 'Final engraved crest should become visibly settled',
-  }).toBeGreaterThan(0.75)
-
-  const crestContinue = page.locator('.intro-2 .tap-hint')
-  await expectLargeTapTarget(crestContinue)
-  await capture(page, testInfo, '05-crest')
-  await crestContinue.click()
+  const shlokaContinue = page.locator('.intro-2 .tap-hint')
+  await expectLargeTapTarget(shlokaContinue)
+  await capture(page, testInfo, '05-shloka')
+  await shlokaContinue.click()
 
   await expect(page.locator('.passport-stage')).toBeVisible()
   const passportCover = page.locator('.passport-cover')
