@@ -67,13 +67,14 @@ function languageScreen() {
 function introScreen() {
   const texts = [t().intro1, t().intro3, t().intro4]
   const image = state.intro === 1 ? media.tiger : media.forest
-  return `<main class="screen intro-screen intro-${state.intro}">
+  const isShloka = state.intro === 2
+  const shloka = isShloka ? t().prePassportShloka.split('\\n').map((line) => `<span>${esc(line)}</span>`).join('') : ''
+  return `<main class="screen intro-screen intro-${state.intro}${isShloka ? ' intro-shloka' : ''}">
     <div class="intro-media" style="background-image:url('${image}')"></div><div class="intro-shade"></div>
     <div class="intro-content">${monogram}<p class="eyebrow">RAMNAGAR · JIM CORBETT</p>
-      <h1>${esc(texts[state.intro])}</h1>
+      ${isShloka ? `<blockquote class="pre-passport-shloka ${state.lang === 'hi' ? 'devanagari-display' : 'editorial-english'}" lang="${state.lang === 'hi' ? 'hi' : 'en'}">${shloka}</blockquote>` : `<h1>${esc(texts[state.intro])}</h1>`}
       ${state.intro === 0 ? `<p>${esc(t().intro2)}</p>` : ''}
       ${state.intro === 1 ? '<div class="tiger-reveal-label">ONE WILD MOMENT</div>' : ''}
-      ${state.intro === 2 ? `<div class="crest-transform">${crest()}</div>` : ''}
       <button type="button" class="intro-continue" data-action="intro"><span>⌁</span>${state.lang === 'hi' ? 'आगे बढ़ने के लिए टैप करें' : 'Tap to continue'}</button>
       <div class="progress-dots">${[0,1,2].map((n) => `<i class="${n === state.intro ? 'active' : ''}"></i>`).join('')}</div>
     </div>
