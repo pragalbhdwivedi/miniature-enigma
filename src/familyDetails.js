@@ -84,7 +84,7 @@ function renderApprovedFamilies() {
   const lang = document.documentElement.lang === 'hi' ? 'hi' : 'en'
   const copy = FAMILY_DATA[lang]
   const order = inferExistingOrder(grid)
-  const signature = `${lang}:${order.join('-')}:approved-v4`
+  const signature = `${lang}:${order.join('-')}:approved-v5`
   if (grid.dataset.familySignature === signature) return
 
   grid.innerHTML = order.map((side, index) => cardHtml(copy[side], index, side)).join('')
